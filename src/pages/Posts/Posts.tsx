@@ -35,7 +35,11 @@ class Posts extends React.Component<Props, State> {
       headerLeft: (
         <Image
           source={require('../../assets/logo-complete.png')}
-          style={{ height: 42, width: 150, marginLeft: 16 }}
+          style={{
+            height: 42,
+            width: 150,
+            marginLeft: 16,
+          }}
           resizeMode="contain"
         />
       ),
@@ -49,6 +53,11 @@ class Posts extends React.Component<Props, State> {
         elevation: 0,
         borderBottomWidth: 0,
         ...Theme.navigationOptions.headerStyle,
+        ...Platform.select({
+          ios: {
+            height: 60,
+          },
+        }),
       },
     }
   }
