@@ -1,0 +1,17 @@
+{
+  "presets": ["react-native"],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": ["./src"],
+        "cwd": "babelrc",
+        "alias": {
+          "@components": "./src/components",
+          "@config": "./src/config",
+          "@pages": "./src/pages"
+        }
+      }
+    ]
+  ]
+}
