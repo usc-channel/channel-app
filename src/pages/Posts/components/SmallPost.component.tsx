@@ -1,8 +1,9 @@
 import React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { Author, Touchable } from '@components'
 import { Post } from '@types'
 import { decode } from 'he'
+import FastImage from 'react-native-fast-image'
 
 interface Props {
   post: Post
@@ -30,7 +31,7 @@ const LargePost: React.SFC<Props> = ({ post, onPress }) => (
         </View>
       </View>
 
-      <Image
+      <FastImage
         source={{
           uri: post.featuredImage.guid,
         }}
