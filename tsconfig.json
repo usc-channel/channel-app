@@ -17,7 +17,8 @@
       "@pages": ["pages"],
       "@types": ["types"],
       "@util": ["util"]
-    }
+    },
+    "lib": ["es2017", "dom"]
   },
   "exclude": ["node_modules"]
 }

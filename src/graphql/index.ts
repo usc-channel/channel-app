@@ -3,7 +3,7 @@ import { GraphPost, PageInfo } from '@types'
 
 const postsCategoriesQuery = gql`
   query {
-    categories(where: { exclude: 11 }) {
+    categories(where: { exclude: 11, hideEmpty: true }, first: 20) {
       edges {
         node {
           categoryId
@@ -111,6 +111,43 @@ const postsQuery = gql`
   }
 `
 
+const filteredPostsQuery = gql`
+  query($after: String!, $categoryIn: [Int]!) {
+    posts(first: 10, after: $after, where: { categoryIn: $categoryIn }) {
+      edges {
+        node {
+          postId
+          id
+          title
+          date
+          excerpt
+          categories(where: { exclude: 11 }) {
+            edges {
+              node {
+                name
+                categoryId
+              }
+            }
+          }
+          featuredImage {
+            guid
+          }
+          author {
+            name
+            avatar {
+              url
+            }
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+`
+
 const postsTransform = (data: {
   edges: Array<{ node: GraphPost }>
   pageInfo?: PageInfo
@@ -120,4 +157,4 @@ const postsTransform = (data: {
     categories: [...a.node.categories.edges.map((b: any) => b.node)],
   }))
 
-export { postsCategoriesQuery, postsQuery, postsTransform }
+export { postsCategoriesQuery, postsQuery, filteredPostsQuery, postsTransform }

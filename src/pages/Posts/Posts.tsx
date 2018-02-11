@@ -1,26 +1,26 @@
-import { Scene, TabBar, TabViewAnimated } from 'react-native-tab-view'
-import React from 'react'
-import { NavigationScreenProps } from 'react-navigation'
 import {
   ActivityIndicator,
-  Dimensions,
   Image,
   Platform,
+  StyleSheet,
   Text,
   View,
 } from 'react-native'
-import { NavIcon } from '@components'
 import { graphqlClient, Theme } from '@config'
-import PostPage from './components/Post.page'
-import { decode } from 'he'
-import { postsCategoriesQuery, postsQuery, postsTransform } from '../../graphql'
+import { NavigationScreenProps } from 'react-navigation'
+import Collapsible from 'react-native-collapsible'
+import { NavIcon } from '@components'
+import React from 'react'
+import {
+  filteredPostsQuery,
+  postsCategoriesQuery,
+  postsQuery,
+  postsTransform,
+} from '../../graphql'
 import { ChildProps, graphql } from 'react-apollo'
 import { Category, GraphPost, PageInfo, Post } from '@types'
-
-const initialLayout = {
-  height: 0,
-  width: Dimensions.get('window').width,
-}
+import PostPage from './components/Post.page'
+import CategoryFilter from './components/CategoryFilter'
 
 interface GraphProps {
   categories: Category[]
@@ -31,18 +31,19 @@ interface GraphProps {
 
 interface ScreenProps {
   onSearch(): void
+  onFilter(): void
 }
 
 interface State {
+  filterToggled: boolean
   initialLoad: boolean
-  fetching: boolean
+  fetchingMore: boolean
+  filterStatus: string
   pageInfo: PageInfo | null
+  categories: Category[]
+  selectedCategories: number[]
   featured: Post[]
   other: Post[]
-  tabState: {
-    index: number
-    routes: Array<{ key: string; title: string }>
-  }
 }
 
 type OwnProps = NavigationScreenProps<ScreenProps>
@@ -67,14 +68,22 @@ class Posts extends React.Component<Props, State> {
         />
       ),
       headerRight: (
-        <NavIcon
-          iconName={Platform.OS === 'android' ? 'search' : 'ios-search-outline'}
-          onPress={params.onSearch}
-        />
+        <View style={{ flexDirection: 'row' }}>
+          <NavIcon
+            iconName={
+              Platform.OS === 'android' ? 'search' : 'ios-search-outline'
+            }
+            onPress={params.onSearch}
+          />
+          <NavIcon
+            iconName={
+              Platform.OS === 'android' ? 'filter-list' : 'ios-options-outline'
+            }
+            onPress={params.onFilter}
+          />
+        </View>
       ),
       headerStyle: {
-        elevation: 0,
-        borderBottomWidth: 0,
         ...Theme.navigationOptions.headerStyle,
         ...Platform.select({
           ios: {
@@ -89,49 +98,41 @@ class Posts extends React.Component<Props, State> {
     super(props)
 
     this.state = {
+      filterStatus: 'NO FILTERS ACTIVE',
+      selectedCategories: [],
+      filterToggled: false,
       initialLoad: false,
       pageInfo: null,
-      fetching: false,
+      fetchingMore: false,
       featured: [],
       other: [],
-      tabState: {
-        index: 0,
-        routes: [{ key: 'all', title: 'All' }],
-      },
+      categories: [],
     }
   }
 
   componentWillMount() {
     this.props.navigation.setParams({
       onSearch: this.onSearch,
+      onFilter: this.onFilter,
     })
   }
 
   componentDidUpdate() {
-    const { categories, pageInfo, featured, other } = this.props.data!
+    const { pageInfo, featured, other, categories } = this.props.data!
 
     if (
-      categories &&
       pageInfo &&
       featured &&
       other &&
+      categories &&
       !this.state.initialLoad
     ) {
       this.setState({
         initialLoad: true,
-        tabState: {
-          ...this.state.tabState,
-          routes: [
-            { key: 'all', title: 'All' },
-            ...categories.map(a => ({
-              key: a.categoryId.toString(),
-              title: a.name,
-            })),
-          ],
-        },
         featured,
         other,
         pageInfo,
+        categories,
       })
     }
   }
@@ -140,37 +141,22 @@ class Posts extends React.Component<Props, State> {
     alert('Search Pressed')
   }
 
-  handleIndexChange = (index: number) =>
-    this.setState({ tabState: { ...this.state.tabState, index } })
-
-  renderHeader = (props: any) => (
-    <TabBar
-      {...props}
-      scrollEnabled
-      style={{ backgroundColor: Theme.primary }}
-      indicatorStyle={{ backgroundColor: '#fff' }}
-      renderLabel={({ route }: Scene<{ title: string }>) => (
-        <Text
-          style={{
-            fontFamily: 'NunitoSans-SemiBold',
-            color: '#fff',
-            fontSize: 14,
-          }}
-        >
-          {decode(route.title).toUpperCase()}
-        </Text>
-      )}
-    />
-  )
+  onFilter = () => {
+    this.setState({ filterToggled: !this.state.filterToggled })
+  }
 
   loadMore = () => {
-    if (this.state.pageInfo!.hasNextPage && !this.state.fetching) {
-      this.setState({ fetching: true }, () => {
+    if (this.state.pageInfo!.hasNextPage && !this.state.fetchingMore) {
+      this.setState({ fetchingMore: true }, () => {
         graphqlClient
           .query({
-            query: postsQuery,
+            query:
+              this.state.selectedCategories.length > 0
+                ? filteredPostsQuery
+                : postsQuery,
             variables: {
               after: this.state.pageInfo!.endCursor,
+              categoryIn: this.state.selectedCategories,
             },
           })
           .then(({ data }: any) => {
@@ -179,21 +165,44 @@ class Posts extends React.Component<Props, State> {
             this.setState({
               other: [...this.state.other, ...other],
               pageInfo: data.posts.pageInfo,
-              fetching: false,
+              fetchingMore: false,
             })
           })
       })
     }
   }
 
-  renderScene = () => {
-    return (
-      <PostPage
-        featuredPosts={this.state.featured}
-        otherPosts={this.state.other}
-        onEndReached={this.loadMore}
-        fetching={this.state.fetching}
-      />
+  filterPosts = (selectedCategories: number[]) => {
+    this.setState(
+      {
+        selectedCategories,
+        filterToggled: false,
+        fetchingMore: true,
+        filterStatus: 'APPLYING FILTERS...',
+      },
+      () => {
+        graphqlClient
+          .query({
+            query: filteredPostsQuery,
+            variables: {
+              after: '',
+              categoryIn: selectedCategories,
+            },
+          })
+          .then(({ data }: any) => {
+            const other = postsTransform(data!.posts)
+
+            this.setState({
+              other,
+              pageInfo: data.posts.pageInfo,
+              fetchingMore: false,
+              filterStatus:
+                selectedCategories.length > 0
+                  ? 'FILTERS ACTIVE'
+                  : 'NO FILTERS ACTIVE',
+            })
+          })
+      }
     )
   }
 
@@ -211,17 +220,37 @@ class Posts extends React.Component<Props, State> {
     }
 
     return (
-      <TabViewAnimated
-        style={{ flex: 1, backgroundColor: Theme.background }}
-        navigationState={this.state.tabState}
-        renderScene={this.renderScene}
-        renderHeader={this.renderHeader}
-        onIndexChange={this.handleIndexChange}
-        initialLayout={initialLayout}
-      />
+      <View style={{ flex: 1 }}>
+        <Text style={styles.filterBar}>{this.state.filterStatus}</Text>
+        <Collapsible collapsed={!this.state.filterToggled}>
+          <CategoryFilter
+            categories={this.state.categories}
+            selectedCategories={this.state.selectedCategories}
+            updateSelectedCategories={this.filterPosts}
+          />
+        </Collapsible>
+
+        <PostPage
+          displayFeatured={this.state.selectedCategories.length === 0}
+          featuredPosts={this.state.featured}
+          otherPosts={this.state.other}
+          onEndReached={this.loadMore}
+          fetching={this.state.fetchingMore}
+        />
+      </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  filterBar: {
+    backgroundColor: Theme.accent,
+    color: '#fff',
+    paddingVertical: 8,
+    fontFamily: 'NunitoSans-SemiBold',
+    textAlign: 'center',
+  },
+})
 
 interface Response {
   categories: {
@@ -238,7 +267,7 @@ interface Response {
   }
 }
 
-const withCategories = graphql<Response, any, OwnProps>(postsCategoriesQuery, {
+const withPosts = graphql<Response, any, OwnProps>(postsCategoriesQuery, {
   props: ({ data }) => {
     let returnData = {}
 
@@ -264,4 +293,4 @@ const withCategories = graphql<Response, any, OwnProps>(postsCategoriesQuery, {
   },
 })
 
-export default withCategories(Posts)
+export default withPosts(Posts)

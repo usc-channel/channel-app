@@ -10,6 +10,7 @@ import { Post } from '@types'
 import LargePost from './LargePost.component'
 
 interface Props {
+  displayFeatured: boolean
   featuredPosts: Post[]
   otherPosts: Post[]
   fetching: boolean
@@ -20,7 +21,8 @@ class PostPage extends React.Component<Props> {
   shouldComponentUpdate(nextProps: Props) {
     return (
       this.props.otherPosts.length !== nextProps.otherPosts.length ||
-      this.props.fetching !== nextProps.fetching
+      this.props.fetching !== nextProps.fetching ||
+      this.props.displayFeatured !== nextProps.displayFeatured
     )
   }
 
@@ -41,7 +43,8 @@ class PostPage extends React.Component<Props> {
           onEndReached={this.props.onEndReached}
           onEndReachedThreshold={1}
           ListHeaderComponent={() =>
-            this.props.featuredPosts.length > 0 ? (
+            this.props.featuredPosts.length > 0 &&
+            this.props.displayFeatured ? (
               <LargePost
                 post={this.props.featuredPosts[0]}
                 onPress={() => alert('ue')}
@@ -54,7 +57,7 @@ class PostPage extends React.Component<Props> {
             this.props.fetching ? (
               <ActivityIndicator style={{ paddingVertical: 16 }} />
             ) : (
-              <View />
+              <View style={{ height: 35 }} />
             )
           }
         />

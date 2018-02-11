@@ -4,7 +4,7 @@ import { Theme } from '@config'
 import { Author as AuthorModel, Category } from '@types'
 import { printArray } from '@util'
 import { decode } from 'he'
-import momemt from 'moment'
+import moment from 'moment'
 import FastImage from 'react-native-fast-image'
 
 interface Props {
@@ -27,7 +27,13 @@ const Author: React.SFC<Props> = ({ author, date, categories }) => (
     <View>
       <Text style={styles.metaField}>{author.name}</Text>
       <View style={styles.meta}>
-        <Text style={styles.metaField}>{momemt(date).format('MMM D')}</Text>
+        <Text style={styles.metaField}>
+          {moment(date).isBefore(
+            moment(`${new Date().getFullYear()}-01-01`, 'YYYY-MM-DD')
+          )
+            ? moment(date).format('MMM D, YYYY')
+            : moment(date).format('MMM D')}
+        </Text>
         <FastImage
           style={styles.arrow}
           source={require('../assets/arrow.png')}
