@@ -15,12 +15,14 @@ interface Props {
 
 const Author: React.SFC<Props> = ({ author, date, categories }) => (
   <View style={styles.container}>
-    <FastImage
-      style={styles.avatar}
-      source={{
-        uri: author.avatar.url,
-      }}
-    />
+    <View style={styles.avatarContainer}>
+      <FastImage
+        style={styles.avatar}
+        source={{
+          uri: author.avatar.url,
+        }}
+      />
+    </View>
 
     <View>
       <Text style={styles.metaField}>{author.name}</Text>
@@ -42,13 +44,20 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
   },
-  avatar: {
+  avatarContainer: {
     height: 30,
     width: 30,
     borderRadius: 15,
+    overflow: 'hidden',
     borderColor: Theme.accent,
     borderWidth: 1,
     marginRight: 6,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  avatar: {
+    height: 30,
+    width: 30,
   },
   metaField: {
     fontFamily: 'NunitoSans-SemiBold',
