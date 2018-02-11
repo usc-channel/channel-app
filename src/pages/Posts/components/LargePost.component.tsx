@@ -27,11 +27,13 @@ const LargePost: React.SFC<Props> = ({ post, onPress }) => (
         </Text>
       )}
 
-      <Author
-        author={post.author}
-        date={post.date}
-        categories={post.categories}
-      />
+      <View style={styles.authorContainer}>
+        <Author
+          author={post.author}
+          date={post.date}
+          categories={post.categories}
+        />
+      </View>
     </View>
   </Touchable>
 )
@@ -55,8 +57,10 @@ const styles = StyleSheet.create({
   },
   excerpt: {
     color: 'rgba(0,0,0,.54)',
-    marginBottom: 13,
     fontFamily: 'NunitoSans-Regular',
+  },
+  authorContainer: {
+    marginTop: 14,
   },
 })
 
