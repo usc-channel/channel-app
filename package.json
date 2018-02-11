@@ -7,8 +7,13 @@
     "test": "jest"
   },
   "dependencies": {
+    "apollo-client-preset": "^1.0.8",
+    "graphql": "^0.13.0",
+    "graphql-tag": "^2.7.3",
     "he": "^1.1.1",
+    "moment": "^2.20.1",
     "react": "16.2.0",
+    "react-apollo": "^2.0.4",
     "react-native": "0.53.0",
     "react-native-gesture-handler": "^1.0.0-alpha.40",
     "react-native-tab-view": "^0.0.74",

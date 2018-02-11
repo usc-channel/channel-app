@@ -14,7 +14,9 @@
     "paths": {
       "@components": ["components"],
       "@config": ["config"],
-      "@pages": ["pages"]
+      "@pages": ["pages"],
+      "@types": ["types"],
+      "@util": ["util"]
     }
   },
   "exclude": ["node_modules"]

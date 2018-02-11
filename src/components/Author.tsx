@@ -1,23 +1,34 @@
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import { Theme } from '@config'
+import { Author as AuthorModel, Category } from '@types'
+import { printArray } from '@util'
+import { decode } from 'he'
+import momemt from 'moment'
 
-const Author = () => (
+interface Props {
+  author: AuthorModel
+  date: string
+  categories: Category[]
+}
+
+const Author: React.SFC<Props> = ({ author, date, categories }) => (
   <View style={styles.container}>
     <Image
       style={styles.avatar}
       source={{
-        uri:
-          'http://0.gravatar.com/avatar/328a8689584cbd6912954b1a5444f0ad?s=96&d=mm&r=g',
+        uri: author.avatar.url,
       }}
     />
 
     <View>
-      <Text style={styles.metaField}>Rafael Boyce</Text>
+      <Text style={styles.metaField}>{author.name}</Text>
       <View style={styles.meta}>
-        <Text style={styles.metaField}>7 Feb</Text>
+        <Text style={styles.metaField}>{momemt(date).format('MMM D')}</Text>
         <Image style={styles.arrow} source={require('../assets/arrow.png')} />
-        <Text style={[styles.metaField, styles.category]}>Technology</Text>
+        <Text style={[styles.metaField, styles.category]}>
+          {printArray(categories.map(a => decode(a.name)))}
+        </Text>
       </View>
     </View>
   </View>

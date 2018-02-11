@@ -9,7 +9,9 @@
         "alias": {
           "@components": "./src/components",
           "@config": "./src/config",
-          "@pages": "./src/pages"
+          "@pages": "./src/pages",
+          "@types": "./src/types",
+          "@util": "./src/util"
         }
       }
     ]

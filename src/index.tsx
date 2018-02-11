@@ -1,8 +1,9 @@
 import React from 'react'
 import { AppRegistry, StatusBar, View } from 'react-native'
+import { ApolloProvider } from 'react-apollo'
 import Tabs from './containers/Tabs'
 import { StackNavigator } from 'react-navigation'
-import { Theme } from '@config'
+import { graphqlClient, Theme } from '@config'
 
 const ModalStack = StackNavigator(
   {
@@ -19,10 +20,12 @@ const ModalStack = StackNavigator(
 )
 
 const AppRoot = () => (
-  <View style={{ flex: 1 }}>
-    <StatusBar backgroundColor={Theme.darkPrimary} barStyle="light-content" />
-    <ModalStack />
-  </View>
+  <ApolloProvider client={graphqlClient}>
+    <View style={{ flex: 1 }}>
+      <StatusBar backgroundColor={Theme.darkPrimary} barStyle="light-content" />
+      <ModalStack />
+    </View>
+  </ApolloProvider>
 )
 
 AppRegistry.registerComponent('USCChannel', () => AppRoot)
