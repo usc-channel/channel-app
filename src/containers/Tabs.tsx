@@ -85,7 +85,9 @@ export default TabNavigator(
   {
     animationEnabled: false,
     swipeEnabled: false,
-    tabBarComponent: TabBarBottom,
+    tabBarComponent: props => (
+      <TabBarBottom {...props} style={{ backgroundColor: '#fff' }} />
+    ),
     tabBarOptions: {
       activeTintColor: Theme.primary,
       inactiveTintColor: '#666666',
