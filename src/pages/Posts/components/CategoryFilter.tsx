@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Platform } from 'react-native'
+import { Platform, StyleSheet, Text, View } from 'react-native'
 import { Category } from '@types'
 import { Theme } from '@config'
 import { Touchable } from '@components'
@@ -22,6 +22,12 @@ class CategoryFilter extends React.Component<Props, State> {
 
     this.state = {
       selectedCategories: props.selectedCategories,
+    }
+  }
+
+  componentWillReceiveProps({ selectedCategories }: Props) {
+    if (selectedCategories !== this.props.selectedCategories) {
+      this.setState({ selectedCategories })
     }
   }
 
