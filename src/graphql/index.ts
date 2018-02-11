@@ -11,9 +11,38 @@ const postsCategoriesQuery = gql`
         }
       }
     }
-    posts(first: 10, after: "") {
+    featured: posts(first: 1, after: "") {
       edges {
         node {
+          postId
+          id
+          title
+          date
+          excerpt
+          categories(where: { include: [11] }) {
+            edges {
+              node {
+                name
+                categoryId
+              }
+            }
+          }
+          featuredImage {
+            guid
+          }
+          author {
+            name
+            avatar {
+              url
+            }
+          }
+        }
+      }
+    }
+    other: posts(first: 10, after: "") {
+      edges {
+        node {
+          postId
           id
           title
           date
@@ -50,6 +79,7 @@ const postsQuery = gql`
     posts(first: 10, after: $after) {
       edges {
         node {
+          postId
           id
           title
           date
@@ -82,16 +112,12 @@ const postsQuery = gql`
 `
 
 const postsTransform = (data: {
-  posts: {
-    edges: Array<{ node: GraphPost }>
-    pageInfo: PageInfo
-  }
-}) => ({
-  pageInfo: data!.posts!.pageInfo,
-  posts: data!.posts!.edges.map(a => ({
+  edges: Array<{ node: GraphPost }>
+  pageInfo?: PageInfo
+}) =>
+  data!.edges.map((a: any) => ({
     ...a.node,
-    categories: [...a.node.categories.edges.map(b => b.node)],
-  })),
-})
+    categories: [...a.node.categories.edges.map((b: any) => b.node)],
+  }))
 
 export { postsCategoriesQuery, postsQuery, postsTransform }

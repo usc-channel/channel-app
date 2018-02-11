@@ -24,7 +24,8 @@ const initialLayout = {
 
 interface GraphProps {
   categories: Category[]
-  posts: Post[]
+  other: Post[]
+  featured: Post[]
   pageInfo: PageInfo
 }
 
@@ -36,7 +37,8 @@ interface State {
   initialLoad: boolean
   fetching: boolean
   pageInfo: PageInfo | null
-  posts: Post[]
+  featured: Post[]
+  other: Post[]
   tabState: {
     index: number
     routes: Array<{ key: string; title: string }>
@@ -90,7 +92,8 @@ class Posts extends React.Component<Props, State> {
       initialLoad: false,
       pageInfo: null,
       fetching: false,
-      posts: [],
+      featured: [],
+      other: [],
       tabState: {
         index: 0,
         routes: [{ key: 'all', title: 'All' }],
@@ -105,9 +108,15 @@ class Posts extends React.Component<Props, State> {
   }
 
   componentDidUpdate() {
-    const { categories, pageInfo, posts } = this.props.data!
+    const { categories, pageInfo, featured, other } = this.props.data!
 
-    if (categories && pageInfo && posts && !this.state.initialLoad) {
+    if (
+      categories &&
+      pageInfo &&
+      featured &&
+      other &&
+      !this.state.initialLoad
+    ) {
       this.setState({
         initialLoad: true,
         tabState: {
@@ -120,7 +129,8 @@ class Posts extends React.Component<Props, State> {
             })),
           ],
         },
-        posts,
+        featured,
+        other,
         pageInfo,
       })
     }
@@ -163,11 +173,12 @@ class Posts extends React.Component<Props, State> {
               after: this.state.pageInfo!.endCursor,
             },
           })
-          .then((a: any) => {
-            const { posts, pageInfo } = postsTransform(a.data!)
+          .then(({ data }: any) => {
+            const other = postsTransform(data!.posts)
+
             this.setState({
-              posts: [...this.state.posts, ...posts],
-              pageInfo,
+              other: [...this.state.other, ...other],
+              pageInfo: data.posts.pageInfo,
               fetching: false,
             })
           })
@@ -178,7 +189,8 @@ class Posts extends React.Component<Props, State> {
   renderScene = () => {
     return (
       <PostPage
-        posts={this.state.posts}
+        featuredPosts={this.state.featured}
+        otherPosts={this.state.other}
         onEndReached={this.loadMore}
         fetching={this.state.fetching}
       />
@@ -217,7 +229,10 @@ interface Response {
       node: Category
     }>
   }
-  posts: {
+  featured: {
+    edges: Array<{ node: GraphPost }>
+  }
+  other: {
     edges: Array<{ node: GraphPost }>
     pageInfo: PageInfo
   }
@@ -234,10 +249,12 @@ const withCategories = graphql<Response, any, OwnProps>(postsCategoriesQuery, {
       }
     }
 
-    if (data!.posts) {
+    if (data!.featured && data!.other) {
       returnData = {
         ...returnData,
-        ...postsTransform(data!),
+        other: postsTransform(data!.other),
+        featured: postsTransform(data!.featured),
+        pageInfo: data!.other.pageInfo,
       }
     }
 

@@ -4,6 +4,7 @@ export interface Category {
 }
 
 export interface PostBase {
+  postId: number
   id: string
   title: string
   date: string

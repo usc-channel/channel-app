@@ -1,35 +1,37 @@
 import React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { Author, Touchable } from '@components'
+import { Post } from '@types'
+import FastImage from 'react-native-fast-image'
 
 interface Props {
+  post: Post
   onPress(): void
 }
 
-const LargePost: React.SFC<Props> = props => (
-  <Touchable onPress={props.onPress}>
+const LargePost: React.SFC<Props> = ({ post, onPress }) => (
+  <Touchable onPress={onPress}>
     <View style={styles.container}>
-      <Image
+      <FastImage
         source={{
-          uri:
-            'http://uscchannel.com/wp-content/uploads/2018/01/productivity1.jpg',
+          uri: post.featuredImage.guid,
         }}
         style={styles.image}
       />
 
-      <Text style={styles.title}>How To Look Up</Text>
-      <Text style={styles.excerpt} numberOfLines={1}>
-        Donec facilisis tortor ut augue lacinia, at viverra est semper. Sed
-        sapien metus, scelerisque nec pharetra id, tempor a tortor. Pellentesque
-        non dignissim neque. Ut porta viverra est, ut dignissim elit elementum
-        ut. Nunc vel rhoncus nibh, ut tincidunt turpis. Integer ac enim
-        pellentesque, adipiscing metus id, pharetra odio. Donec bibendum nunc
-        sit amet tortor scelerisque luctus et sit amet mauris. Suspendisse felis
-        sem, condimentum ullamcorper est sit amet, molestie mollis nulla. Etiam
-        lorem orci, consequat ac magna quis, facilisis vehicula neque.
-      </Text>
+      <Text style={styles.title}>{post.title}</Text>
 
-      <Author />
+      {!!post.excerpt && (
+        <Text style={styles.excerpt} numberOfLines={1}>
+          {post.excerpt}
+        </Text>
+      )}
+
+      <Author
+        author={post.author}
+        date={post.date}
+        categories={post.categories}
+      />
     </View>
   </Touchable>
 )
