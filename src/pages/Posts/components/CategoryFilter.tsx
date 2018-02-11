@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Platform } from 'react-native'
 import { Category } from '@types'
 import { Theme } from '@config'
 import { Touchable } from '@components'
@@ -79,6 +79,7 @@ class CategoryFilter extends React.Component<Props, State> {
               color: '#fff',
               width: '100%',
               fontFamily: 'NunitoSans-SemiBold',
+              fontWeight: '400',
               fontSize: 16,
             }}
             buttonStyle={{
@@ -97,6 +98,7 @@ class CategoryFilter extends React.Component<Props, State> {
             textStyle={{
               color: '#fff',
               width: '100%',
+              fontWeight: Platform.OS === 'ios' ? '500' : '400',
               fontFamily: 'NunitoSans-SemiBold',
               fontSize: 16,
             }}
