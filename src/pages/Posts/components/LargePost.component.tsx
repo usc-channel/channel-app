@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontFamily: 'NunitoSans-Bold',
+    color: 'rgba(0,0,0, .87)',
   },
   excerpt: {
     color: 'rgba(0,0,0,.54)',
