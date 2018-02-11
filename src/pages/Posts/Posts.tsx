@@ -1,5 +1,5 @@
+import { Scene, TabBar, TabViewAnimated } from 'react-native-tab-view'
 import React from 'react'
-import { ApolloError } from 'apollo-client'
 import { NavigationScreenProps } from 'react-navigation'
 import {
   ActivityIndicator,
@@ -10,12 +10,11 @@ import {
   View,
 } from 'react-native'
 import { NavIcon } from '@components'
-import { Theme } from '@config'
-import { Scene, TabBar, TabViewAnimated } from 'react-native-tab-view'
+import { graphqlClient, Theme } from '@config'
 import PostPage from './components/Post.page'
 import { decode } from 'he'
-import { postsCategoriesQuery } from '../../graphql'
-import { ChildProps, compose, graphql } from 'react-apollo'
+import { postsCategoriesQuery, postsQuery, postsTransform } from '../../graphql'
+import { ChildProps, graphql } from 'react-apollo'
 import { Category, GraphPost, PageInfo, Post } from '@types'
 
 const initialLayout = {
@@ -35,6 +34,7 @@ interface ScreenProps {
 
 interface State {
   initialLoad: boolean
+  fetching: boolean
   pageInfo: PageInfo | null
   posts: Post[]
   tabState: {
@@ -89,6 +89,7 @@ class Posts extends React.Component<Props, State> {
     this.state = {
       initialLoad: false,
       pageInfo: null,
+      fetching: false,
       posts: [],
       tabState: {
         index: 0,
@@ -152,8 +153,36 @@ class Posts extends React.Component<Props, State> {
     />
   )
 
+  loadMore = () => {
+    if (this.state.pageInfo!.hasNextPage && !this.state.fetching) {
+      this.setState({ fetching: true }, () => {
+        graphqlClient
+          .query({
+            query: postsQuery,
+            variables: {
+              after: this.state.pageInfo!.endCursor,
+            },
+          })
+          .then((a: any) => {
+            const { posts, pageInfo } = postsTransform(a.data!)
+            this.setState({
+              posts: [...this.state.posts, ...posts],
+              pageInfo,
+              fetching: false,
+            })
+          })
+      })
+    }
+  }
+
   renderScene = () => {
-    return <PostPage posts={this.state.posts} />
+    return (
+      <PostPage
+        posts={this.state.posts}
+        onEndReached={this.loadMore}
+        fetching={this.state.fetching}
+      />
+    )
   }
 
   render() {
@@ -171,7 +200,7 @@ class Posts extends React.Component<Props, State> {
 
     return (
       <TabViewAnimated
-        style={{ flex: 1 }}
+        style={{ flex: 1, backgroundColor: Theme.background }}
         navigationState={this.state.tabState}
         renderScene={this.renderScene}
         renderHeader={this.renderHeader}
@@ -208,11 +237,7 @@ const withCategories = graphql<Response, any, OwnProps>(postsCategoriesQuery, {
     if (data!.posts) {
       returnData = {
         ...returnData,
-        pageInfo: data!.posts!.pageInfo,
-        posts: data!.posts!.edges.map(a => ({
-          ...a.node,
-          categories: [...a.node.categories.edges.map(b => b.node)],
-        })),
+        ...postsTransform(data!),
       }
     }
 

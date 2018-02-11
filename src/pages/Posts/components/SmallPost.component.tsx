@@ -31,12 +31,14 @@ const LargePost: React.SFC<Props> = ({ post, onPress }) => (
         </View>
       </View>
 
-      <FastImage
-        source={{
-          uri: post.featuredImage.guid,
-        }}
-        style={styles.image}
-      />
+      {post.featuredImage && (
+        <FastImage
+          source={{
+            uri: post.featuredImage.guid,
+          }}
+          style={styles.image}
+        />
+      )}
     </View>
   </Touchable>
 )

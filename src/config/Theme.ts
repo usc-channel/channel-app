@@ -8,6 +8,7 @@ const Theme = {
     },
   },
   primary: '#2266AA',
+  background: '#F3F5FA',
 }
 
 export default Theme
