@@ -4,7 +4,7 @@ import { Dimensions, Image, Platform, Text } from 'react-native'
 import { NavIcon } from '@components'
 import { Theme } from '@config'
 import { Scene, TabBar, TabViewAnimated } from 'react-native-tab-view'
-import PostPage from './Post.page'
+import PostPage from './components/Post.page'
 import { decode } from 'he'
 
 const initialLayout = {
