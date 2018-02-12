@@ -60,8 +60,8 @@ class Posts extends React.Component<Props, State> {
         <Image
           source={require('../../assets/logo-complete.png')}
           style={{
-            height: 42,
-            width: 150,
+            height: 36,
+            width: 128,
             marginLeft: 16,
           }}
           resizeMode="contain"
@@ -83,14 +83,6 @@ class Posts extends React.Component<Props, State> {
           />
         </View>
       ),
-      headerStyle: {
-        ...Theme.navigationOptions.headerStyle,
-        ...Platform.select({
-          ios: {
-            height: 60,
-          },
-        }),
-      },
     }
   }
 
@@ -143,6 +135,10 @@ class Posts extends React.Component<Props, State> {
 
   onFilter = () => {
     this.setState({ filterToggled: !this.state.filterToggled })
+  }
+
+  viewPost = (post: Post) => {
+    this.props.navigation.navigate('viewPost', { post })
   }
 
   loadMore = () => {
@@ -236,6 +232,7 @@ class Posts extends React.Component<Props, State> {
           otherPosts={this.state.other}
           onEndReached={this.loadMore}
           fetching={this.state.fetchingMore}
+          viewPost={this.viewPost}
         />
       </View>
     )

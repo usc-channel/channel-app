@@ -15,6 +15,7 @@ interface Props {
   otherPosts: Post[]
   fetching: boolean
   onEndReached(): void
+  viewPost(post: Post): void
 }
 
 class PostPage extends React.Component<Props> {
@@ -27,7 +28,7 @@ class PostPage extends React.Component<Props> {
   }
 
   renderItem = ({ item }: ListRenderItemInfo<Post>) => (
-    <SmallPost post={item} onPress={() => alert('ue')} />
+    <SmallPost post={item} onPress={() => this.props.viewPost(item)} />
   )
 
   render() {
@@ -47,7 +48,7 @@ class PostPage extends React.Component<Props> {
             this.props.displayFeatured ? (
               <LargePost
                 post={this.props.featuredPosts[0]}
-                onPress={() => alert('ue')}
+                onPress={() => this.props.viewPost(this.props.featuredPosts[0])}
               />
             ) : (
               <View />

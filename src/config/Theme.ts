@@ -6,6 +6,7 @@ const Theme = {
     headerStyle: {
       backgroundColor: '#2266AA',
     },
+    headerTintColor: '#fff',
   },
   primary: '#2266AA',
   background: '#F3F5FA',
