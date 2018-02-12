@@ -33,36 +33,34 @@ class PostPage extends React.Component<Props> {
 
   render() {
     return (
-      <View>
-        <FlatList
-          data={this.props.otherPosts.filter(
-            a => a.postId !== this.props.featuredPosts[0].postId
-          )}
-          initialNumToRender={4}
-          renderItem={this.renderItem}
-          keyExtractor={(a: Post) => a.id}
-          onEndReached={this.props.onEndReached}
-          onEndReachedThreshold={1}
-          ListHeaderComponent={() =>
-            this.props.featuredPosts.length > 0 &&
-            this.props.displayFeatured ? (
-              <LargePost
-                post={this.props.featuredPosts[0]}
-                onPress={() => this.props.viewPost(this.props.featuredPosts[0])}
-              />
-            ) : (
-              <View />
-            )
-          }
-          ListFooterComponent={() =>
-            this.props.fetching ? (
-              <ActivityIndicator style={{ paddingVertical: 16 }} />
-            ) : (
-              <View style={{ height: 35 }} />
-            )
-          }
-        />
-      </View>
+      <FlatList
+        data={this.props.otherPosts.filter(
+          a => a.postId !== this.props.featuredPosts[0].postId
+        )}
+        initialNumToRender={4}
+        renderItem={this.renderItem}
+        keyExtractor={(a: Post) => a.id}
+        onEndReached={this.props.onEndReached}
+        contentContainerStyle={{ marginBottom: 30 }}
+        onEndReachedThreshold={1}
+        ListHeaderComponent={() =>
+          this.props.featuredPosts.length > 0 && this.props.displayFeatured ? (
+            <LargePost
+              post={this.props.featuredPosts[0]}
+              onPress={() => this.props.viewPost(this.props.featuredPosts[0])}
+            />
+          ) : (
+            <View />
+          )
+        }
+        ListFooterComponent={() =>
+          this.props.fetching ? (
+            <ActivityIndicator style={{ paddingVertical: 16 }} />
+          ) : (
+            <View />
+          )
+        }
+      />
     )
   }
 }
