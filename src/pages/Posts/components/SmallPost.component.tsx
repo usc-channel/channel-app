@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Author, Touchable } from '@components'
 import { Post } from '@types'
+import { featuredCategoryId } from '@config'
 import { decode } from 'he'
 import FastImage from 'react-native-fast-image'
 
@@ -26,7 +27,9 @@ const LargePost: React.SFC<Props> = ({ post, onPress }) => (
           <Author
             author={post.author}
             date={post.date}
-            categories={post.categories}
+            categories={post.categories.filter(
+              a => a.categoryId !== featuredCategoryId
+            )}
           />
         </View>
       </View>

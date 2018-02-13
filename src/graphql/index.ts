@@ -1,9 +1,17 @@
 import gql from 'graphql-tag'
 import { GraphPost, PageInfo } from '@types'
+import { featuredCategoryId } from '@config'
 
 const postsCategoriesQuery = gql`
   query {
-    categories(where: { exclude: 11, hideEmpty: true }, first: 20) {
+    categories(
+      where: {
+        exclude: ${featuredCategoryId}
+        hideEmpty: true
+        shouldOutputInFlatList: true
+      }
+      first: 20
+    ) {
       edges {
         node {
           categoryId
@@ -19,7 +27,7 @@ const postsCategoriesQuery = gql`
           title
           date
           excerpt
-          categories(where: { include: [11] }) {
+          categories(where: { include: [${featuredCategoryId}] }) {
             edges {
               node {
                 name
@@ -47,7 +55,9 @@ const postsCategoriesQuery = gql`
           title
           date
           excerpt
-          categories(where: { exclude: 11 }) {
+          categories(
+            where: { exclude: ${featuredCategoryId}, shouldOutputInFlatList: true }
+          ) {
             edges {
               node {
                 name
@@ -84,7 +94,9 @@ const postsQuery = gql`
           title
           date
           excerpt
-          categories(where: { exclude: 11 }) {
+          categories(
+            where: { exclude: ${featuredCategoryId}, shouldOutputInFlatList: true }
+          ) {
             edges {
               node {
                 name
@@ -121,7 +133,9 @@ const filteredPostsQuery = gql`
           title
           date
           excerpt
-          categories(where: { exclude: 11 }) {
+          categories(
+            where: { exclude: ${featuredCategoryId}, shouldOutputInFlatList: true }
+          ) {
             edges {
               node {
                 name

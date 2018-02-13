@@ -1,3 +1,6 @@
 {
-  "emmet.showAbbreviationSuggestions": false
+  "emmet.showAbbreviationSuggestions": false,
+  "cSpell.words": [
+    "guid"
+  ]
 }
