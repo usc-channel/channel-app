@@ -46,10 +46,12 @@ class ViewPost extends React.Component<Props> {
           />
         </View>
 
-        <FastImage
-          source={{ uri: post.featuredImage.guid }}
-          style={styles.featuredImage}
-        />
+        {post.featuredImage && (
+          <FastImage
+            source={{ uri: post.featuredImage.guid }}
+            style={styles.featuredImage}
+          />
+        )}
       </ScrollView>
     )
   }
