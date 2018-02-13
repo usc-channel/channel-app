@@ -1,9 +1,10 @@
 import React from 'react'
-import { Platform, ScrollView, StyleSheet, View } from 'react-native'
+import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
 import { Author, NavIcon } from '@components'
 import { Post } from '@types'
 import FastImage from 'react-native-fast-image'
+import { decode } from 'he'
 
 interface ScreenProps {
   post: Post
@@ -52,6 +53,10 @@ class ViewPost extends React.Component<Props> {
             style={styles.featuredImage}
           />
         )}
+
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>{decode(post.title)}</Text>
+        </View>
       </ScrollView>
     )
   }
@@ -67,6 +72,14 @@ const styles = StyleSheet.create({
   },
   featuredImage: {
     height: 250,
+  },
+  titleContainer: {
+    marginTop: 16,
+  },
+  title: {
+    fontFamily: 'Alegreya-Bold',
+    marginHorizontal: 16,
+    fontSize: 28,
   },
 })
 

@@ -48,7 +48,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>
@@ -78,6 +78,7 @@
 		<string>NunitoSans-Regular.ttf</string>
 		<string>NunitoSans-SemiBold.ttf</string>
 		<string>NunitoSans-SemiBoldItalic.ttf</string>
+		<string>Alegreya-Bold.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
