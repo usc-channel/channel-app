@@ -1,17 +1,32 @@
 import React from 'react'
-import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native'
+import {
+  Platform,
+  ScrollView,
+  Share,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
 import { Author, NavIcon } from '@components'
 import { Post } from '@types'
 import FastImage from 'react-native-fast-image'
 import { decode } from 'he'
+import { ChildProps, graphql } from 'react-apollo'
+import { postQuery } from '../../graphql'
+
+interface GraphProps {
+  content: string
+  url: string
+}
 
 interface ScreenProps {
   post: Post
   onShare(): void
 }
 
-type Props = NavigationScreenProps<ScreenProps>
+type OwnProps = NavigationScreenProps<ScreenProps>
+type Props = ChildProps<OwnProps, GraphProps>
 
 class ViewPost extends React.Component<Props> {
   static navigationOptions = ({
@@ -32,7 +47,10 @@ class ViewPost extends React.Component<Props> {
   }
 
   onShare = () => {
-    //
+    Share.share({
+      title: this.props.navigation.state.params.post.title,
+      url: this.props.data!.url!,
+    })
   }
 
   render() {
@@ -83,4 +101,32 @@ const styles = StyleSheet.create({
   },
 })
 
-export default ViewPost
+interface Response {
+  post: {
+    content: string
+    guid: string
+  }
+}
+
+const withPost = graphql<Response, any, OwnProps>(postQuery, {
+  props: ({ data }) => {
+    let returnData = {}
+
+    if (data!.post) {
+      returnData = {
+        ...returnData,
+        content: data!.post.content,
+        url: data!.post.guid,
+      }
+    }
+
+    return {
+      data: { ...returnData, error: data!.error, loading: data!.loading },
+    }
+  },
+  options: ({ navigation }: OwnProps) => ({
+    variables: { id: navigation.state.params.post.id },
+  }),
+})
+
+export default withPost(ViewPost)

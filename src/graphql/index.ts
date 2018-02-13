@@ -162,6 +162,15 @@ const filteredPostsQuery = gql`
   }
 `
 
+const postQuery = gql`
+  query($id: ID!) {
+    post(id: $id) {
+      content
+      guid
+    }
+  }
+`
+
 const postsTransform = (data: {
   edges: Array<{ node: GraphPost }>
   pageInfo?: PageInfo
@@ -171,4 +180,10 @@ const postsTransform = (data: {
     categories: [...a.node.categories.edges.map((b: any) => b.node)],
   }))
 
-export { postsCategoriesQuery, postsQuery, filteredPostsQuery, postsTransform }
+export {
+  postsCategoriesQuery,
+  postsQuery,
+  filteredPostsQuery,
+  postsTransform,
+  postQuery,
+}
