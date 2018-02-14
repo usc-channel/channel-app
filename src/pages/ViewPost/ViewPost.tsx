@@ -1,5 +1,7 @@
 import React from 'react'
 import {
+  ActivityIndicator,
+  Dimensions,
   Platform,
   ScrollView,
   Share,
@@ -14,6 +16,7 @@ import FastImage from 'react-native-fast-image'
 import { decode } from 'he'
 import { ChildProps, graphql } from 'react-apollo'
 import { postQuery } from '../../graphql'
+import HTML from 'react-native-render-html'
 
 interface GraphProps {
   content: string
@@ -55,6 +58,15 @@ class ViewPost extends React.Component<Props> {
 
   render() {
     const { post } = this.props.navigation.state.params
+
+    if (this.props.data!.loading) {
+      return (
+        <View style={{ flex: 1, backgroundColor: '#fff', paddingTop: 16 }}>
+          <ActivityIndicator />
+        </View>
+      )
+    }
+
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.authorContainer}>
@@ -75,14 +87,53 @@ class ViewPost extends React.Component<Props> {
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{decode(post.title)}</Text>
         </View>
+
+        <HTML
+          html={this.props.data!.content!}
+          tagsStyles={css}
+          baseFontStyle={{
+            fontFamily: 'NunitoSans-Regular',
+            fontSize: 16,
+            lineHeight: 30,
+          }}
+          ignoredStyles={['float', 'height']}
+          imagesMaxWidth={Dimensions.get('window').width}
+        />
+
+        <View style={styles.shareContainer}>
+          <Author
+            author={post.author}
+            date={post.date}
+            categories={post.categories}
+          />
+        </View>
       </ScrollView>
     )
   }
 }
 
+const css = {
+  p: {
+    marginVertical: 8,
+    marginHorizontal: 16,
+    width: Dimensions.get('window').width - 32,
+  },
+  img: {
+    marginVertical: 8,
+    maxWidth: '100%',
+    minWidth: '100%',
+  },
+  ol: {
+    marginTop: 8,
+  },
+  li: {
+    marginBottom: 0,
+    maxWidth: '100%',
+  },
+}
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#fff',
   },
   authorContainer: {
@@ -98,6 +149,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Alegreya-Bold',
     marginHorizontal: 16,
     fontSize: 28,
+  },
+  shareContainer: {
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: 'rgba(0,0,0,.24)',
+    padding: 16,
   },
 })
 
@@ -115,7 +171,7 @@ const withPost = graphql<Response, any, OwnProps>(postQuery, {
     if (data!.post) {
       returnData = {
         ...returnData,
-        content: data!.post.content,
+        content: data!.post.content.replace(/<p>&nbsp;<\/p>/gi, ''),
         url: data!.post.guid,
       }
     }
