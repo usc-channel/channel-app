@@ -95,6 +95,7 @@ class ViewPost extends React.Component<Props> {
             fontFamily: 'NunitoSans-Regular',
             fontSize: 16,
             lineHeight: 30,
+            color: 'rgba(0,0,0,0.87)',
           }}
           ignoredStyles={['float', 'height']}
           imagesMaxWidth={Dimensions.get('window').width}
@@ -149,6 +150,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Alegreya-Bold',
     marginHorizontal: 16,
     fontSize: 28,
+    color: 'rgba(0,0,0,0.87)',
   },
   shareContainer: {
     borderTopWidth: StyleSheet.hairlineWidth,
