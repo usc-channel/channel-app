@@ -93,8 +93,8 @@ class ViewPost extends React.Component<Props> {
           tagsStyles={css}
           baseFontStyle={{
             fontFamily: 'NunitoSans-Regular',
-            fontSize: 16,
-            lineHeight: 30,
+            fontSize: 18,
+            lineHeight: 34,
             color: 'rgba(0,0,0,0.87)',
           }}
           ignoredStyles={['float', 'height']}
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'Alegreya-Bold',
     marginHorizontal: 16,
-    fontSize: 28,
+    fontSize: 32,
     color: 'rgba(0,0,0,0.87)',
   },
   shareContainer: {

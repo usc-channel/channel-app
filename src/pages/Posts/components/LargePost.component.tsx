@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   title: {
-    fontSize: 20,
+    fontSize: 23,
     fontFamily: 'NunitoSans-Bold',
     color: 'rgba(0,0,0, .87)',
   },

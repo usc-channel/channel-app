@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   },
   metaField: {
     fontFamily: 'NunitoSans-SemiBold',
-    fontSize: 12,
+    fontSize: 14,
     color: 'rgba(0,0,0,.54)',
   },
   category: {
