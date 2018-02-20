@@ -130,7 +130,7 @@ class Posts extends React.Component<Props, State> {
   }
 
   onSearch = () => {
-    alert('Search Pressed')
+    this.props.navigation.navigate('searchPosts')
   }
 
   onFilter = () => {

@@ -12,3 +12,7 @@ declare module 'react-native-render-html' {
 
   export default class HTML extends React.Component<Props> {}
 }
+
+declare module 'react-native-status-bar-height' {
+  function getStatusBarHeight(): number
+}

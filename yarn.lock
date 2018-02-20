@@ -3969,6 +3969,10 @@ react-native-fast-image@^2.2.4:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-iphone-x-helper@^1.0.1:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.0.2.tgz#7dbca530930f7c1ce8633cc8fd13ba94102992e1"
+
 react-native-render-html@^3.8.1:
   version "3.8.1"
   resolved "https://registry.yarnpkg.com/react-native-render-html/-/react-native-render-html-3.8.1.tgz#c7d3dfc437b1a8301f97f3d1485a05fb978284a5"
@@ -3984,6 +3988,12 @@ react-native-safe-area-view@^0.6.0:
   resolved "https://registry.yarnpkg.com/react-native-safe-area-view/-/react-native-safe-area-view-0.6.0.tgz#ce01eb27905a77780219537e0f53fe9c783a8b3d"
   dependencies:
     hoist-non-react-statics "^2.3.1"
+
+react-native-status-bar-height@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-status-bar-height/-/react-native-status-bar-height-2.0.0.tgz#9def59bdfa162da73134aff4f480ef2fc873ee0a"
+  dependencies:
+    react-native-iphone-x-helper "^1.0.1"
 
 react-native-tab-view@^0.0.74:
   version "0.0.74"
