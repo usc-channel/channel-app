@@ -19,7 +19,7 @@ import {
 } from '../../graphql'
 import { ChildProps, graphql } from 'react-apollo'
 import { Category, GraphPost, PageInfo, Post } from '@types'
-import PostPage from './components/Post.page'
+import PostPage from './components/Posts.page'
 import CategoryFilter from './components/CategoryFilter'
 
 interface GraphProps {

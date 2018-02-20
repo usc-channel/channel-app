@@ -1,5 +1,5 @@
 import React from 'react'
-import { Platform, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { Category } from '@types'
 import { Theme } from '@config'
 import { Touchable } from '@components'
@@ -81,41 +81,29 @@ class CategoryFilter extends React.Component<Props, State> {
             onPress={() =>
               updateSelectedCategories(this.state.selectedCategories)
             }
-            textStyle={{
-              color: '#fff',
-              width: '100%',
-              fontFamily: 'NunitoSans-SemiBold',
-              fontWeight: '400',
-              fontSize: 16,
-            }}
-            buttonStyle={{
-              backgroundColor: Theme.accent,
-              borderRadius: 0,
-              width: '100%',
-              borderWidth: StyleSheet.hairlineWidth,
-              borderColor: Theme.accent,
-            }}
-            containerStyle={{ width: '48%' }}
+            textStyle={styles.buttonTextStyle}
+            buttonStyle={[
+              styles.buttonStyle,
+              {
+                backgroundColor: Theme.accent,
+                borderColor: Theme.accent,
+              },
+            ]}
+            containerStyle={{ width: '47%' }}
           />
 
           <Button
             text="Clear filters"
             onPress={() => updateSelectedCategories([])}
-            textStyle={{
-              color: '#fff',
-              width: '100%',
-              fontWeight: Platform.OS === 'ios' ? '500' : '400',
-              fontFamily: 'NunitoSans-SemiBold',
-              fontSize: 16,
-            }}
-            buttonStyle={{
-              backgroundColor: Theme.primary,
-              borderRadius: 0,
-              width: '100%',
-              borderColor: '#fff',
-              borderWidth: StyleSheet.hairlineWidth,
-            }}
-            containerStyle={{ width: '48%' }}
+            textStyle={styles.buttonTextStyle}
+            buttonStyle={[
+              styles.buttonStyle,
+              {
+                backgroundColor: Theme.primary,
+                borderColor: '#fff',
+              },
+            ]}
+            containerStyle={{ width: '47%' }}
           />
         </View>
       </View>
@@ -154,6 +142,18 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     marginTop: 8,
     marginLeft: -8,
+  },
+  buttonTextStyle: {
+    color: '#fff',
+    width: '100%',
+    fontFamily: 'NunitoSans-SemiBold',
+    fontWeight: '400',
+    fontSize: 16,
+  },
+  buttonStyle: {
+    borderRadius: 0,
+    width: '100%',
+    borderWidth: StyleSheet.hairlineWidth,
   },
 })
 
