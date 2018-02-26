@@ -24,6 +24,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-native-material-design-searchbar@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@types/react-native-material-design-searchbar/-/react-native-material-design-searchbar-1.1.2.tgz#afd50fa2025d42452ad08e0bc7f3d300e95c0164"
+  dependencies:
+    "@types/react" "*"
+    "@types/react-native" "*"
+
 "@types/react-native-tab-view@^0.0.2":
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/@types/react-native-tab-view/-/react-native-tab-view-0.0.2.tgz#aa58095ce253cd645e5e8102fb8fc6ef1ba515f1"
@@ -3973,6 +3980,13 @@ react-native-iphone-x-helper@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.0.2.tgz#7dbca530930f7c1ce8633cc8fd13ba94102992e1"
 
+react-native-material-design-searchbar@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/react-native-material-design-searchbar/-/react-native-material-design-searchbar-1.8.0.tgz#040cc96450991b82b9bedd2030573819d740202d"
+  dependencies:
+    prop-types "^15.5.10"
+    react-native-vector-icons "^4.2.0"
+
 react-native-render-html@^3.8.1:
   version "3.8.1"
   resolved "https://registry.yarnpkg.com/react-native-render-html/-/react-native-render-html-3.8.1.tgz#c7d3dfc437b1a8301f97f3d1485a05fb978284a5"
@@ -4010,7 +4024,7 @@ react-native-typescript-transformer@^1.2.3:
     semver "^5.4.1"
     source-map "^0.5.6"
 
-react-native-vector-icons@^4.5.0:
+react-native-vector-icons@^4.2.0, react-native-vector-icons@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-4.5.0.tgz#6b95619e64f62f05f579f74a01fe5640df95158b"
   dependencies:
