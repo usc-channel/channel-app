@@ -14,7 +14,7 @@
     "moment": "^2.20.1",
     "react": "16.2.0",
     "react-apollo": "^2.0.4",
-    "react-native": "0.53.0",
+    "react-native": "0.53.3",
     "react-native-collapsible": "^0.10.0",
     "react-native-elements": "^1.0.0-beta2",
     "react-native-fast-image": "^2.2.4",
