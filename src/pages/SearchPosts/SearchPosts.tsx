@@ -20,9 +20,59 @@ class SearchPosts extends React.Component<Props, State> {
     }
   }
 
-  render() {
+  renderSearch = () => {
     const Header = Platform.OS === 'ios' ? SafeAreaView : View
+    return Platform.OS === 'ios' ? (
+      <Header
+        style={{
+          backgroundColor: '#fff',
+          flexDirection: 'row',
+          alignItems: 'center',
+          paddingTop: getStatusBarHeight(),
+        }}
+      >
+        <HeaderBackButton
+          onPress={() => {
+            Keyboard.dismiss()
+            this.props.navigation.goBack()
+          }}
+          tintColor="#565656"
+        />
 
+        <View style={{ flex: 1, marginLeft: -8 }}>
+          <SearchBar
+            autoFocus
+            placeholder="Search the Channel"
+            value={this.state.text}
+            onChangeText={text => this.setState({ text })}
+          />
+        </View>
+      </Header>
+    ) : (
+      <AndroidSearchBar
+        onSearchChange={text => this.setState({ text })}
+        height={50}
+        padding={0}
+        placeholder="Search the Channel"
+        autoCorrect={false}
+        returnKeyType={'search'}
+        alwaysShowBackButton
+        onBackPress={this.props.navigation.goBack}
+        inputProps={{ autoFocus: true }}
+        inputStyle={{
+          backgroundColor: '#fff',
+          borderWidth: 0,
+          elevation: 2,
+        }}
+        textStyle={{
+          fontSize: 16,
+          fontFamily: 'NunitoSans-Regular',
+        }}
+      />
+    )
+  }
+
+  render() {
     return (
       <View
         style={{
@@ -32,54 +82,7 @@ class SearchPosts extends React.Component<Props, State> {
       >
         {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
 
-        {Platform.OS === 'ios' ? (
-          <Header
-            style={{
-              backgroundColor: '#fff',
-              flexDirection: 'row',
-              alignItems: 'center',
-              paddingTop: getStatusBarHeight(),
-            }}
-          >
-            <HeaderBackButton
-              onPress={() => {
-                Keyboard.dismiss()
-                this.props.navigation.goBack()
-              }}
-              tintColor="#565656"
-            />
-
-            <View style={{ flex: 1, marginLeft: -8 }}>
-              <SearchBar
-                autoFocus
-                placeholder="Search the Channel"
-                value={this.state.text}
-                onChangeText={text => this.setState({ text })}
-              />
-            </View>
-          </Header>
-        ) : (
-          <AndroidSearchBar
-            onSearchChange={text => this.setState({ text })}
-            height={50}
-            padding={0}
-            placeholder="Search the Channel"
-            autoCorrect={false}
-            returnKeyType={'search'}
-            alwaysShowBackButton
-            onBackPress={this.props.navigation.goBack}
-            inputProps={{ autoFocus: true }}
-            inputStyle={{
-              backgroundColor: '#fff',
-              borderWidth: 0,
-              elevation: 2,
-            }}
-            textStyle={{
-              fontSize: 16,
-              fontFamily: 'NunitoSans-Regular',
-            }}
-          />
-        )}
+        {this.renderSearch()}
       </View>
     )
   }
