@@ -31,6 +31,7 @@ class SearchPosts extends React.Component<Props, State> {
         }}
       >
         {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
+
         {Platform.OS === 'ios' ? (
           <Header
             style={{
@@ -58,27 +59,26 @@ class SearchPosts extends React.Component<Props, State> {
             </View>
           </Header>
         ) : (
-          <View style={{ elevation: 5 }}>
-            <AndroidSearchBar
-              onSearchChange={text => this.setState({ text })}
-              height={50}
-              padding={0}
-              placeholder="Search the Channel"
-              autoCorrect={false}
-              returnKeyType={'search'}
-              alwaysShowBackButton
-              onBackPress={this.props.navigation.goBack}
-              inputProps={{ autoFocus: true }}
-              inputStyle={{
-                backgroundColor: '#fff',
-                borderWidth: 0,
-              }}
-              textStyle={{
-                fontSize: 16,
-                fontFamily: 'NunitoSans-Regular',
-              }}
-            />
-          </View>
+          <AndroidSearchBar
+            onSearchChange={text => this.setState({ text })}
+            height={50}
+            padding={0}
+            placeholder="Search the Channel"
+            autoCorrect={false}
+            returnKeyType={'search'}
+            alwaysShowBackButton
+            onBackPress={this.props.navigation.goBack}
+            inputProps={{ autoFocus: true }}
+            inputStyle={{
+              backgroundColor: '#fff',
+              borderWidth: 0,
+              elevation: 2,
+            }}
+            textStyle={{
+              fontSize: 16,
+              fontFamily: 'NunitoSans-Regular',
+            }}
+          />
         )}
       </View>
     )
