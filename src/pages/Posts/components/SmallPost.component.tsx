@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { Author, Touchable } from '@components'
+import { PostMeta, Touchable } from '@components'
 import { Post } from '@types'
 import { featuredCategoryId } from '@config'
 import { decode } from 'he'
@@ -24,7 +24,7 @@ const LargePost: React.SFC<Props> = ({ post, onPress }) => (
         )}
 
         <View style={styles.authorContainer}>
-          <Author
+          <PostMeta
             author={post.author}
             date={post.date}
             categories={post.categories.filter(
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: 'rgba(0,0,0, .87)',
-    fontSize: 17,
+    fontSize: 16,
     fontFamily: 'NunitoSans-Bold',
   },
   excerpt: {

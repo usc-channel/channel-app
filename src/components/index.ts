@@ -1,5 +1,5 @@
 import NavIcon from './NavIcon'
 import Touchable from './Touchable'
-import Author from './Author'
+import PostMeta from './PostMeta'
 
-export { NavIcon, Touchable, Author }
+export { NavIcon, Touchable, PostMeta }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { Author, Touchable } from '@components'
+import { PostMeta, Touchable } from '@components'
 import { Post } from '@types'
 import FastImage from 'react-native-fast-image'
 
@@ -28,7 +28,7 @@ const LargePost: React.SFC<Props> = ({ post, onPress }) => (
       )}
 
       <View style={styles.authorContainer}>
-        <Author
+        <PostMeta
           author={post.author}
           date={post.date}
           categories={post.categories}
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   title: {
-    fontSize: 23,
+    fontSize: 20,
     fontFamily: 'NunitoSans-Bold',
     color: 'rgba(0,0,0, .87)',
   },

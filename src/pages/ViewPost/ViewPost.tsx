@@ -10,7 +10,7 @@ import {
   View,
 } from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
-import { Author, NavIcon } from '@components'
+import { NavIcon, PostMeta } from '@components'
 import { Post } from '@types'
 import FastImage from 'react-native-fast-image'
 import { decode } from 'he'
@@ -70,7 +70,7 @@ class ViewPost extends React.Component<Props> {
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.authorContainer}>
-          <Author
+          <PostMeta
             author={post.author}
             date={post.date}
             categories={post.categories}
@@ -102,7 +102,7 @@ class ViewPost extends React.Component<Props> {
         />
 
         <View style={styles.shareContainer}>
-          <Author
+          <PostMeta
             author={post.author}
             date={post.date}
             categories={post.categories}
@@ -147,9 +147,10 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   title: {
-    fontFamily: 'Alegreya-Bold',
+    fontFamily: 'NunitoSans-Bold',
     marginHorizontal: 16,
-    fontSize: 32,
+    textAlign: 'center',
+    fontSize: 28,
     color: 'rgba(0,0,0,0.87)',
   },
   shareContainer: {

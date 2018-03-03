@@ -13,7 +13,7 @@ interface Props {
   categories: Category[]
 }
 
-const Author: React.SFC<Props> = ({ author, date, categories }) => (
+const PostMeta: React.SFC<Props> = ({ author, date, categories }) => (
   <View style={styles.container}>
     <View style={styles.avatarContainer}>
       <FastImage
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   },
   metaField: {
     fontFamily: 'NunitoSans-SemiBold',
-    fontSize: 14,
+    fontSize: 12,
     color: 'rgba(0,0,0,.54)',
   },
   category: {
@@ -84,4 +84,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Author
+export default PostMeta
