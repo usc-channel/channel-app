@@ -10,13 +10,15 @@ import {
   View,
 } from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
-import { NavIcon, PostMeta } from '@components'
-import { Post } from '@types'
 import FastImage from 'react-native-fast-image'
 import { decode } from 'he'
 import { ChildProps, graphql } from 'react-apollo'
-import { postQuery } from '../../graphql'
 import HTML from 'react-native-render-html'
+
+import { Post } from '@types'
+import { NavIcon, PostMeta } from '@components'
+import { Theme } from '@config'
+import { postQuery } from '../../graphql'
 
 interface GraphProps {
   content: string
@@ -97,7 +99,13 @@ class ViewPost extends React.Component<Props> {
             lineHeight: 34,
             color: 'rgba(0,0,0,0.87)',
           }}
-          ignoredStyles={['float', 'height']}
+          ignoredStyles={[
+            'float',
+            'height',
+            'font-family',
+            'margin',
+            'padding',
+          ]}
           imagesMaxWidth={Dimensions.get('window').width}
         />
 
@@ -130,6 +138,25 @@ const css = {
   li: {
     marginBottom: 0,
     maxWidth: '100%',
+  },
+  h2: {
+    marginHorizontal: 16,
+  },
+  h3: {
+    marginHorizontal: 16,
+  },
+  h4: {
+    marginHorizontal: 16,
+  },
+  span: {
+    marginHorizontal: 16,
+  },
+  blockquote: {
+    backgroundColor: '#fafafa',
+    borderLeftWidth: 4,
+    borderLeftColor: Theme.darkPrimary,
+    paddingTop: 8,
+    marginBottom: 4,
   },
 }
 
