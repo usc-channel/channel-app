@@ -9,6 +9,7 @@ import { PageInfo, Post } from '@types'
 import { postsTransform, searchQuery } from '../../graphql'
 import { graphqlClient, Theme } from '@config'
 import PostPage from '../Posts/components/Posts.page'
+import SearchEmpty from './components/SearchEmpty'
 
 interface State {
   text: string
@@ -140,6 +141,14 @@ class SearchPosts extends React.Component<Props, State> {
     }
   }
 
+  isEmpty = () => {
+    return (
+      this.state.text.length > 0 &&
+      this.state.posts.length === 0 &&
+      !this.state.loading
+    )
+  }
+
   render() {
     return (
       <View
@@ -150,12 +159,16 @@ class SearchPosts extends React.Component<Props, State> {
       >
         {this.renderSearch()}
 
-        <PostPage
-          otherPosts={this.state.posts}
-          viewPost={this.viewPost}
-          fetching={this.state.loading}
-          onEndReached={this.fetchMore}
-        />
+        {this.isEmpty() ? (
+          <SearchEmpty search={this.state.text} />
+        ) : (
+          <PostPage
+            otherPosts={this.state.posts}
+            viewPost={this.viewPost}
+            fetching={this.state.loading}
+            onEndReached={this.fetchMore}
+          />
+        )}
       </View>
     )
   }
