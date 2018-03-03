@@ -2,6 +2,7 @@ import React from 'react'
 import {
   ActivityIndicator,
   FlatList,
+  Keyboard,
   ListRenderItemInfo,
   View,
 } from 'react-native'
@@ -10,8 +11,8 @@ import { Post } from '@types'
 import LargePost from './LargePost.component'
 
 interface Props {
-  displayFeatured: boolean
-  featuredPosts: Post[]
+  displayFeatured?: boolean
+  featuredPosts?: Post[]
   otherPosts: Post[]
   fetching: boolean
   onEndReached(): void
@@ -34,20 +35,26 @@ class PostPage extends React.Component<Props> {
   render() {
     return (
       <FlatList
-        data={this.props.otherPosts.filter(
-          a => a.postId !== this.props.featuredPosts[0].postId
-        )}
+        data={
+          this.props.displayFeatured
+            ? this.props.otherPosts.filter(
+                a => a.postId !== this.props.featuredPosts![0].postId
+              )
+            : this.props.otherPosts
+        }
         initialNumToRender={4}
         renderItem={this.renderItem}
         keyExtractor={(a: Post) => a.id}
         onEndReached={this.props.onEndReached}
         contentContainerStyle={{ marginBottom: 30 }}
         onEndReachedThreshold={1}
+        keyboardShouldPersistTaps="always"
+        onScroll={() => Keyboard.dismiss()}
         ListHeaderComponent={() =>
-          this.props.featuredPosts.length > 0 && this.props.displayFeatured ? (
+          this.props.displayFeatured && this.props.featuredPosts!.length > 0 ? (
             <LargePost
-              post={this.props.featuredPosts[0]}
-              onPress={() => this.props.viewPost(this.props.featuredPosts[0])}
+              post={this.props.featuredPosts![0]}
+              onPress={() => this.props.viewPost(this.props.featuredPosts![0])}
             />
           ) : (
             <View />

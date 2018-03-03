@@ -171,6 +171,43 @@ const postQuery = gql`
   }
 `
 
+const searchQuery = gql`
+  query($after: String!, $search: String!) {
+    posts(first: 10, after: $after, where: { search: $search }) {
+      edges {
+        node {
+          postId
+          id
+          title
+          date
+          excerpt
+          categories(where: { exclude: 11, shouldOutputInFlatList: true }) {
+            edges {
+              node {
+                name
+                categoryId
+              }
+            }
+          }
+          featuredImage {
+            guid
+          }
+          author {
+            name
+            avatar {
+              url
+            }
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+`
+
 const postsTransform = (data: {
   edges: Array<{ node: GraphPost }>
   pageInfo?: PageInfo
@@ -186,4 +223,5 @@ export {
   filteredPostsQuery,
   postsTransform,
   postQuery,
+  searchQuery,
 }

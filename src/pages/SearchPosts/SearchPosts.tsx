@@ -1,12 +1,21 @@
 import React from 'react'
-import { HeaderBackButton, NavigationScreenProps } from 'react-navigation'
-import { Keyboard, Platform, SafeAreaView, StatusBar, View } from 'react-native'
+import { NavigationScreenProps } from 'react-navigation'
+import { Platform, View } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
-import { SearchBar } from '@components'
 import AndroidSearchBar from 'react-native-material-design-searchbar'
+import debounce from 'lodash.debounce'
+
+import { PageInfo, Post } from '@types'
+import { postsTransform, searchQuery } from '../../graphql'
+import { graphqlClient, Theme } from '@config'
+import PostPage from '../Posts/components/Posts.page'
 
 interface State {
+  initialLoad: boolean
   text: string
+  loading: boolean
+  posts: Post[]
+  pageInfo: PageInfo | null
 }
 
 type Props = NavigationScreenProps<{}>
@@ -16,41 +25,51 @@ class SearchPosts extends React.Component<Props, State> {
     super(props)
 
     this.state = {
+      initialLoad: false,
       text: '',
+      loading: false,
+      posts: [],
+      pageInfo: null,
     }
   }
 
-  renderSearch = () => {
-    const Header = Platform.OS === 'ios' ? SafeAreaView : View
-    return Platform.OS === 'ios' ? (
-      <Header
-        style={{
-          backgroundColor: '#fff',
-          flexDirection: 'row',
-          alignItems: 'center',
-          paddingTop: getStatusBarHeight(),
-        }}
-      >
-        <HeaderBackButton
-          onPress={() => {
-            Keyboard.dismiss()
-            this.props.navigation.goBack()
-          }}
-          tintColor="#565656"
-        />
+  updateSearch = (text: string) => {
+    const search = text.toLowerCase().trim()
 
-        <View style={{ flex: 1, marginLeft: -8 }}>
-          <SearchBar
-            autoFocus
-            placeholder="Search the Channel"
-            value={this.state.text}
-            onChangeText={text => this.setState({ text })}
-          />
-        </View>
-      </Header>
-    ) : (
+    if (search.length === 0) {
+      this.setState({ text, posts: [] })
+    } else {
+      this.setState({ text, loading: true }, () => this.getResults(search))
+    }
+  }
+
+  getResults = (search: string) => {
+    this.setState({ loading: true, initialLoad: false }, () => {
+      graphqlClient
+        .query({
+          query: searchQuery,
+          variables: {
+            after: '',
+            search,
+          },
+        })
+        .then(({ data }: any) => {
+          const posts = postsTransform(data!.posts)
+
+          this.setState({
+            loading: false,
+            posts,
+            initialLoad: true,
+            pageInfo: data.posts.pageInfo,
+          })
+        })
+    })
+  }
+
+  renderSearch = () => {
+    const Bar = (
       <AndroidSearchBar
-        onSearchChange={text => this.setState({ text })}
+        onSearchChange={this.updateSearch}
         height={50}
         padding={0}
         placeholder="Search the Channel"
@@ -70,6 +89,57 @@ class SearchPosts extends React.Component<Props, State> {
         }}
       />
     )
+
+    return Platform.OS === 'ios' ? (
+      <View
+        style={{
+          shadowColor: '#D2D2D2',
+          shadowOffset: { width: 0, height: 1 },
+          shadowOpacity: 0.8,
+          shadowRadius: 2,
+          paddingTop: getStatusBarHeight(),
+          backgroundColor: Theme.primary,
+          zIndex: 2,
+        }}
+      >
+        {Bar}
+      </View>
+    ) : (
+      Bar
+    )
+  }
+
+  viewPost = (post: Post) => {
+    this.props.navigation.navigate('viewPost', { post })
+  }
+
+  fetchMore = () => {
+    if (
+      this.state.pageInfo &&
+      this.state.pageInfo!.hasNextPage &&
+      this.state.initialLoad &&
+      !this.state.loading
+    ) {
+      this.setState({ loading: true }, () => {
+        graphqlClient
+          .query({
+            query: searchQuery,
+            variables: {
+              after: this.state.pageInfo!.endCursor,
+              search: this.state.text,
+            },
+          })
+          .then(({ data }: any) => {
+            const posts = postsTransform(data!.posts)
+
+            this.setState({
+              pageInfo: data.posts.pageInfo,
+              loading: false,
+              posts: [...this.state.posts, ...posts],
+            })
+          })
+      })
+    }
   }
 
   render() {
@@ -77,12 +147,17 @@ class SearchPosts extends React.Component<Props, State> {
       <View
         style={{
           flex: 1,
-          backgroundColor: Platform.OS === 'ios' ? '#fff' : '#EEEEEE',
+          backgroundColor: '#EEEEEE',
         }}
       >
-        {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
-
         {this.renderSearch()}
+
+        <PostPage
+          otherPosts={this.state.posts}
+          viewPost={this.viewPost}
+          fetching={this.state.loading}
+          onEndReached={debounce(this.fetchMore, 2000)}
+        />
       </View>
     )
   }
