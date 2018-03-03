@@ -11,7 +11,6 @@ import { graphqlClient, Theme } from '@config'
 import PostPage from '../Posts/components/Posts.page'
 
 interface State {
-  initialLoad: boolean
   text: string
   loading: boolean
   posts: Post[]
@@ -25,12 +24,13 @@ class SearchPosts extends React.Component<Props, State> {
     super(props)
 
     this.state = {
-      initialLoad: false,
       text: '',
       loading: false,
       posts: [],
       pageInfo: null,
     }
+
+    this.getResults = debounce(this.getResults, 500)
   }
 
   updateSearch = (text: string) => {
@@ -44,26 +44,23 @@ class SearchPosts extends React.Component<Props, State> {
   }
 
   getResults = (search: string) => {
-    this.setState({ loading: true, initialLoad: false }, () => {
-      graphqlClient
-        .query({
-          query: searchQuery,
-          variables: {
-            after: '',
-            search,
-          },
-        })
-        .then(({ data }: any) => {
-          const posts = postsTransform(data!.posts)
+    graphqlClient
+      .query({
+        query: searchQuery,
+        variables: {
+          after: '',
+          search,
+        },
+      })
+      .then(({ data }: any) => {
+        const posts = postsTransform(data!.posts)
 
-          this.setState({
-            loading: false,
-            posts,
-            initialLoad: true,
-            pageInfo: data.posts.pageInfo,
-          })
+        this.setState({
+          loading: false,
+          posts: search.length === 0 ? [] : posts,
+          pageInfo: data.posts.pageInfo,
         })
-    })
+      })
   }
 
   renderSearch = () => {
@@ -117,7 +114,6 @@ class SearchPosts extends React.Component<Props, State> {
     if (
       this.state.pageInfo &&
       this.state.pageInfo!.hasNextPage &&
-      this.state.initialLoad &&
       !this.state.loading
     ) {
       this.setState({ loading: true }, () => {
@@ -132,11 +128,13 @@ class SearchPosts extends React.Component<Props, State> {
           .then(({ data }: any) => {
             const posts = postsTransform(data!.posts)
 
-            this.setState({
-              pageInfo: data.posts.pageInfo,
-              loading: false,
-              posts: [...this.state.posts, ...posts],
-            })
+            if (!this.state.loading) {
+              this.setState({
+                pageInfo: data.posts.pageInfo,
+                loading: false,
+                posts: [...this.state.posts, ...posts],
+              })
+            }
           })
       })
     }
@@ -156,7 +154,7 @@ class SearchPosts extends React.Component<Props, State> {
           otherPosts={this.state.posts}
           viewPost={this.viewPost}
           fetching={this.state.loading}
-          onEndReached={debounce(this.fetchMore, 2000)}
+          onEndReached={this.fetchMore}
         />
       </View>
     )
