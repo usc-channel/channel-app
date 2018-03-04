@@ -29,8 +29,13 @@ class PostPage extends React.Component<Props> {
   }
 
   renderItem = ({ item }: ListRenderItemInfo<Post>) => (
-    <SmallPost post={item} onPress={() => this.props.viewPost(item)} />
+    <SmallPost post={item} onPress={() => this.viewPost(item)} />
   )
+
+  viewPost = (post: Post) => {
+    Keyboard.dismiss()
+    this.props.viewPost(post)
+  }
 
   render() {
     return (
@@ -54,7 +59,7 @@ class PostPage extends React.Component<Props> {
           this.props.displayFeatured && this.props.featuredPosts!.length > 0 ? (
             <LargePost
               post={this.props.featuredPosts![0]}
-              onPress={() => this.props.viewPost(this.props.featuredPosts![0])}
+              onPress={() => this.viewPost(this.props.featuredPosts![0])}
             />
           ) : (
             <View />
