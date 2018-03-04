@@ -43,3 +43,10 @@ export interface Author {
     url: string
   }
 }
+
+export interface Store {
+  network: {
+    isConnected: boolean
+    actionQueue: any[]
+  }
+}

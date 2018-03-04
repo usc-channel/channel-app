@@ -1,26 +1,36 @@
+import React from 'react'
 import {
   ActivityIndicator,
+  Button,
   Image,
+  LayoutAnimation,
   Platform,
   StyleSheet,
   Text,
+  UIManager,
   View,
 } from 'react-native'
-import { graphqlClient, Theme } from '@config'
 import { NavigationScreenProps } from 'react-navigation'
 import Collapsible from 'react-native-collapsible'
-import { NavIcon } from '@components'
-import React from 'react'
+import { ChildProps, graphql, QueryProps } from 'react-apollo'
+import DropdownAlert from 'react-native-dropdownalert'
+import { connect } from 'react-redux'
+
+import { graphqlClient, Theme } from '@config'
+import { NavIcon, Offline } from '@components'
 import {
   filteredPostsQuery,
   postsCategoriesQuery,
   postsQuery,
   postsTransform,
 } from '../../graphql'
-import { ChildProps, graphql } from 'react-apollo'
-import { Category, GraphPost, PageInfo, Post } from '@types'
+import { Category, GraphPost, PageInfo, Post, Store } from '@types'
 import PostPage from './components/Posts.page'
 import CategoryFilter from './components/CategoryFilter'
+
+if (UIManager.setLayoutAnimationEnabledExperimental) {
+  UIManager.setLayoutAnimationEnabledExperimental(true)
+}
 
 interface GraphProps {
   categories: Category[]
@@ -44,10 +54,19 @@ interface State {
   selectedCategories: number[]
   featured: Post[]
   other: Post[]
+  retrying: boolean
+  retryingMessage: string
+  error: {} | undefined | null
+  loading: boolean | null
+}
+
+interface ConnectedProps {
+  isConnected: boolean
 }
 
 type OwnProps = NavigationScreenProps<ScreenProps>
-type Props = ChildProps<OwnProps, GraphProps>
+
+type Props = ChildProps<OwnProps, GraphProps> & ConnectedProps
 
 class Posts extends React.Component<Props, State> {
   static navigationOptions = ({
@@ -86,6 +105,8 @@ class Posts extends React.Component<Props, State> {
     }
   }
 
+  alert: DropdownAlert
+
   constructor(props: Props) {
     super(props)
 
@@ -96,9 +117,13 @@ class Posts extends React.Component<Props, State> {
       initialLoad: false,
       pageInfo: null,
       fetchingMore: false,
+      retrying: false,
       featured: [],
       other: [],
       categories: [],
+      retryingMessage: 'Try again',
+      error: null,
+      loading: null,
     }
   }
 
@@ -129,12 +154,39 @@ class Posts extends React.Component<Props, State> {
     }
   }
 
+  componentWillReceiveProps(nextProps: Props) {
+    if (nextProps.data!.loading !== this.state.loading) {
+      LayoutAnimation.spring()
+      this.setState({ loading: nextProps.data!.loading })
+    }
+
+    if (nextProps.data!.error !== this.state.error) {
+      this.setState({ error: nextProps.data!.error })
+    }
+  }
+
   onSearch = () => {
-    this.props.navigation.navigate('searchPosts')
+    if (this.props.isConnected && !this.state.error) {
+      this.props.navigation.navigate('searchPosts')
+    } else {
+      this.alert.alertWithType(
+        'error',
+        'No Connection',
+        'Cannot search while offline.'
+      )
+    }
   }
 
   onFilter = () => {
-    this.setState({ filterToggled: !this.state.filterToggled })
+    if (this.props.isConnected && !this.state.error) {
+      this.setState({ filterToggled: !this.state.filterToggled })
+    } else {
+      this.alert.alertWithType(
+        'error',
+        'No Connection',
+        'Cannot filter while offline.'
+      )
+    }
   }
 
   viewPost = (post: Post) => {
@@ -142,7 +194,17 @@ class Posts extends React.Component<Props, State> {
   }
 
   loadMore = () => {
-    if (this.state.pageInfo!.hasNextPage && !this.state.fetchingMore) {
+    if (!this.props.isConnected) {
+      this.alert.alertWithType(
+        'error',
+        'No Connection',
+        'Cannot load more posts while offline.'
+      )
+    } else if (
+      this.props.isConnected &&
+      this.state.pageInfo!.hasNextPage &&
+      !this.state.fetchingMore
+    ) {
       this.setState({ fetchingMore: true }, () => {
         graphqlClient
           .query({
@@ -162,8 +224,10 @@ class Posts extends React.Component<Props, State> {
               other: [...this.state.other, ...other],
               pageInfo: data.posts.pageInfo,
               fetchingMore: false,
+              loading: false,
             })
           })
+          .catch(console.error)
       })
     }
   }
@@ -202,14 +266,69 @@ class Posts extends React.Component<Props, State> {
     )
   }
 
+  retryOffline = () => {
+    this.setState({ retrying: true }, () => {
+      this.props.data!
+        .refetch()
+        .then(({ data }) => {
+          const response = postCategoriesResolver(data).data
+
+          LayoutAnimation.spring()
+
+          this.setState({
+            retrying: false,
+            retryingMessage: 'Try again',
+            error: null,
+            categories: response!.categories!,
+            featured: response!.featured!,
+            other: response!.other!,
+            pageInfo: response!.pageInfo!,
+          })
+        })
+        .catch(() => {
+          this.setState({
+            retrying: false,
+            retryingMessage: 'Still offline, Try again',
+          })
+        })
+    })
+  }
+
+  offlineAlert = () => (
+    <DropdownAlert
+      ref={(ref: DropdownAlert) => (this.alert = ref)}
+      zIndex={3}
+      defaultContainer={{ paddingTop: 0, paddingHorizontal: 15 }}
+      updateStatusBar={false}
+      useNativeDriver
+      showCancel
+      closeInterval={3000}
+      renderCancel={() =>
+        this.props.isConnected && (
+          <Button title="Retry" color="#fff" onPress={this.retryOffline} />
+        )
+      }
+    />
+  )
+
   render() {
-    if (this.props.data!.error) {
-      return <Text>Error</Text>
+    if (this.state.error || !this.props.isConnected) {
+      return (
+        <View style={{ flex: 1 }}>
+          {this.offlineAlert()}
+
+          <Offline
+            action={this.retryOffline}
+            retrying={this.state.retrying}
+            message={this.state.retryingMessage}
+          />
+        </View>
+      )
     }
 
-    if (this.props.data!.loading) {
+    if (this.state.loading) {
       return (
-        <View style={{ paddingTop: 16, flex: 1, backgroundColor: '#fff' }}>
+        <View style={{ paddingTop: 15, flex: 1, backgroundColor: '#fff' }}>
           <ActivityIndicator />
         </View>
       )
@@ -266,28 +385,43 @@ interface Response {
 
 const withPosts = graphql<Response, any, OwnProps>(postsCategoriesQuery, {
   props: ({ data }) => {
-    let returnData = {}
-
-    if (data!.categories) {
-      returnData = {
-        ...returnData,
-        categories: data!.categories!.edges.map(a => a.node),
-      }
-    }
-
-    if (data!.featured && data!.other) {
-      returnData = {
-        ...returnData,
-        other: postsTransform(data!.other),
-        featured: postsTransform(data!.featured),
-        pageInfo: data!.other.pageInfo,
-      }
-    }
-
-    return {
-      data: { ...returnData, error: data!.error, loading: data!.loading },
-    }
+    return postCategoriesResolver(data as any)
   },
 })
 
-export default withPosts(Posts)
+const postCategoriesResolver = (
+  data: QueryProps & Response
+): ChildProps<{}, GraphProps> => {
+  let returnData = {}
+
+  if (data!.categories) {
+    returnData = {
+      ...returnData,
+      categories: data!.categories!.edges.map(a => a.node),
+    }
+  }
+
+  if (data!.featured && data!.other) {
+    returnData = {
+      ...returnData,
+      other: postsTransform(data!.other),
+      featured: postsTransform(data!.featured),
+      pageInfo: data!.other.pageInfo,
+    }
+  }
+
+  return {
+    data: {
+      ...returnData,
+      error: data!.error,
+      loading: data!.loading,
+      refetch: data!.refetch,
+    } as any,
+  }
+}
+
+const mapStateToProps = (state: Store) => ({
+  isConnected: state.network.isConnected,
+})
+
+export default withPosts(connect(mapStateToProps)(Posts))

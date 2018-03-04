@@ -1,3 +1,5 @@
+// tslint:disable:max-classes-per-file
+
 declare module 'react-native-render-html' {
   import * as React from 'react'
   import { StyleProp, TextStyle } from 'react-native'
@@ -15,4 +17,27 @@ declare module 'react-native-render-html' {
 
 declare module 'react-native-status-bar-height' {
   function getStatusBarHeight(): number
+}
+
+declare module 'react-native-offline'
+
+declare module 'react-native-dropdownalert' {
+  import React from 'react'
+  import { StyleProp, ViewStyle } from 'react-native'
+
+  interface DropdownAlertProps {
+    zIndex?: number
+    defaultContainer?: StyleProp<ViewStyle>
+    updateStatusBar?: boolean
+    useNativeDriver?: boolean
+    showCancel?: boolean
+    closeInterval?: number
+    renderCancel?(): React.ReactNode
+  }
+
+  export default class DropdownAlert extends React.Component<
+    DropdownAlertProps
+  > {
+    alertWithType(type: string, title: string, message: string): void
+  }
 }

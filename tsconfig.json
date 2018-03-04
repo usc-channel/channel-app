@@ -5,6 +5,8 @@
     "jsx": "react-native",
     "noEmit": true,
     "moduleResolution": "node",
+    "strictPropertyInitialization": false,
+    "skipLibCheck": true,
     "strict": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": "src",
