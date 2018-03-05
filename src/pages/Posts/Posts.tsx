@@ -25,7 +25,7 @@ import {
   postsTransform,
 } from '../../graphql'
 import { Category, GraphPost, PageInfo, Post, Store } from '@types'
-import PostPage from './components/Posts.page'
+import PostList from './components/PostList'
 import CategoryFilter from './components/CategoryFilter'
 
 if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -345,7 +345,7 @@ class Posts extends React.Component<Props, State> {
           />
         </Collapsible>
 
-        <PostPage
+        <PostList
           displayFeatured={this.state.selectedCategories.length === 0}
           featuredPosts={this.state.featured}
           otherPosts={this.state.other}

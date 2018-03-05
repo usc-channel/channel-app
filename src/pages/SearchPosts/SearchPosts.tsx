@@ -8,7 +8,7 @@ import debounce from 'lodash.debounce'
 import { PageInfo, Post } from '@types'
 import { postsTransform, searchQuery } from '../../graphql'
 import { graphqlClient, Theme } from '@config'
-import PostPage from '../Posts/components/Posts.page'
+import PostList from '../Posts/components/PostList'
 import SearchEmpty from './components/SearchEmpty'
 
 interface State {
@@ -162,7 +162,7 @@ class SearchPosts extends React.Component<Props, State> {
         {this.isEmpty() ? (
           <SearchEmpty search={this.state.text} />
         ) : (
-          <PostPage
+          <PostList
             otherPosts={this.state.posts}
             viewPost={this.viewPost}
             fetching={this.state.loading}

@@ -19,7 +19,7 @@ interface Props {
   viewPost(post: Post): void
 }
 
-class PostPage extends React.Component<Props> {
+class PostList extends React.Component<Props> {
   shouldComponentUpdate(nextProps: Props) {
     return (
       this.props.otherPosts.length !== nextProps.otherPosts.length ||
@@ -77,4 +77,4 @@ class PostPage extends React.Component<Props> {
   }
 }
 
-export default PostPage
+export default PostList
