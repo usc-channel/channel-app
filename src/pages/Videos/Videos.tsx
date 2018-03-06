@@ -3,6 +3,7 @@ import {
   ActivityIndicator,
   FlatList,
   LayoutAnimation,
+  Linking,
   View,
 } from 'react-native'
 import { stringify } from 'query-string'
@@ -91,7 +92,7 @@ export default class Videos extends React.Component<{}, State> {
   }
 
   viewVideo = (video: Video) => {
-    //
+    Linking.openURL(`https://www.youtube.com/watch?v=${video.videoId}`)
   }
 
   render() {
