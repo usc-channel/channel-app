@@ -17,22 +17,24 @@ interface Props {
 }
 
 const VideoPreview: React.SFC<Props> = ({ video, onPress }) => (
-  <Touchable onPress={() => onPress(video)}>
-    <ImageBackground source={{ uri: video.thumbnail }} style={styles.image}>
-      <ImageBackground
-        source={require('../../../assets/shadow.png')}
-        style={styles.shadow}
-      >
-        <Text style={styles.title}>{video.title}</Text>
+  <ImageBackground source={{ uri: video.thumbnail }} style={styles.image}>
+    <ImageBackground
+      source={require('../../../assets/shadow.png')}
+      style={styles.shadow}
+    >
+      <Touchable onPress={() => onPress(video)}>
+        <View>
+          <Text style={styles.title}>{video.title}</Text>
 
-        <View style={styles.meta}>
-          <Text style={styles.date}>
-            {moment(video.publishedAt).format('DD MMM YYYY')}
-          </Text>
+          <View style={styles.meta}>
+            <Text style={styles.date}>
+              {moment(video.publishedAt).format('DD MMM YYYY')}
+            </Text>
+          </View>
         </View>
-      </ImageBackground>
+      </Touchable>
     </ImageBackground>
-  </Touchable>
+  </ImageBackground>
 )
 
 const styles = StyleSheet.create({

@@ -45,6 +45,7 @@ export default StackNavigator(
       headerStyle: {
         ...Theme.navigationOptions.headerStyle,
         borderBottomWidth: 0,
+        elevation: 0,
       },
       headerTitleStyle: {
         fontFamily: 'NunitoSans-Bold',

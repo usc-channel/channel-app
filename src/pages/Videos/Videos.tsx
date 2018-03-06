@@ -4,12 +4,17 @@ import {
   FlatList,
   LayoutAnimation,
   Linking,
+  UIManager,
   View,
 } from 'react-native'
 import { stringify } from 'query-string'
 
 import { Video } from '@types'
 import VideoPreview from './components/VideoPreview'
+
+if (UIManager.setLayoutAnimationEnabledExperimental) {
+  UIManager.setLayoutAnimationEnabledExperimental(true)
+}
 
 interface State {
   loading: boolean
