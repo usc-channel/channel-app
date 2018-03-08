@@ -23,8 +23,10 @@
     "react-native-dropdownalert": "^3.3.1",
     "react-native-elements": "^1.0.0-beta2",
     "react-native-fast-image": "^2.2.4",
+    "react-native-fetch-blob": "^0.10.8",
     "react-native-material-design-searchbar": "^1.8.0",
     "react-native-offline": "^3.7.3",
+    "react-native-pdf": "^3.0.4",
     "react-native-render-html": "^3.8.1",
     "react-native-status-bar-height": "^2.0.0",
     "react-native-vector-icons": "^4.5.0",
@@ -61,9 +63,13 @@
     "preset": "react-native"
   },
   "rnpm": {
-    "assets": ["./src/assets/fonts/"]
+    "assets": [
+      "./src/assets/fonts/"
+    ]
   },
   "lint-staged": {
-    "*.{ts,tsx}": ["tslint 'src/**/*.ts?(x)' --format stylish"]
+    "*.{ts,tsx}": [
+      "tslint 'src/**/*.ts?(x)' --format stylish"
+    ]
   }
 }

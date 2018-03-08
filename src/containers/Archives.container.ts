@@ -1,5 +1,5 @@
 import { StackNavigator, TabNavigator } from 'react-navigation'
-import { Adverts, Releases } from '@pages'
+import { Adverts, Releases, ViewRelease } from '@pages'
 import { Theme } from '@config'
 
 const Tabs = TabNavigator(
@@ -32,21 +32,22 @@ const Tabs = TabNavigator(
 
 export default StackNavigator(
   {
-    posts: {
+    Archives: {
       screen: Tabs,
       navigationOptions: {
         title: 'Archives',
+        headerStyle: {
+          ...Theme.navigationOptions.headerStyle,
+          borderBottomWidth: 0,
+          elevation: 0,
+        },
       },
+    },
+    ViewRelease: {
+      screen: ViewRelease,
     },
   },
   {
-    navigationOptions: {
-      ...Theme.navigationOptions,
-      headerStyle: {
-        ...Theme.navigationOptions.headerStyle,
-        borderBottomWidth: 0,
-        elevation: 0,
-      },
-    },
+    navigationOptions: Theme.navigationOptions,
   }
 )

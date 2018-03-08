@@ -2,5 +2,6 @@
   "emmet.showAbbreviationSuggestions": false,
   "cSpell.words": [
     "guid"
-  ]
+  ],
+  "java.configuration.updateBuildConfiguration": "disabled"
 }

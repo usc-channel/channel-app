@@ -10,7 +10,7 @@ type Props = NavigationScreenProps<{}>
 
 const Releases: React.SFC<Props> = props => {
   const viewRelease = (release: Release) => {
-    props.navigation.navigate('', { release })
+    props.navigation.navigate('ViewRelease', { release })
   }
 
   return (
