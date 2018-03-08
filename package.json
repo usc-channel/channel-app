@@ -30,7 +30,7 @@
     "react-native-render-html": "^3.8.1",
     "react-native-status-bar-height": "^2.0.0",
     "react-native-vector-icons": "^4.5.0",
-    "react-navigation": "^1.0.3",
+    "react-navigation": "^1.5.0",
     "react-redux": "^5.0.7",
     "redux": "^3.7.2"
   },
@@ -44,7 +44,7 @@
     "@types/react-native-material-design-searchbar": "^1.1.2",
     "@types/react-native-tab-view": "^0.0.2",
     "@types/react-native-vector-icons": "^4.4.2",
-    "@types/react-navigation": "^1.0.30",
+    "@types/react-navigation": "^1.2.1",
     "@types/react-redux": "^5.0.15",
     "babel-jest": "22.2.0",
     "babel-plugin-module-resolver": "^3.0.0",

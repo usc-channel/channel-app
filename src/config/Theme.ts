@@ -14,7 +14,8 @@ const Theme = {
           headerTitleStyle: {
             fontFamily: 'NunitoSans-Bold',
             fontSize: 20,
-            alignSelf: 'flex-start',
+            flex: 1,
+            textAlign: 'left',
           },
         }
       : {}),
