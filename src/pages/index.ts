@@ -7,6 +7,7 @@ import Lecturers from './Lecturers.page'
 
 import Releases from './Releases'
 import Adverts from './Adverts'
+import ViewRelease from './ViewRelease'
 
 import Videos from './Videos'
 import Gallery from './Gallery'
@@ -21,4 +22,5 @@ export {
   SearchPosts,
   Videos,
   Gallery,
+  ViewRelease,
 }
