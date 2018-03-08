@@ -4,7 +4,9 @@ import SearchPosts from './SearchPosts'
 
 import MarketPlace from './MarketPlace.page'
 import Lecturers from './Lecturers.page'
-import Archives from './Archives.page'
+
+import Releases from './Releases'
+import Adverts from './Adverts'
 
 import Videos from './Videos'
 import Gallery from './Gallery'
@@ -13,7 +15,8 @@ export {
   Posts,
   MarketPlace,
   Lecturers,
-  Archives,
+  Releases,
+  Adverts,
   ViewPost,
   SearchPosts,
   Videos,

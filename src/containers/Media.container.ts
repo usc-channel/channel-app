@@ -47,11 +47,6 @@ export default StackNavigator(
         borderBottomWidth: 0,
         elevation: 0,
       },
-      headerTitleStyle: {
-        fontFamily: 'NunitoSans-Bold',
-        fontSize: 20,
-        alignSelf: 'flex-start',
-      },
     },
   }
 )
