@@ -7,7 +7,12 @@ const Theme = {
       backgroundColor: '#2266AA',
     },
     headerTintColor: '#fff',
-  },
+    headerTitleStyle: {
+      fontFamily: 'NunitoSans-Bold',
+      fontSize: 20,
+      alignSelf: 'flex-start',
+    },
+  } as any,
   primary: '#2266AA',
   background: '#F3F5FA',
 }
