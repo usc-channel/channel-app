@@ -1,5 +1,5 @@
 import { StackNavigator } from 'react-navigation'
-import { Posts, ViewPost, SearchPosts } from '@pages'
+import { Posts, SearchPosts, ViewPost } from '@pages'
 import { Theme } from '@config'
 
 export default StackNavigator(
