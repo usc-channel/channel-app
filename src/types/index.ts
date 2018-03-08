@@ -57,3 +57,9 @@ export interface Video {
   title: string
   thumbnail: string
 }
+
+export interface Release {
+  title: string
+  cover: string
+  magazine: string
+}
