@@ -65,9 +65,9 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-navigation@^1.0.30":
-  version "1.0.30"
-  resolved "https://registry.yarnpkg.com/@types/react-navigation/-/react-navigation-1.0.30.tgz#02859ff8052285738d8a85ad564c28078ab23d18"
+"@types/react-navigation@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@types/react-navigation/-/react-navigation-1.2.1.tgz#154e030e324fcd4f084198fc074ebd6fcaedfe8e"
   dependencies:
     "@types/react" "*"
     "@types/react-native" "*"
@@ -4887,9 +4887,9 @@ react-native-render-html@^3.8.1:
     htmlparser2 "^3.9.0"
     stream "0.0.2"
 
-react-native-safe-area-view@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/react-native-safe-area-view/-/react-native-safe-area-view-0.6.0.tgz#ce01eb27905a77780219537e0f53fe9c783a8b3d"
+react-native-safe-area-view@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/react-native-safe-area-view/-/react-native-safe-area-view-0.7.0.tgz#38f5ab9368d6ef9e5d18ab64212938af3ec39421"
   dependencies:
     hoist-non-react-statics "^2.3.1"
 
@@ -4981,16 +4981,16 @@ react-native@0.53.3:
     xmldoc "^0.4.0"
     yargs "^9.0.0"
 
-react-navigation@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/react-navigation/-/react-navigation-1.0.3.tgz#1687ea67a72a382633b01e7afda88582ebc3b5f9"
+react-navigation@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/react-navigation/-/react-navigation-1.5.0.tgz#0dbef16a086d8fcdbcf44147e0c77fa53121648e"
   dependencies:
     clamp "^1.0.1"
     hoist-non-react-statics "^2.2.0"
     path-to-regexp "^1.7.0"
     prop-types "^15.5.10"
     react-native-drawer-layout-polyfill "^1.3.2"
-    react-native-safe-area-view "^0.6.0"
+    react-native-safe-area-view "^0.7.0"
     react-native-tab-view "^0.0.74"
 
 react-proxy@^1.1.7:
