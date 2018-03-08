@@ -41,3 +41,8 @@ declare module 'react-native-dropdownalert' {
     alertWithType(type: string, title: string, message: string): void
   }
 }
+
+declare module '*.json' {
+  const value: any
+  export default value
+}
