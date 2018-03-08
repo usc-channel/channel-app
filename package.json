@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "lint": "tslint 'src/**/*.ts?(x)' --format stylish",
+    "precommit": "lint-staged"
   },
   "dependencies": {
     "apollo-client-preset": "^1.0.8",
@@ -45,7 +47,9 @@
     "babel-jest": "22.2.0",
     "babel-plugin-module-resolver": "^3.0.0",
     "babel-preset-react-native": "4.0.0",
+    "husky": "^0.14.3",
     "jest": "22.2.1",
+    "lint-staged": "^7.0.0",
     "prettier": "^1.10.2",
     "react-native-typescript-transformer": "^1.2.3",
     "react-test-renderer": "16.2.0",
@@ -57,8 +61,9 @@
     "preset": "react-native"
   },
   "rnpm": {
-    "assets": [
-      "./src/assets/fonts/"
-    ]
+    "assets": ["./src/assets/fonts/"]
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": ["tslint 'src/**/*.ts?(x)' --format stylish"]
   }
 }
