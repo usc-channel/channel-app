@@ -19,7 +19,7 @@ const NavIcon = (props: Props) => {
           size={Platform.OS === 'ios' ? 24 : 24}
           color="#fff"
           name={props.iconName}
-          style={{ paddingVertical: 16 }}
+          style={{ paddingVertical: 8 }}
         />
       </View>
     </Touchable>
