@@ -44,7 +44,7 @@
     "@types/react-native-material-design-searchbar": "^1.1.2",
     "@types/react-native-tab-view": "^0.0.2",
     "@types/react-native-vector-icons": "^4.4.2",
-    "@types/react-navigation": "^1.2.1",
+    "@types/react-navigation": "1.1.0",
     "@types/react-redux": "^5.0.15",
     "babel-jest": "22.2.0",
     "babel-plugin-module-resolver": "^3.0.0",
