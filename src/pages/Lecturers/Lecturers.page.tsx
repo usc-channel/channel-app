@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList, StyleSheet, View } from 'react-native'
+import { FlatList, Platform, StyleSheet, View } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import SearchBar from 'react-native-material-design-searchbar'
 import { NavigationScreenProps } from 'react-navigation'
@@ -51,12 +51,14 @@ class Lecturers extends React.Component<Props, State> {
   render() {
     return (
       <View style={styles.container}>
-        <View
-          style={{
-            paddingTop: getStatusBarHeight(),
-            backgroundColor: Theme.primary,
-          }}
-        />
+        {Platform.OS === 'ios' && (
+          <View
+            style={{
+              paddingTop: getStatusBarHeight(),
+              backgroundColor: Theme.primary,
+            }}
+          />
+        )}
 
         <SearchBar
           onSearchChange={this.updateSearch}
@@ -70,7 +72,7 @@ class Lecturers extends React.Component<Props, State> {
           inputStyle={{
             backgroundColor: '#fff',
             borderWidth: 0,
-            borderBottomWidth: 1,
+            borderBottomWidth: Platform.OS === 'ios' ? 1 : 0,
             borderBottomColor: 'rgba(0,0,0,.12)',
             elevation: 2,
           }}
