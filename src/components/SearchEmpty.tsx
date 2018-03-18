@@ -66,7 +66,7 @@ class SearchEmpty extends React.Component<Props, State> {
           <Image
             resizeMode="contain"
             style={styles.image}
-            source={require('../../../assets/tv-empty.png')}
+            source={require('../assets/tv-empty.png')}
           />
 
           <Text style={styles.text}>No results found for</Text>
