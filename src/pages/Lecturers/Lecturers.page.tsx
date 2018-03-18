@@ -68,7 +68,7 @@ class Lecturers extends React.Component<Props, State> {
           onBlur={() => this.updateSearch('')}
           height={50}
           padding={0}
-          placeholder="Search lecturer or course number"
+          placeholder="Search lecturer"
           autoCorrect={false}
           returnKeyType={'search'}
           inputProps={{ value: this.state.search }}
