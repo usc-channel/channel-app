@@ -63,3 +63,10 @@ export interface Release {
   cover: string
   magazine: string
 }
+
+export interface Lecturer {
+  id: number
+  name: string
+  totalReviews: number
+  averageRating: number | null
+}
