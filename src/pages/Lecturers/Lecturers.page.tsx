@@ -36,7 +36,7 @@ class Lecturers extends React.Component<Props, State> {
   }
 
   viewLecturer = (lecturer: LecturerModel) => {
-    //
+    this.props.navigation.navigate('viewLecturer', { lecturer })
   }
 
   filterLecturers = () => {
