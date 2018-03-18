@@ -14,10 +14,12 @@ interface Props {
 const Lecturer: React.SFC<Props> = ({ lecturer, onPress }) => (
   <Touchable onPress={() => onPress(lecturer)}>
     <View style={styles.container}>
-      <Text style={styles.name}>{lecturer.name}</Text>
-      <Text style={styles.reviews}>{`${
-        lecturer.totalReviews
-      } review${lecturer.totalReviews !== 1 && 's'}`}</Text>
+      <View>
+        <Text style={styles.name}>{lecturer.name}</Text>
+        <Text style={styles.reviews}>{`${
+          lecturer.totalReviews
+        } review${lecturer.totalReviews !== 1 && 's'}`}</Text>
+      </View>
 
       <StarRating
         disabled
@@ -42,6 +44,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     margin: 8,
     borderColor: 'rgba(0,0,0,.12)',
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
   name: {
     fontFamily: 'NunitoSans-SemiBold',
