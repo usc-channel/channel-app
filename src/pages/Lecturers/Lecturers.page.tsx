@@ -6,6 +6,7 @@ import { NavigationScreenProps } from 'react-navigation'
 
 import { Theme } from '@config'
 import { Lecturer as LecturerModel } from '@types'
+import { SearchEmpty } from '@components'
 import Lecturer from './components/Lecturer'
 import mocks from '../../mocks.json'
 
@@ -49,6 +50,8 @@ class Lecturers extends React.Component<Props, State> {
   }
 
   render() {
+    const lecturers = this.filterLecturers()
+
     return (
       <View style={styles.container}>
         {Platform.OS === 'ios' && (
@@ -82,17 +85,21 @@ class Lecturers extends React.Component<Props, State> {
           }}
         />
 
-        <FlatList
-          data={this.filterLecturers()}
-          keyExtractor={(a: LecturerModel) => a.id.toString()}
-          contentContainerStyle={styles.content}
-          numColumns={2}
-          renderItem={({ item }) => (
-            <View style={{ flex: 1, maxWidth: '50%' }}>
-              <Lecturer onPress={this.viewLecturer} lecturer={item} />
-            </View>
-          )}
-        />
+        {lecturers.length > 0 ? (
+          <FlatList
+            data={lecturers}
+            keyExtractor={(a: LecturerModel) => a.id.toString()}
+            contentContainerStyle={styles.content}
+            numColumns={2}
+            renderItem={({ item }) => (
+              <View style={{ flex: 1, maxWidth: '50%' }}>
+                <Lecturer onPress={this.viewLecturer} lecturer={item} />
+              </View>
+            )}
+          />
+        ) : (
+          <SearchEmpty search={this.state.search} />
+        )}
       </View>
     )
   }
