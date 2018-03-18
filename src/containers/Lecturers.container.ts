@@ -1,5 +1,5 @@
 import { StackNavigator } from 'react-navigation'
-import { Lecturers } from '@pages'
+import { Lecturers, ViewLecturer } from '@pages'
 import { Theme } from '@config'
 
 export default StackNavigator(
@@ -10,8 +10,12 @@ export default StackNavigator(
         header: null,
       },
     },
+    viewLecturer: {
+      screen: ViewLecturer,
+    },
   },
   {
     navigationOptions: Theme.navigationOptions,
+    headerMode: 'screen',
   }
 )

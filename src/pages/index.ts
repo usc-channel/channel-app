@@ -3,7 +3,9 @@ import ViewPost from './ViewPost'
 import SearchPosts from './SearchPosts'
 
 import MarketPlace from './MarketPlace.page'
+
 import Lecturers from './Lecturers'
+import ViewLecturer from './ViewLecturer'
 
 import Releases from './Releases'
 import Adverts from './Adverts'
@@ -23,4 +25,5 @@ export {
   Videos,
   Gallery,
   ViewRelease,
+  ViewLecturer,
 }
