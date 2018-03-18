@@ -6,10 +6,10 @@ import AndroidSearchBar from 'react-native-material-design-searchbar'
 import debounce from 'lodash.debounce'
 
 import { PageInfo, Post } from '@types'
-import { postsTransform, searchQuery } from '../../graphql'
+import { SearchEmpty } from '@components'
 import { graphqlClient, Theme } from '@config'
+import { postsTransform, searchQuery } from '../../graphql'
 import PostList from '../Posts/components/PostList'
-import SearchEmpty from './components/SearchEmpty'
 
 interface State {
   text: string
