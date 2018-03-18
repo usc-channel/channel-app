@@ -3,7 +3,7 @@ import ViewPost from './ViewPost'
 import SearchPosts from './SearchPosts'
 
 import MarketPlace from './MarketPlace.page'
-import Lecturers from './Lecturers.page'
+import Lecturers from './Lecturers'
 
 import Releases from './Releases'
 import Adverts from './Adverts'

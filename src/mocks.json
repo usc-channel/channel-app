@@ -1,0 +1,34 @@
+{
+  "lecturers": [
+    {
+      "id": 1,
+      "name": "George Mccallum",
+      "avatar": null,
+      "createdAt": "2018-03-11T19:38:24.000Z",
+      "updatedAt": "2018-03-12T11:05:42.000Z",
+      "schoolId": 2,
+      "totalReviews": 5,
+      "averageRating": 4.8
+    },
+    {
+      "id": 2,
+      "name": "Johnny",
+      "avatar": null,
+      "createdAt": "2018-03-11T21:16:35.000Z",
+      "updatedAt": "2018-03-11T21:16:35.000Z",
+      "schoolId": 1,
+      "totalReviews": 0,
+      "averageRating": null
+    },
+    {
+      "id": 3,
+      "name": "Johnny",
+      "avatar": null,
+      "createdAt": "2018-03-11T21:16:35.000Z",
+      "updatedAt": "2018-03-11T21:16:35.000Z",
+      "schoolId": 1,
+      "totalReviews": 0,
+      "averageRating": null
+    }
+  ]
+}

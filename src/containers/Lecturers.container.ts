@@ -6,6 +6,9 @@ export default StackNavigator(
   {
     posts: {
       screen: Lecturers,
+      navigationOptions: {
+        header: null,
+      },
     },
   },
   {
