@@ -13,7 +13,7 @@ const NavIcon = (props: Props) => {
   const Icon = Platform.OS === 'ios' ? Ionicon : MaterialIcon
 
   return (
-    <Touchable onPress={props.onPress}>
+    <Touchable onPress={props.onPress} rounded>
       <View style={{ marginHorizontal: 16 }}>
         <Icon
           size={Platform.OS === 'ios' ? 24 : 24}

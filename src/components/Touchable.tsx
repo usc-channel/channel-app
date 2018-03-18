@@ -13,7 +13,9 @@ if (Platform.OS === 'android' && Platform.Version >= 21) {
   Component = TouchableNativeFeedback
 }
 
-type TouchableProps = TouchableOpacityProperties &
+type TouchableProps = {
+  rounded?: boolean
+} & TouchableOpacityProperties &
   TouchableNativeFeedbackProperties
 
 const Touchable: React.SFC<TouchableProps> = props => (
@@ -22,7 +24,9 @@ const Touchable: React.SFC<TouchableProps> = props => (
     background={
       Platform.OS === 'android' &&
       Platform.Version >= 21 &&
-      TouchableNativeFeedback.SelectableBackgroundBorderless()
+      (props.rounded
+        ? TouchableNativeFeedback.SelectableBackgroundBorderless()
+        : TouchableNativeFeedback.SelectableBackground())
     }
   >
     {props.children}
