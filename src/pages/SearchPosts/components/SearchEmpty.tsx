@@ -17,29 +17,39 @@ interface Props {
   search: string
 }
 
+const SpringValue = Platform.OS === 'ios' ? -50 : -70
+
 class SearchEmpty extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
 
     this.state = {
-      top: new Animated.Value(Platform.OS === 'ios' ? -50 : 0),
+      top: new Animated.Value(SpringValue),
     }
   }
 
   componentDidMount() {
     if (Platform.OS === 'ios') {
-      Keyboard.addListener('keyboardWillShow', () => {
-        Animated.spring(this.state.top, {
-          toValue: -50,
-        }).start()
-      })
-
-      Keyboard.addListener('keyboardWillHide', () => {
-        Animated.spring(this.state.top, {
-          toValue: 0,
-        }).start()
-      })
+      Keyboard.addListener('keyboardWillShow', this.springUp)
+      Keyboard.addListener('keyboardWillHide', this.springDown)
+    } else {
+      Keyboard.addListener('keyboardDidShow', this.springUp)
+      Keyboard.addListener('keyboardDidHide', this.springDown)
     }
+  }
+
+  springUp = () => {
+    Animated.spring(this.state.top, {
+      toValue: SpringValue,
+      useNativeDriver: true,
+    }).start()
+  }
+
+  springDown = () => {
+    Animated.spring(this.state.top, {
+      toValue: 0,
+      useNativeDriver: true,
+    }).start()
   }
 
   render() {
@@ -47,8 +57,14 @@ class SearchEmpty extends React.Component<Props, State> {
 
     return (
       <View style={styles.container}>
-        <Animated.View style={{ top: this.state.top }}>
+        <Animated.View
+          style={{
+            marginTop: -100,
+            transform: [{ translateY: this.state.top }],
+          }}
+        >
           <Image
+            resizeMode="contain"
             style={styles.image}
             source={require('../../../assets/tv-empty.png')}
           />
@@ -79,7 +95,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     width: 150,
     height: 120,
-    marginTop: Platform.OS === 'ios' ? -100 : -30,
+    position: 'relative',
   },
 })
 
