@@ -5138,9 +5138,9 @@ react-native-offline@^3.7.3:
     lodash "^4.17.4"
     redux-saga "^0.16.0"
 
-react-native-pdf@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/react-native-pdf/-/react-native-pdf-3.0.4.tgz#244d11ba7bc664313afe6409f146bce672253c6e"
+react-native-pdf@^3.0.5:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-pdf/-/react-native-pdf-3.0.5.tgz#ec9abe4b259c2c803e66fef127a94c69d0a1c96a"
   dependencies:
     crypto-js "^3.1.9-1"
     prop-types "^15.5.10"
