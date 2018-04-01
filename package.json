@@ -6,7 +6,8 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "lint": "tslint 'src/**/*.ts?(x)' --format stylish",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "check": "tsc --noEmit --pretty"
   },
   "dependencies": {
     "apollo-client-preset": "^1.0.8",
@@ -64,13 +65,9 @@
     "preset": "react-native"
   },
   "rnpm": {
-    "assets": [
-      "./src/assets/fonts/"
-    ]
+    "assets": ["./src/assets/fonts/"]
   },
   "lint-staged": {
-    "*.{ts,tsx}": [
-      "tslint 'src/**/*.ts?(x)' --format stylish"
-    ]
+    "*.{ts,tsx}": ["tslint 'src/**/*.ts?(x)' --format stylish"]
   }
 }
