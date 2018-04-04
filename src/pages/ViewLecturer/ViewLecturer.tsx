@@ -39,7 +39,7 @@ const initialLayout = {
 
 export default class ViewLecturer extends React.Component<Props, State> {
   renderScene = SceneMap({
-    first: () => <Reviews viewReview={this.viewReview} />,
+    first: () => <Reviews />,
     second: () => <Courses viewCourse={this.viewCourse} />,
   })
 

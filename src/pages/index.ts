@@ -6,6 +6,7 @@ import MarketPlace from './MarketPlace.page'
 
 import Lecturers from './Lecturers'
 import ViewLecturer from './ViewLecturer'
+import ViewCourse from './ViewCourse'
 
 import Releases from './Releases'
 import Adverts from './Adverts'
@@ -26,4 +27,5 @@ export {
   Gallery,
   ViewRelease,
   ViewLecturer,
+  ViewCourse,
 }
