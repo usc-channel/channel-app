@@ -69,6 +69,9 @@ export interface Lecturer {
   name: string
   totalReviews: number
   averageRating: number | null
+  School: {
+    name: string
+  }
 }
 
 export interface Course {

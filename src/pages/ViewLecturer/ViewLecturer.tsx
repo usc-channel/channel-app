@@ -60,7 +60,10 @@ export default class ViewLecturer extends React.Component<Props, State> {
   }
 
   viewCourse = (course: Course) => {
-    this.props.navigation.navigate('viewCourse', { course })
+    this.props.navigation.navigate('viewCourse', {
+      lecturer: this.props.navigation.state.params.lecturer,
+      course,
+    })
   }
 
   makeReview = () => {
@@ -86,12 +89,14 @@ export default class ViewLecturer extends React.Component<Props, State> {
   )
 
   render() {
+    const { lecturer } = this.props.navigation.state.params
+
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <View>
-            <Text style={styles.name}>Chris Harper</Text>
-            <Text style={styles.school}>School of Business</Text>
+            <Text style={styles.name}>{lecturer.name}</Text>
+            <Text style={styles.school}>{lecturer.School.name}</Text>
           </View>
 
           <Icon
