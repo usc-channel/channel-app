@@ -14,22 +14,14 @@ const PushStack = StackNavigator(
     viewLecturer: {
       screen: ViewLecturer,
       navigationOptions: {
-        headerStyle: {
-          ...Theme.navigationOptions.headerStyle,
-          borderBottomWidth: 0,
-          elevation: 0,
-        },
+        ...Theme.flatNavigationOptions,
         tabBarVisible: false,
       },
     },
     viewCourse: {
       screen: ViewCourse,
       navigationOptions: {
-        headerStyle: {
-          ...Theme.navigationOptions.headerStyle,
-          borderBottomWidth: 0,
-          elevation: 0,
-        },
+        ...Theme.flatNavigationOptions,
         tabBarVisible: false,
       },
     },

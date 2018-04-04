@@ -36,11 +36,7 @@ export default StackNavigator(
       screen: Tabs,
       navigationOptions: {
         title: 'Archives',
-        headerStyle: {
-          ...Theme.navigationOptions.headerStyle,
-          borderBottomWidth: 0,
-          elevation: 0,
-        },
+        ...Theme.flatNavigationOptions,
       },
     },
     ViewRelease: {

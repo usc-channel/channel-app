@@ -40,13 +40,6 @@ export default StackNavigator(
     },
   },
   {
-    navigationOptions: {
-      ...Theme.navigationOptions,
-      headerStyle: {
-        ...Theme.navigationOptions.headerStyle,
-        borderBottomWidth: 0,
-        elevation: 0,
-      },
-    },
+    navigationOptions: Theme.flatNavigationOptions,
   }
 )
