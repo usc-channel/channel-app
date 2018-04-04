@@ -67,7 +67,7 @@ export default class ViewLecturer extends React.Component<Props, State> {
   }
 
   makeReview = () => {
-    //
+    this.props.navigation.navigate('newReview')
   }
 
   handleIndexChange = (index: number) => this.setState({ index })

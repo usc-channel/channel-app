@@ -1,8 +1,9 @@
 import { StackNavigator } from 'react-navigation'
-import { Lecturers, ViewCourse, ViewLecturer } from '@pages'
+
+import { Lecturers, NewReview, ViewCourse, ViewLecturer } from '@pages'
 import { Theme } from '@config'
 
-export default StackNavigator(
+const PushStack = StackNavigator(
   {
     posts: {
       screen: Lecturers,
@@ -36,5 +37,26 @@ export default StackNavigator(
   {
     navigationOptions: Theme.navigationOptions,
     headerMode: 'screen',
+  }
+)
+
+export default StackNavigator(
+  {
+    Main: {
+      screen: PushStack,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    newReview: {
+      screen: NewReview,
+      navigationOptions: {
+        ...Theme.navigationOptions,
+        tabBarVisible: false,
+      },
+    },
+  },
+  {
+    mode: 'modal',
   }
 )
