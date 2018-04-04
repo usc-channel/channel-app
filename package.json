@@ -31,6 +31,7 @@
     "react-native-render-html": "^3.8.1",
     "react-native-star-rating": "^1.0.9",
     "react-native-status-bar-height": "^2.0.0",
+    "react-native-tab-view": "^0.0.77",
     "react-native-vector-icons": "^4.5.0",
     "react-navigation": "^1.5.0",
     "react-redux": "^5.0.7",
@@ -65,9 +66,13 @@
     "preset": "react-native"
   },
   "rnpm": {
-    "assets": ["./src/assets/fonts/"]
+    "assets": [
+      "./src/assets/fonts/"
+    ]
   },
   "lint-staged": {
-    "*.{ts,tsx}": ["tslint 'src/**/*.ts?(x)' --format stylish"]
+    "*.{ts,tsx}": [
+      "tslint 'src/**/*.ts?(x)' --format stylish"
+    ]
   }
 }

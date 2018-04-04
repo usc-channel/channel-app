@@ -12,6 +12,14 @@ export default StackNavigator(
     },
     viewLecturer: {
       screen: ViewLecturer,
+      navigationOptions: {
+        headerStyle: {
+          ...Theme.navigationOptions.headerStyle,
+          borderBottomWidth: 0,
+          elevation: 0,
+        },
+        tabBarVisible: false,
+      },
     },
   },
   {

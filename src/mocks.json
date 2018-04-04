@@ -30,5 +30,52 @@
       "totalReviews": 0,
       "averageRating": null
     }
+  ],
+  "reviews": [
+    {
+      "id": 4,
+      "semester": "January",
+      "year": 2017,
+      "rating": 5,
+      "comment":
+        "The best Bluetooth headphones should be comfortable to wear, easy to carry and use, and fun to listen to. Check out our top picks.",
+      "User": {
+        "name": "Mary Poppins",
+        "avatar": null
+      },
+      "Course": {
+        "code": "RELT340",
+        "name": "Jesus in His Time and Ours"
+      }
+    },
+    {
+      "id": 9,
+      "semester": "Summer",
+      "year": 2017,
+      "rating": 5,
+      "comment": "DE man good",
+      "User": {
+        "name": "Mary Poppins",
+        "avatar": null
+      },
+      "Course": {
+        "code": "COM312",
+        "name": "Computer Science"
+      }
+    }
+  ],
+  "courses": [
+    {
+      "id": 1,
+      "code": "RELT340",
+      "name": "Jesus in His Time and Ours",
+      "reviews": 4
+    },
+    {
+      "id": 2,
+      "code": "COM312",
+      "name": "Computer Science",
+      "reviews": 1
+    }
   ]
 }

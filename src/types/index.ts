@@ -70,3 +70,28 @@ export interface Lecturer {
   totalReviews: number
   averageRating: number | null
 }
+
+export interface Course {
+  id: number
+  code: string
+  name: string
+  reviews: number
+}
+
+export interface User {
+  id: number
+  name: string
+  email: string
+  password: string
+  avatar: string
+}
+
+export interface Review {
+  id: number
+  semester: string
+  year: number
+  rating: number
+  comment: string
+  User: Partial<User>
+  Course: Partial<Course>
+}
