@@ -6,13 +6,7 @@ export default StackNavigator(
   {
     posts: {
       screen: Posts,
-      navigationOptions: {
-        headerStyle: {
-          ...Theme.navigationOptions.headerStyle,
-          borderBottomWidth: 0,
-          elevation: 0,
-        },
-      },
+      navigationOptions: Theme.flatNavigationOptions,
     },
     viewPost: {
       screen: ViewPost,
