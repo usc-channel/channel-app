@@ -1,5 +1,5 @@
 import { StackNavigator } from 'react-navigation'
-import { Lecturers, ViewLecturer } from '@pages'
+import { Lecturers, ViewCourse, ViewLecturer } from '@pages'
 import { Theme } from '@config'
 
 export default StackNavigator(
@@ -12,6 +12,17 @@ export default StackNavigator(
     },
     viewLecturer: {
       screen: ViewLecturer,
+      navigationOptions: {
+        headerStyle: {
+          ...Theme.navigationOptions.headerStyle,
+          borderBottomWidth: 0,
+          elevation: 0,
+        },
+        tabBarVisible: false,
+      },
+    },
+    viewCourse: {
+      screen: ViewCourse,
       navigationOptions: {
         headerStyle: {
           ...Theme.navigationOptions.headerStyle,

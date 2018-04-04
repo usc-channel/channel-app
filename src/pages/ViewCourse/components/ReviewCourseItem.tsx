@@ -8,23 +8,21 @@ interface Props {
   review: Review
 }
 
-const ReviewItem: React.SFC<Props> = ({ review }) => (
+const ReviewCourseItem: React.SFC<Props> = ({ review }) => (
   <View style={styles.container}>
-    <View style={styles.userContainer}>
-      <View style={styles.avatarContainer}>
-        {review.User.avatar && <Image source={{ uri: review.User.avatar }} />}
-      </View>
+    <View style={styles.header}>
+      <View style={styles.userContainer}>
+        <View style={styles.avatarContainer}>
+          {review.User.avatar && <Image source={{ uri: review.User.avatar }} />}
+        </View>
 
-      <View>
-        <Text style={styles.user}>{review.User.name}</Text>
-        <Text style={styles.semester}>{`${review.semester} ${
-          review.year
-        }`}</Text>
+        <View>
+          <Text style={styles.user}>{review.User.name}</Text>
+          <Text style={styles.semester}>{`${review.semester} ${
+            review.year
+          }`}</Text>
+        </View>
       </View>
-    </View>
-
-    <View style={styles.courseHeader}>
-      <Text style={styles.courseName}>{review.Course.name}</Text>
 
       <View style={styles.ratingContainer}>
         <Text style={styles.reviewText}>RATED</Text>
@@ -45,9 +43,10 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(0,0,0,.12)',
     marginBottom: 16,
   },
-  courseHeader: {
+  header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'flex-start',
   },
   courseName: {
     fontFamily: 'NunitoSans-SemiBold',
@@ -55,7 +54,6 @@ const styles = StyleSheet.create({
     color: 'rgba(0,0,0,.87)',
   },
   courseComment: {
-    marginTop: 16,
     fontFamily: 'NunitoSans-Regular',
     fontSize: 14,
     color: 'rgba(0,0,0,.87)',
@@ -102,4 +100,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default ReviewItem
+export default ReviewCourseItem

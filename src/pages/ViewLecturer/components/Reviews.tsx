@@ -6,18 +6,12 @@ import { Review } from '@types'
 import mocks from '../../../mocks.json'
 import ReviewItem from './ReviewItem'
 
-interface Props {
-  viewReview(review: Review): void
-}
-
-const Reviews: React.SFC<Props> = ({ viewReview }) => (
+const Reviews = () => (
   <FlatList
     data={mocks.reviews}
     keyExtractor={(review: Review) => review.id.toString()}
     contentContainerStyle={{ flex: 1, backgroundColor: Theme.background }}
-    renderItem={({ item }) => (
-      <ReviewItem review={item} viewReview={viewReview} />
-    )}
+    renderItem={({ item }) => <ReviewItem review={item} />}
   />
 )
 
