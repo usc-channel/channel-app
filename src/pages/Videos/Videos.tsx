@@ -1,20 +1,9 @@
 import React from 'react'
-import {
-  ActivityIndicator,
-  FlatList,
-  LayoutAnimation,
-  Linking,
-  UIManager,
-  View,
-} from 'react-native'
+import { ActivityIndicator, FlatList, Linking, View } from 'react-native'
 import { stringify } from 'query-string'
 
 import { Video } from '@types'
 import VideoPreview from './components/VideoPreview'
-
-if (UIManager.setLayoutAnimationEnabledExperimental) {
-  UIManager.setLayoutAnimationEnabledExperimental(true)
-}
 
 interface State {
   loading: boolean
@@ -59,8 +48,6 @@ export default class Videos extends React.Component<{}, State> {
       `https://www.googleapis.com/youtube/v3/search?${params}`
     )
     const data = await response.json()
-
-    LayoutAnimation.spring()
 
     this.setState({
       initialLoad: false,

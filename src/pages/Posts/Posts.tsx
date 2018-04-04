@@ -3,11 +3,9 @@ import {
   ActivityIndicator,
   Button,
   Image,
-  LayoutAnimation,
   Platform,
   StyleSheet,
   Text,
-  UIManager,
   View,
 } from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
@@ -27,10 +25,6 @@ import {
 import { Category, GraphPost, PageInfo, Post, Store } from '@types'
 import PostList from './components/PostList'
 import CategoryFilter from './components/CategoryFilter'
-
-if (UIManager.setLayoutAnimationEnabledExperimental) {
-  UIManager.setLayoutAnimationEnabledExperimental(true)
-}
 
 interface GraphProps {
   categories: Category[]
@@ -156,7 +150,6 @@ class Posts extends React.Component<Props, State> {
 
   componentWillReceiveProps(nextProps: Props) {
     if (nextProps.data!.loading !== this.state.loading) {
-      LayoutAnimation.spring()
       this.setState({ loading: nextProps.data!.loading })
     }
 
@@ -272,8 +265,6 @@ class Posts extends React.Component<Props, State> {
         .refetch()
         .then(({ data }) => {
           const response = postCategoriesResolver(data).data
-
-          LayoutAnimation.spring()
 
           this.setState({
             retrying: false,
