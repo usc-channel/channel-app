@@ -8,6 +8,9 @@
       "updatedAt": "2018-03-12T11:05:42.000Z",
       "schoolId": 2,
       "totalReviews": 5,
+      "School": {
+        "name": "School of Theology and Religion"
+      },
       "averageRating": 4.8
     },
     {
@@ -18,16 +21,9 @@
       "updatedAt": "2018-03-11T21:16:35.000Z",
       "schoolId": 1,
       "totalReviews": 0,
-      "averageRating": null
-    },
-    {
-      "id": 3,
-      "name": "Johnny",
-      "avatar": null,
-      "createdAt": "2018-03-11T21:16:35.000Z",
-      "updatedAt": "2018-03-11T21:16:35.000Z",
-      "schoolId": 1,
-      "totalReviews": 0,
+      "School": {
+        "name": "School of Education and Humanities"
+      },
       "averageRating": null
     }
   ],
