@@ -8,6 +8,7 @@ import Lecturers from './Lecturers'
 import ViewLecturer from './ViewLecturer'
 import ViewCourse from './ViewCourse'
 import NewReview from './NewReview'
+import SearchCourses from './SearchCourses'
 
 import Releases from './Releases'
 import Adverts from './Adverts'
@@ -30,4 +31,5 @@ export {
   ViewLecturer,
   ViewCourse,
   NewReview,
+  SearchCourses,
 }
