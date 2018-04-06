@@ -60,8 +60,14 @@ export default class NewReview extends React.Component<Props, State> {
     this.props.navigation.goBack()
   }
 
+  selectCourse = (course: Course) => {
+    this.setState({ course })
+  }
+
   lookupCourse = () => {
-    //
+    this.props.navigation.navigate('searchCourses', {
+      selectCourse: this.selectCourse,
+    })
   }
 
   render() {

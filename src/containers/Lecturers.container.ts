@@ -1,6 +1,12 @@
 import { StackNavigator } from 'react-navigation'
 
-import { Lecturers, NewReview, ViewCourse, ViewLecturer } from '@pages'
+import {
+  Lecturers,
+  NewReview,
+  SearchCourses,
+  ViewCourse,
+  ViewLecturer,
+} from '@pages'
 import { Theme } from '@config'
 
 const PushStack = StackNavigator(
@@ -44,6 +50,13 @@ export default StackNavigator(
       screen: NewReview,
       navigationOptions: {
         ...Theme.flatNavigationOptions,
+        tabBarVisible: false,
+      },
+    },
+    searchCourses: {
+      screen: SearchCourses,
+      navigationOptions: {
+        header: null,
         tabBarVisible: false,
       },
     },
