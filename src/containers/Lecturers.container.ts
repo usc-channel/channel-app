@@ -43,7 +43,7 @@ export default StackNavigator(
     newReview: {
       screen: NewReview,
       navigationOptions: {
-        ...Theme.navigationOptions,
+        ...Theme.flatNavigationOptions,
         tabBarVisible: false,
       },
     },

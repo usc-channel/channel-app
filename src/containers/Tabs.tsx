@@ -83,6 +83,7 @@ export default TabNavigator(
     },
   },
   {
+    initialRouteName: 'Lecturers',
     animationEnabled: false,
     swipeEnabled: false,
     tabBarComponent: props => (

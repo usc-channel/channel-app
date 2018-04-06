@@ -67,7 +67,9 @@ export default class ViewLecturer extends React.Component<Props, State> {
   }
 
   makeReview = () => {
-    this.props.navigation.navigate('newReview')
+    this.props.navigation.navigate('newReview', {
+      lecturer: this.props.navigation.state.params.lecturer,
+    })
   }
 
   handleIndexChange = (index: number) => this.setState({ index })
@@ -106,7 +108,7 @@ export default class ViewLecturer extends React.Component<Props, State> {
             size={24}
             raised
             iconStyle={{ fontSize: 20 }}
-            containerStyle={{ backgroundColor: Theme.accent }}
+            containerStyle={{ backgroundColor: Theme.accent, marginRight: 0 }}
             onPress={this.makeReview}
           />
         </View>

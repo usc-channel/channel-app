@@ -77,11 +77,11 @@ class CategoryFilter extends React.Component<Props, State> {
 
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Button
-            text="Apply Filters"
+            title="Apply Filters"
             onPress={() =>
               updateSelectedCategories(this.state.selectedCategories)
             }
-            textStyle={styles.buttonTextStyle}
+            titleStyle={styles.buttonTextStyle}
             buttonStyle={[
               styles.buttonStyle,
               {
@@ -93,9 +93,9 @@ class CategoryFilter extends React.Component<Props, State> {
           />
 
           <Button
-            text="Clear filters"
+            title="Clear filters"
             onPress={() => updateSelectedCategories([])}
-            textStyle={styles.buttonTextStyle}
+            titleStyle={styles.buttonTextStyle}
             buttonStyle={[
               styles.buttonStyle,
               {
