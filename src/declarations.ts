@@ -46,30 +46,3 @@ declare module '*.json' {
   const value: any
   export default value
 }
-
-declare module 'react-native-star-rating' {
-  import * as React from 'react'
-  import { ImageURISource, StyleProp, ViewStyle } from 'react-native'
-
-  interface StarRatingProps {
-    buttonStyle?: StyleProp<ViewStyle>
-    containerStyle?: StyleProp<ViewStyle>
-    disabled?: boolean
-    emptyStar?: string | ImageURISource
-    emptyStarColor?: string
-    fullStar?: string | ImageURISource
-    fullStarColor?: string
-    halfStar?: string | ImageURISource
-    halfStarColor?: string
-    halfStarEnabled?: boolean
-    iconSet?: string
-    maxStars?: number
-    rating?: number
-    reversed?: boolean
-    starSize?: number
-    starStyle?: StyleProp<ViewStyle>
-    selectedStar?(): void
-  }
-
-  export default class StarRating extends React.Component<StarRatingProps> {}
-}
