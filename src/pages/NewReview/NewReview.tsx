@@ -76,6 +76,8 @@ export default class NewReview extends React.Component<Props, State> {
     return (
       <KeyboardAwareScrollView
         bounces={false}
+        enableOnAndroid
+        extraScrollHeight={Platform.OS === 'android' ? 80 : 0}
         style={{ flex: 1, backgroundColor: Theme.background }}
       >
         <View style={styles.header}>
@@ -215,6 +217,7 @@ const styles = StyleSheet.create({
   reviewText: {
     fontSize: 16,
     flex: 1,
+    textAlignVertical: 'top',
     fontFamily: 'NunitoSans-Regular',
     color: 'rgba(0,0,0,.87)',
   },
