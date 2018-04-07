@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'NunitoSans-SemiBold',
     fontSize: 16,
+    color: 'rgba(0,0,0,.87)'
   },
   reviews: {
     fontFamily: 'NunitoSans-Regular',
