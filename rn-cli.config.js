@@ -7,7 +7,4 @@ module.exports = {
   getSourceExts() {
     return ['ts', 'tsx']
   },
-  getBlacklistRE() {
-    return blacklist([/react-native\/local-cli\/core\/__fixtures__.*/])
-  },
 }
