@@ -68,6 +68,7 @@ export default class ViewLecturer extends React.Component<Props, State> {
 
   makeReview = () => {
     this.props.navigation.navigate('newReview', {
+      mode: 'single',
       lecturer: this.props.navigation.state.params.lecturer,
     })
   }
@@ -108,7 +109,12 @@ export default class ViewLecturer extends React.Component<Props, State> {
             size={24}
             raised
             iconStyle={{ fontSize: 20 }}
-            containerStyle={{ backgroundColor: Theme.accent, marginRight: 0 }}
+            containerStyle={{
+              backgroundColor: Theme.accent,
+              margin: 0,
+              marginLeft: 7,
+              marginBottom: 7,
+            }}
             onPress={this.makeReview}
           />
         </View>

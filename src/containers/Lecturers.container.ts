@@ -7,6 +7,7 @@ import {
   ViewCourse,
   ViewLecturer,
 } from '@pages'
+import { Search } from '@components'
 import { Theme } from '@config'
 
 const PushStack = StackNavigator(
@@ -55,6 +56,13 @@ export default StackNavigator(
     },
     searchCourses: {
       screen: SearchCourses,
+      navigationOptions: {
+        header: null,
+        tabBarVisible: false,
+      },
+    },
+    search: {
+      screen: Search,
       navigationOptions: {
         header: null,
         tabBarVisible: false,

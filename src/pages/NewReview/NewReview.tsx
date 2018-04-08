@@ -8,16 +8,18 @@ import {
   View,
 } from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
-import { ButtonGroup, Icon } from 'react-native-elements'
+import { ButtonGroup, Icon, ListItem } from 'react-native-elements'
 import StarRating from 'react-native-star-rating'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import { Input, InputPicker, NavIcon } from '@components'
-import { Theme } from '@config'
+import { API, Theme } from '@config'
 import { Course, Lecturer } from '@types'
 
 interface ScreenParams {
   lecturer: Lecturer
+  mode: 'all' | 'single'
+  addReview(): void
 }
 
 type Props = NavigationScreenProps<ScreenParams>
@@ -29,10 +31,14 @@ interface State {
   courseLookup: string
   rating: number | null
   review: string
+  lecturer: Lecturer | null
 }
 
 export default class NewReview extends React.Component<Props, State> {
-  static navigationOptions = ({ navigation }: NavigationScreenProps<{}>) => ({
+  static navigationOptions = ({
+    navigation,
+  }: NavigationScreenProps<ScreenParams>) => ({
+    title: navigation.state.params.mode === 'all' ? 'New Lecturer Review' : '',
     headerLeft: (
       <NavIcon
         iconName={
@@ -41,6 +47,15 @@ export default class NewReview extends React.Component<Props, State> {
         onPress={() => navigation.goBack()}
       />
     ),
+    headerRight:
+      navigation.state.params.mode === 'all' ? (
+        <NavIcon
+          iconName={Platform.OS === 'ios' ? 'md-checkmark' : 'check'}
+          onPress={() =>
+            navigation.state.params && navigation.state.params.addReview()
+          }
+        />
+      ) : null,
   })
 
   constructor(props: Props) {
@@ -51,9 +66,16 @@ export default class NewReview extends React.Component<Props, State> {
       year: (new Date().getFullYear() - 1).toString(),
       course: null,
       rating: null,
+      lecturer: null,
       review: '',
       courseLookup: '',
     }
+  }
+
+  componentDidMount() {
+    this.props.navigation.setParams({
+      addReview: this.addReview,
+    })
   }
 
   addReview = () => {
@@ -64,14 +86,46 @@ export default class NewReview extends React.Component<Props, State> {
     this.setState({ course })
   }
 
+  selectLecturer = (lecturer: Lecturer) => {
+    this.setState({ lecturer })
+  }
+
+  getLecturers = (search: string) => {
+    return new Promise(async resolve => {
+      const request = await fetch(`${API}/lecturers?search=${search}`)
+      const lecturers = await request.json()
+      resolve(lecturers)
+    })
+  }
+
   lookupCourse = () => {
     this.props.navigation.navigate('searchCourses', {
       selectCourse: this.selectCourse,
     })
   }
 
+  lookupLectures = () => {
+    this.props.navigation.navigate('search', {
+      placeholder: 'Search Lecturers',
+      getResults: this.getLecturers,
+      keyExtractor: (item: Lecturer) => item.id.toString(),
+      renderItem: (item: Lecturer, onSelect: () => void) => (
+        <ListItem
+          title={item.name}
+          onPress={() => {
+            this.selectLecturer(item)
+            onSelect()
+          }}
+          titleStyle={{ fontFamily: 'NunitoSans-Regular' }}
+        />
+      ),
+    })
+  }
+
   render() {
-    const { lecturer } = this.props.navigation.state.params
+    const { mode } = this.props.navigation.state.params
+    const lecturer =
+      this.props.navigation.state.params.lecturer || this.state.lecturer
 
     return (
       <KeyboardAwareScrollView
@@ -80,23 +134,27 @@ export default class NewReview extends React.Component<Props, State> {
         extraScrollHeight={Platform.OS === 'android' ? 80 : 0}
         style={{ flex: 1, backgroundColor: Theme.background }}
       >
-        <View style={styles.header}>
-          <View>
-            <Text style={styles.subtitle}>NEW LECTURER REVIEW</Text>
-            <Text style={styles.name}>{lecturer.name}</Text>
-          </View>
+        {mode === 'single' && (
+          <View style={styles.header}>
+            <View>
+              <Text style={styles.subtitle}>NEW LECTURER REVIEW</Text>
+              <Text style={styles.name}>
+                {lecturer ? lecturer.name : 'Select Lecturer'}
+              </Text>
+            </View>
 
-          <Icon
-            component={TouchableOpacity}
-            name="check"
-            color="#fff"
-            size={24}
-            raised
-            iconStyle={{ fontSize: 20 }}
-            containerStyle={{ backgroundColor: Theme.accent, marginRight: 0 }}
-            onPress={this.addReview}
-          />
-        </View>
+            <Icon
+              component={TouchableOpacity}
+              name="check"
+              color="#fff"
+              size={24}
+              raised
+              iconStyle={{ fontSize: 20 }}
+              containerStyle={{ backgroundColor: Theme.accent, marginRight: 0 }}
+              onPress={this.addReview}
+            />
+          </View>
+        )}
 
         <View style={{ flexDirection: 'row' }}>
           <Input
@@ -142,6 +200,16 @@ export default class NewReview extends React.Component<Props, State> {
           }
           onPress={this.lookupCourse}
         />
+
+        {mode === 'all' && (
+          <InputPicker
+            label="Lecturer"
+            value={
+              this.state.lecturer ? this.state.lecturer.name : 'Select lecturer'
+            }
+            onPress={this.lookupLectures}
+          />
+        )}
 
         <View style={styles.ratingBox}>
           <Text style={styles.subheader}>Rating</Text>
