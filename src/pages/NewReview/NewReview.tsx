@@ -98,9 +98,29 @@ export default class NewReview extends React.Component<Props, State> {
     })
   }
 
+  getCourses = (search: string) => {
+    return new Promise(async resolve => {
+      const request = await fetch(`${API}/courses?search=${search}`)
+      const courses = await request.json()
+      resolve(courses)
+    })
+  }
+
   lookupCourse = () => {
-    this.props.navigation.navigate('searchCourses', {
-      selectCourse: this.selectCourse,
+    this.props.navigation.navigate('search', {
+      placeholder: 'Search Course ID or Course Name',
+      getResults: this.getCourses,
+      keyExtractor: (item: Course) => item.id.toString(),
+      renderItem: (item: Course, onSelect: () => void) => (
+        <ListItem
+          title={`${item.code} - ${item.name}`}
+          onPress={() => {
+            this.selectCourse(item)
+            onSelect()
+          }}
+          titleStyle={{ fontFamily: 'NunitoSans-Regular' }}
+        />
+      ),
     })
   }
 
