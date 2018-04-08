@@ -1,12 +1,6 @@
 import { StackNavigator } from 'react-navigation'
 
-import {
-  Lecturers,
-  NewReview,
-  SearchCourses,
-  ViewCourse,
-  ViewLecturer,
-} from '@pages'
+import { Lecturers, NewReview, ViewCourse, ViewLecturer } from '@pages'
 import { Search } from '@components'
 import { Theme } from '@config'
 
@@ -51,13 +45,6 @@ export default StackNavigator(
       screen: NewReview,
       navigationOptions: {
         ...Theme.flatNavigationOptions,
-        tabBarVisible: false,
-      },
-    },
-    searchCourses: {
-      screen: SearchCourses,
-      navigationOptions: {
-        header: null,
         tabBarVisible: false,
       },
     },
