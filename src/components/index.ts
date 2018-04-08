@@ -5,6 +5,7 @@ import Offline from './Offline'
 import SearchEmpty from './SearchEmpty'
 import InputPicker from './InputPicker'
 import Input from './Input'
+import Search from './Search'
 
 export {
   NavIcon,
@@ -14,4 +15,5 @@ export {
   SearchEmpty,
   InputPicker,
   Input,
+  Search,
 }

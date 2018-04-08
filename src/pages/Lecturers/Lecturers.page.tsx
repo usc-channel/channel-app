@@ -4,11 +4,13 @@ import {
   FlatList,
   Platform,
   StyleSheet,
+  TouchableOpacity,
   View,
 } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import SearchBar from 'react-native-material-design-searchbar'
 import { NavigationScreenProps } from 'react-navigation'
+import { Icon } from 'react-native-elements'
 
 import { API, Theme } from '@config'
 import { Lecturer as LecturerModel } from '@types'
@@ -41,18 +43,26 @@ class Lecturers extends React.Component<Props, State> {
   }
 
   getLecturers = async () => {
-    const request = await fetch(`${API}/lecturers`)
-    const lecturers = await request.json()
+    try {
+      const request = await fetch(`${API}/lecturers`)
+      const lecturers = await request.json()
 
-    this.setState({
-      lecturers,
-      loading: false,
-      refreshing: false,
-    })
+      this.setState({
+        lecturers,
+        loading: false,
+        refreshing: false,
+      })
+    } catch (e) {
+      // TODO: Display error screen
+    }
   }
 
   updateSearch = (search: string) => {
     this.setState({ search })
+  }
+
+  addReview = () => {
+    this.props.navigation.navigate('newReview', { mode: 'all' })
   }
 
   viewLecturer = (lecturer: LecturerModel) => {
@@ -115,19 +125,38 @@ class Lecturers extends React.Component<Props, State> {
         {loading ? (
           <ActivityIndicator style={{ margin: 16 }} />
         ) : lecturers.length > 0 ? (
-          <FlatList
-            data={lecturers}
-            keyExtractor={(a: LecturerModel) => a.id.toString()}
-            contentContainerStyle={styles.content}
-            numColumns={2}
-            refreshing={refreshing}
-            onRefresh={this.getLecturers}
-            renderItem={({ item }) => (
-              <View style={{ flex: 1, maxWidth: '50%' }}>
-                <Lecturer onPress={this.viewLecturer} lecturer={item} />
-              </View>
-            )}
-          />
+          <View style={{ flex: 1 }}>
+            <FlatList
+              data={lecturers}
+              keyExtractor={(a: LecturerModel) => a.id.toString()}
+              contentContainerStyle={styles.content}
+              numColumns={2}
+              refreshing={refreshing}
+              onRefresh={this.getLecturers}
+              renderItem={({ item }) => (
+                <View style={{ flex: 1, maxWidth: '50%' }}>
+                  <Lecturer onPress={this.viewLecturer} lecturer={item} />
+                </View>
+              )}
+            />
+
+            <Icon
+              component={TouchableOpacity}
+              name="star"
+              color="#fff"
+              size={24}
+              raised
+              iconStyle={{ fontSize: 20 }}
+              containerStyle={{
+                backgroundColor: Theme.accent,
+                marginRight: 0,
+                position: 'absolute',
+                bottom: 20,
+                right: 16,
+              }}
+              onPress={this.addReview}
+            />
+          </View>
         ) : (
           <SearchEmpty search={this.state.search} />
         )}
