@@ -1,18 +1,25 @@
 import React from 'react'
-import { FlatList, Platform, StyleSheet, View } from 'react-native'
+import {
+  ActivityIndicator,
+  FlatList,
+  Platform,
+  StyleSheet,
+  View,
+} from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import SearchBar from 'react-native-material-design-searchbar'
 import { NavigationScreenProps } from 'react-navigation'
 
-import { Theme } from '@config'
+import { API, Theme } from '@config'
 import { Lecturer as LecturerModel } from '@types'
 import { SearchEmpty } from '@components'
 import Lecturer from './components/Lecturer'
-import mocks from '../../mocks.json'
 
 type Props = NavigationScreenProps<{}>
 
 interface State {
+  loading: boolean
+  refreshing: boolean
   search: string
   lecturers: LecturerModel[]
 }
@@ -22,13 +29,26 @@ class Lecturers extends React.Component<Props, State> {
     super(props)
 
     this.state = {
+      loading: false,
+      refreshing: false,
       search: '',
       lecturers: [],
     }
   }
 
   componentDidMount() {
-    this.setState({ lecturers: mocks.lecturers })
+    this.setState({ loading: true }, this.getLecturers)
+  }
+
+  getLecturers = async () => {
+    const request = await fetch(`${API}/lecturers`)
+    const lecturers = await request.json()
+
+    this.setState({
+      lecturers,
+      loading: false,
+      refreshing: false,
+    })
   }
 
   updateSearch = (search: string) => {
@@ -49,8 +69,15 @@ class Lecturers extends React.Component<Props, State> {
     )
   }
 
+  onRefresh = () => {
+    this.setState({ refreshing: true }, () => {
+      this.getLecturers()
+    })
+  }
+
   render() {
     const lecturers = this.filterLecturers()
+    const { loading, refreshing } = this.state
 
     return (
       <View style={styles.container}>
@@ -85,12 +112,16 @@ class Lecturers extends React.Component<Props, State> {
           }}
         />
 
-        {lecturers.length > 0 ? (
+        {loading ? (
+          <ActivityIndicator style={{ margin: 16 }} />
+        ) : lecturers.length > 0 ? (
           <FlatList
             data={lecturers}
             keyExtractor={(a: LecturerModel) => a.id.toString()}
             contentContainerStyle={styles.content}
             numColumns={2}
+            refreshing={refreshing}
+            onRefresh={this.getLecturers}
             renderItem={({ item }) => (
               <View style={{ flex: 1, maxWidth: '50%' }}>
                 <Lecturer onPress={this.viewLecturer} lecturer={item} />
