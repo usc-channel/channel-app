@@ -14,7 +14,12 @@ const navigationOptions = {
           textAlign: 'left',
         },
       }
-    : {}),
+    : {
+        headerTitleStyle: {
+          fontFamily: 'NunitoSans-Bold',
+          fontWeight: '400',
+        },
+      }),
 } as any
 
 const Theme = {
