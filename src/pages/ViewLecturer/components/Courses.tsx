@@ -2,17 +2,17 @@ import React from 'react'
 import { FlatList } from 'react-native'
 
 import { Course } from '@types'
-import mocks from '../../../mocks.json'
 import CourseItem from './CourseItem'
 
 interface Props {
+  courses: Course[]
   viewCourse(course: Course): void
 }
 
-const Courses: React.SFC<Props> = ({ viewCourse }) => (
+const Courses: React.SFC<Props> = ({ courses, viewCourse }) => (
   <FlatList
     keyExtractor={(course: Course) => course.id.toString()}
-    data={mocks.courses}
+    data={courses}
     renderItem={({ item }) => (
       <CourseItem course={item} viewCourse={viewCourse} />
     )}

@@ -1,10 +1,15 @@
 import React from 'react'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import {
+  ActivityIndicator,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
 
-import { Theme } from '@config'
+import { API, Theme } from '@config'
 import { Course, Lecturer, Review } from '@types'
-import mocks from '../../mocks.json'
 import ReviewCourseItem from './components/ReviewCourseItem'
 
 interface ScreenParams {
@@ -14,26 +19,67 @@ interface ScreenParams {
 
 type Props = NavigationScreenProps<ScreenParams>
 
-const ViewCourse: React.SFC<Props> = ({ navigation }) => {
-  const { course, lecturer } = navigation.state.params
+interface State {
+  loading: boolean
+  reviews: Review[]
+}
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <View>
-          <Text style={styles.name}>{`${lecturer.name}'s Reviews`}</Text>
-          <Text style={styles.course}>{`${course.code} - ${course.name}`}</Text>
+class ViewCourse extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props)
+
+    this.state = {
+      loading: false,
+      reviews: [],
+    }
+  }
+
+  componentDidMount() {
+    this.getReviews()
+  }
+
+  getReviews = () => {
+    this.setState({ loading: true }, async () => {
+      const { lecturer, course } = this.props.navigation.state.params
+
+      const request = await fetch(
+        `${API}/lecturers/${lecturer.id}/reviews/${course.id}`
+      )
+      const reviews = await request.json()
+
+      this.setState({ reviews, loading: false })
+    })
+  }
+
+  render() {
+    const { course, lecturer } = this.props.navigation.state.params
+
+    return (
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <View>
+            <Text style={styles.name}>{`${lecturer.name}'s Reviews`}</Text>
+            <Text style={styles.course}>{`${course.code} - ${
+              course.name
+            }`}</Text>
+          </View>
         </View>
-      </View>
 
-      <FlatList
-        data={mocks.reviews}
-        keyExtractor={(review: Review) => review.id.toString()}
-        contentContainerStyle={{ flex: 1, backgroundColor: Theme.background }}
-        renderItem={({ item }) => <ReviewCourseItem review={item} />}
-      />
-    </View>
-  )
+        {this.state.loading ? (
+          <ActivityIndicator style={{ margin: 16 }} />
+        ) : (
+          <FlatList
+            data={this.state.reviews}
+            keyExtractor={(review: Review) => review.id.toString()}
+            contentContainerStyle={{
+              backgroundColor: Theme.background,
+            }}
+            renderItem={({ item }) => <ReviewCourseItem review={item} />}
+          />
+        )}
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
