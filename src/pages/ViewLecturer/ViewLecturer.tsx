@@ -8,10 +8,10 @@ import {
 } from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
 import { Icon } from 'react-native-elements'
-import { SceneMap, TabBar, TabViewAnimated } from 'react-native-tab-view'
+import { TabBar, TabViewAnimated } from 'react-native-tab-view'
 
 import { Course, Lecturer, Review } from '@types'
-import { Theme } from '@config'
+import { API, Theme } from '@config'
 import Reviews from './components/Reviews'
 import Courses from './components/Courses'
 
@@ -24,12 +24,13 @@ type Props = NavigationScreenProps<ScreenParams>
 interface Route {
   key: string
   title: string
-  count: number
 }
 
 interface State {
   index: number
   routes: Route[]
+  courses: Course[]
+  reviews: Review[]
 }
 
 const initialLayout = {
@@ -38,21 +39,56 @@ const initialLayout = {
 }
 
 export default class ViewLecturer extends React.Component<Props, State> {
-  renderScene = SceneMap({
-    first: () => <Reviews />,
-    second: () => <Courses viewCourse={this.viewCourse} />,
-  })
-
   constructor(props: Props) {
     super(props)
 
     this.state = {
       index: 0,
       routes: [
-        { key: 'first', title: 'Reviews', count: 300 },
-        { key: 'second', title: 'Courses', count: 12 },
+        { key: 'first', title: 'Reviews' },
+        { key: 'second', title: 'Courses' },
       ],
+      courses: [],
+      reviews: [],
     }
+  }
+
+  componentDidMount() {
+    this.getCourses()
+    this.getReviews()
+  }
+
+  renderScene = ({ route }: { route: Route }) => {
+    switch (route.key) {
+      case 'first':
+        return <Reviews reviews={this.state.reviews} />
+      case 'second':
+        return (
+          <Courses courses={this.state.courses} viewCourse={this.viewCourse} />
+        )
+      default:
+        return null
+    }
+  }
+
+  getCourses = async () => {
+    const { id } = this.props.navigation.state.params.lecturer
+    const request = await fetch(`${API}/lecturers/${id}/courses`)
+    const courses = await request.json()
+
+    this.setState({
+      courses: courses.rows,
+    })
+  }
+
+  getReviews = async () => {
+    const { id } = this.props.navigation.state.params.lecturer
+    const request = await fetch(`${API}/lecturers/${id}/reviews`)
+    const reviews = await request.json()
+
+    this.setState({
+      reviews: reviews.rows,
+    })
   }
 
   viewReview = (review: Review) => {
@@ -84,9 +120,11 @@ export default class ViewLecturer extends React.Component<Props, State> {
     />
   )
 
-  renderLabel = ({ route }: { route: Route }) => (
+  renderLabel = ({ route, index }: { route: Route; index: number }) => (
     <View>
-      <Text style={styles.tabCount}>{route.count}</Text>
+      <Text style={styles.tabCount}>
+        {index === 0 ? this.state.reviews.length : this.state.courses.length}
+      </Text>
       <Text style={styles.tabTitle}>{route.title}</Text>
     </View>
   )
