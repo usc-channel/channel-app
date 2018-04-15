@@ -1,7 +1,5 @@
 {
   "emmet.showAbbreviationSuggestions": false,
-  "cSpell.words": [
-    "guid"
-  ],
-  "java.configuration.updateBuildConfiguration": "disabled"
+  "eslint.enable": false,
+  "cSpell.words": ["guid"]
 }

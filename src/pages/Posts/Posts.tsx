@@ -121,7 +121,7 @@ class Posts extends React.Component<Props, State> {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.navigation.setParams({
       onSearch: this.onSearch,
       onFilter: this.onFilter,

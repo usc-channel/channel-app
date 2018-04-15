@@ -45,7 +45,7 @@ class ViewPost extends React.Component<Props> {
     ),
   })
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.navigation.setParams({
       onShare: this.onShare,
     })
