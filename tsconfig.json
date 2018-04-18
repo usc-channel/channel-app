@@ -18,7 +18,9 @@
       "@config": ["config"],
       "@pages": ["pages"],
       "@types": ["types"],
-      "@util": ["util"]
+      "@util": ["util"],
+      "@actions": ["actions"],
+      "@reducers": ["reducers"]
     },
     "lib": ["es2017", "dom"]
   },

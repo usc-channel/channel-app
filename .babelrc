@@ -11,7 +11,9 @@
           "@config": "./src/config",
           "@pages": "./src/pages",
           "@types": "./src/types",
-          "@util": "./src/util"
+          "@util": "./src/util",
+          "@actions": "./src/actions",
+          "@reducers": "./src/reducers"
         }
       }
     ]
