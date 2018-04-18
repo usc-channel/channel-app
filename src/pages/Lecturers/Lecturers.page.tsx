@@ -11,13 +11,20 @@ import { getStatusBarHeight } from 'react-native-status-bar-height'
 import SearchBar from 'react-native-material-design-searchbar'
 import { NavigationScreenProps } from 'react-navigation'
 import { Icon } from 'react-native-elements'
+import { connect } from 'react-redux'
 
 import { API, Theme } from '@config'
-import { Lecturer as LecturerModel } from '@types'
+import { Lecturer as LecturerModel, Store } from '@types'
 import { SearchEmpty } from '@components'
 import Lecturer from './components/Lecturer'
 
-type Props = NavigationScreenProps<{}>
+type OwnProps = NavigationScreenProps<{}>
+
+interface StateProps {
+  loggedIn: boolean
+}
+
+type Props = StateProps & OwnProps
 
 interface State {
   loading: boolean
@@ -62,7 +69,11 @@ class Lecturers extends React.Component<Props, State> {
   }
 
   addReview = () => {
-    this.props.navigation.navigate('newReview', { mode: 'all' })
+    if (this.props.loggedIn) {
+      this.props.navigation.navigate('newReview', { mode: 'all' })
+    } else {
+      alert('You need an account')
+    }
   }
 
   viewLecturer = (lecturer: LecturerModel) => {
@@ -175,4 +186,8 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Lecturers
+const mapStateToProps = ({ userState }: Store) => ({
+  loggedIn: !!userState.user,
+})
+
+export default connect(mapStateToProps)(Lecturers)
