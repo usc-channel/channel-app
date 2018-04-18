@@ -9,8 +9,9 @@ import {
 import { NavigationScreenProps } from 'react-navigation'
 import { Icon } from 'react-native-elements'
 import { TabBar, TabViewAnimated } from 'react-native-tab-view'
+import { connect } from 'react-redux'
 
-import { Course, Lecturer, Review } from '@types'
+import { Course, Lecturer, Review, Store } from '@types'
 import { API, Theme } from '@config'
 import Reviews from './components/Reviews'
 import Courses from './components/Courses'
@@ -19,7 +20,13 @@ interface ScreenParams {
   lecturer: Lecturer
 }
 
-type Props = NavigationScreenProps<ScreenParams>
+type OwnProps = NavigationScreenProps<ScreenParams>
+
+interface StateProps {
+  isLoggedIn: boolean
+}
+
+type Props = OwnProps & StateProps
 
 interface Route {
   key: string
@@ -38,7 +45,7 @@ const initialLayout = {
   width: Dimensions.get('window').width,
 }
 
-export default class ViewLecturer extends React.Component<Props, State> {
+class ViewLecturer extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
 
@@ -103,10 +110,14 @@ export default class ViewLecturer extends React.Component<Props, State> {
   }
 
   makeReview = () => {
-    this.props.navigation.navigate('newReview', {
-      mode: 'single',
-      lecturer: this.props.navigation.state.params.lecturer,
-    })
+    if (this.props.isLoggedIn) {
+      this.props.navigation.navigate('newReview', {
+        mode: 'single',
+        lecturer: this.props.navigation.state.params.lecturer,
+      })
+    } else {
+      alert('You need an account')
+    }
   }
 
   handleIndexChange = (index: number) => this.setState({ index })
@@ -204,3 +215,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 })
+
+const mapStateToProps = ({ userState }: Store) => ({
+  isLoggedIn: !!userState.user,
+})
+
+export default connect(mapStateToProps)(ViewLecturer)
