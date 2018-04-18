@@ -1,3 +1,5 @@
+import { Dispatch as ReduxDispatch } from 'react-redux'
+
 export interface Category {
   categoryId: number
   name: string
@@ -98,3 +100,15 @@ export interface Review {
   User: Partial<User>
   Course: Partial<Course>
 }
+
+export interface Store {
+  userState: UserState
+}
+
+export interface UserState {
+  user: User | null
+  loading: boolean
+  error: string | null
+}
+
+export type Dispatch = ReduxDispatch<Store>

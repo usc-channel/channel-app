@@ -484,6 +484,12 @@
   version "16.0.36"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.0.36.tgz#ceb5639013bdb92a94147883052e69bb2c22c69b"
 
+"@types/redux-logger@^3.0.6":
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/@types/redux-logger/-/redux-logger-3.0.6.tgz#4cf9d5b596b576b030a4bb671547f0ab63f81a73"
+  dependencies:
+    redux "^3.6.0"
+
 "@types/zen-observable@0.5.3", "@types/zen-observable@^0.5.3":
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/@types/zen-observable/-/zen-observable-0.5.3.tgz#91b728599544efbb7386d8b6633693a3c2e7ade5"
@@ -1930,6 +1936,10 @@ decode-uri-component@^0.2.0:
 dedent@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/dedent/-/dedent-0.7.0.tgz#2495ddbaf6eb874abb0e1be9df22d2e5a544326c"
+
+deep-diff@^0.3.5:
+  version "0.3.8"
+  resolved "https://registry.yarnpkg.com/deep-diff/-/deep-diff-0.3.8.tgz#c01de63efb0eec9798801d40c7e0dae25b582c84"
 
 deep-extend@~0.4.0:
   version "0.4.2"
@@ -5419,9 +5429,19 @@ realpath-native@^1.0.0:
   dependencies:
     util.promisify "^1.0.0"
 
+redux-logger@^3.0.6:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/redux-logger/-/redux-logger-3.0.6.tgz#f7555966f3098f3c88604c449cf0baf5778274bf"
+  dependencies:
+    deep-diff "^0.3.5"
+
 redux-saga@^0.16.0:
   version "0.16.0"
   resolved "https://registry.yarnpkg.com/redux-saga/-/redux-saga-0.16.0.tgz#0a231db0a1489301dd980f6f2f88d8ced418f724"
+
+redux-thunk@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.2.0.tgz#e615a16e16b47a19a515766133d1e3e99b7852e5"
 
 redux@^3.6.0, redux@^3.7.2:
   version "3.7.2"
