@@ -1,10 +1,11 @@
 import { Platform } from 'react-native'
+import { API_URL } from 'react-native-dotenv'
 
 export const featuredCategoryId = 11
 
-const getLocalAPI = () => {
-  if (process.env.NODE_ENV === 'production') {
-    return ''
+const getAPI = () => {
+  if (API_URL) {
+    return API_URL
   }
 
   return Platform.OS === 'ios'
@@ -12,4 +13,4 @@ const getLocalAPI = () => {
     : 'http://192.168.1.104:8000/api'
 }
 
-export const API = getLocalAPI()
+export const API = getAPI()
