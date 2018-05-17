@@ -1,7 +1,5 @@
 {
   "emmet.showAbbreviationSuggestions": false,
-  "cSpell.words": [
-    "guid"
-  ],
-  "java.configuration.updateBuildConfiguration": "disabled"
+  "cSpell.words": ["guid"],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
