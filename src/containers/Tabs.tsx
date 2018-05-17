@@ -68,7 +68,7 @@ export default TabNavigator(
     },
   },
   {
-    initialRouteName: 'Lecturers',
+    initialRouteName: 'Archives',
     animationEnabled: false,
     swipeEnabled: false,
     tabBarComponent: props => (
