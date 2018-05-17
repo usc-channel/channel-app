@@ -25,6 +25,8 @@ ModalStack = withNetworkConnectivity({
   withRedux: true,
 })(ModalStack)
 
+console.disableYellowBox = true
+
 const AppRoot = () => (
   <Provider store={store}>
     <ApolloProvider client={graphqlClient}>
