@@ -2,8 +2,6 @@ import Posts from './Posts'
 import ViewPost from './ViewPost'
 import SearchPosts from './SearchPosts'
 
-import MarketPlace from './MarketPlace.page'
-
 import Lecturers from './Lecturers'
 import ViewLecturer from './ViewLecturer'
 import ViewCourse from './ViewCourse'
@@ -18,7 +16,6 @@ import Gallery from './Gallery'
 
 export {
   Posts,
-  MarketPlace,
   Lecturers,
   Releases,
   Adverts,
