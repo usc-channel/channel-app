@@ -1,8 +1,7 @@
 import React from 'react'
-import { Dimensions, StyleSheet, View } from 'react-native'
-import FastImage from 'react-native-fast-image'
+import { Dimensions, StyleSheet } from 'react-native'
 
-import { Touchable } from '@components'
+import { ImagePulse, Touchable } from '@components'
 import { Release } from '@types'
 
 interface Props {
@@ -12,18 +11,16 @@ interface Props {
 
 const ReleaseThumbnail: React.SFC<Props> = ({ release, viewRelease }) => (
   <Touchable onPress={() => viewRelease(release)}>
-    <View style={styles.container}>
-      <FastImage source={{ uri: release.cover }} style={styles.image} />
-    </View>
+    <ImagePulse
+      imageSource={{ uri: release.cover }}
+      style={styles.image}
+      thumbnailSource={require('../../../assets/newspaper.jpg')}
+      thumbnailBlurRadius={0}
+    />
   </Touchable>
 )
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-  },
   image: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').width * 1.26,
