@@ -1,42 +1,14 @@
-import { StackNavigator, TabNavigator } from 'react-navigation'
-import { Adverts, Releases, ViewRelease } from '@pages'
+import { StackNavigator } from 'react-navigation'
+import { Releases, ViewRelease } from '@pages'
 import { Theme } from '@config'
-
-const Tabs = TabNavigator(
-  {
-    Releases: {
-      screen: Releases,
-    },
-    Adverts: {
-      screen: Adverts,
-    },
-  },
-  {
-    ...TabNavigator.Presets.AndroidTopTabs,
-    tabBarPosition: 'top',
-    swipeEnabled: true,
-    tabBarOptions: {
-      style: {
-        backgroundColor: Theme.primary,
-      },
-      indicatorStyle: {
-        backgroundColor: '#fff',
-      },
-      labelStyle: {
-        fontFamily: 'NunitoSans-Bold',
-        fontSize: 14,
-      },
-    },
-  }
-)
 
 export default StackNavigator(
   {
     Archives: {
-      screen: Tabs,
+      screen: Releases,
       navigationOptions: {
         title: 'Archives',
-        ...Theme.flatNavigationOptions,
+        ...Theme.navigationOptions,
       },
     },
     ViewRelease: {
