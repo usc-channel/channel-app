@@ -1,11 +1,11 @@
 import { Platform } from 'react-native'
-import { API_URL } from 'react-native-dotenv'
+const env = require('../../env.js')
 
 export const featuredCategoryId = 11
 
 const getAPI = () => {
-  if (API_URL) {
-    return API_URL
+  if (env.API_URL) {
+    return env.API_URL
   }
 
   return Platform.OS === 'ios'

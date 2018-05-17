@@ -1,5 +1,5 @@
 {
-  "presets": ["react-native", "react-native-dotenv"],
+  "presets": ["react-native"],
   "plugins": [
     [
       "module-resolver",

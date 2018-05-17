@@ -21,7 +21,6 @@
     "react-apollo": "^2.0.4",
     "react-native": "0.55.4",
     "react-native-collapsible": "^0.10.0",
-    "react-native-dotenv": "^0.1.1",
     "react-native-dropdownalert": "^3.3.1",
     "react-native-elements": "^1.0.0-beta5",
     "react-native-fast-image": "^2.2.4",
