@@ -12,7 +12,6 @@ import Adverts from './Adverts'
 import ViewRelease from './ViewRelease'
 
 import Videos from './Videos'
-import Gallery from './Gallery'
 
 export {
   Posts,
@@ -22,7 +21,6 @@ export {
   ViewPost,
   SearchPosts,
   Videos,
-  Gallery,
   ViewRelease,
   ViewLecturer,
   ViewCourse,
