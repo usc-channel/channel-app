@@ -19,11 +19,11 @@ const Offline: React.SFC<Props> = ({ message, retrying, action }) => (
     </Text>
 
     <Button
-      textStyle={{ color: Theme.primary }}
+      titleStyle={{ color: Theme.primary }}
       containerStyle={{ marginTop: 15 }}
       clear
       loading={retrying}
-      text={message}
+      title={message}
       loadingProps={{ size: 'small' }}
       loadingStyle={{ marginVertical: 9 }}
       onPress={action}
