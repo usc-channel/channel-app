@@ -154,12 +154,12 @@ class ViewLecturer extends React.Component<Props, State> {
           <Icon
             component={TouchableOpacity}
             name="star"
-            color="#fff"
+            color={Theme.accent}
             size={24}
             raised
+            reverse
             iconStyle={{ fontSize: 20 }}
             containerStyle={{
-              backgroundColor: Theme.accent,
               margin: 0,
               marginLeft: 7,
               marginBottom: 7,

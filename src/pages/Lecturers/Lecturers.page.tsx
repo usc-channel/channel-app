@@ -154,17 +154,17 @@ class Lecturers extends React.Component<Props, State> {
             <Icon
               component={TouchableOpacity}
               name="star"
-              color="#fff"
+              color={Theme.accent}
               size={24}
               raised
               iconStyle={{ fontSize: 20 }}
               containerStyle={{
-                backgroundColor: Theme.accent,
                 marginRight: 0,
                 position: 'absolute',
                 bottom: 20,
                 right: 16,
               }}
+              reverse
               onPress={this.addReview}
             />
           </View>
