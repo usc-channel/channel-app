@@ -12,6 +12,8 @@ import ViewRelease from './ViewRelease'
 
 import Videos from './Videos'
 
+import More from './More'
+
 export {
   Posts,
   Lecturers,
@@ -23,4 +25,5 @@ export {
   ViewLecturer,
   ViewCourse,
   NewReview,
+  More,
 }

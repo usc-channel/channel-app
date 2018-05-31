@@ -25,6 +25,7 @@
         "named-imports-order": "case-insensitive"
       }
     ],
+    "jsx-curly-spacing": false,
     "arrow-parens": [true, "ban-single-arg-parens"],
     "jsx-no-multiline-js": false
   }
