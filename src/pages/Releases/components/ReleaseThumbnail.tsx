@@ -20,10 +20,13 @@ const ReleaseThumbnail: React.SFC<Props> = ({ release, viewRelease }) => (
   </Touchable>
 )
 
+const width = (Dimensions.get('window').width - 24) / 2
+
 const styles = StyleSheet.create({
   image: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').width * 1.26,
+    width,
+    height: width * 1.26,
+    margin: 4,
   },
 })
 
