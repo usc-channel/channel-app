@@ -6,6 +6,7 @@ import Posts from './Posts.container'
 import Lecturers from './Lecturers.container'
 import Media from './Media.container'
 import Archives from './Archives.container'
+import More from './More.container'
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -96,9 +97,30 @@ export default TabNavigator(
         },
       },
     },
+    More: {
+      screen: More,
+      navigationOptions: {
+        tabBarLabel: 'MORE',
+        tabBarIcon: ({ tintColor }: TabScene) => {
+          return Platform.OS === 'ios' ? (
+            <Ionicons
+              name="ios-menu"
+              size={Theme.tabIconSize}
+              color={tintColor!}
+            />
+          ) : (
+            <MaterialIcons
+              name="more"
+              size={Theme.tabIconSize}
+              color={tintColor!}
+            />
+          )
+        },
+      },
+    },
   },
   {
-    initialRouteName: 'Lecturers',
+    initialRouteName: 'More',
     tabBarComponent: props => (
       <TabBarBottom
         {...props}
