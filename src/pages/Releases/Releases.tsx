@@ -17,6 +17,7 @@ const Releases: React.SFC<Props> = props => {
     <FlatList
       data={releases}
       keyExtractor={(a: Release) => a.title}
+      numColumns={2}
       renderItem={({ item }) => (
         <ReleaseThumbnail release={item} viewRelease={viewRelease} />
       )}
