@@ -1,4 +1,5 @@
 import React from 'react'
+import { Platform } from 'react-native'
 import { TabBarBottom, TabNavigator, TabScene } from 'react-navigation'
 import { Theme } from '@config'
 import Posts from './Posts.container'
@@ -7,14 +8,22 @@ import Media from './Media.container'
 import Archives from './Archives.container'
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 export default TabNavigator(
   {
     Posts: {
       screen: Posts,
       navigationOptions: {
-        tabBarIcon: ({ tintColor }: TabScene) => {
-          return (
+        tabBarLabel: 'POSTS',
+        tabBarIcon: ({ tintColor, focused }: TabScene) => {
+          return Platform.OS === 'ios' ? (
+            <Ionicons
+              name={`ios-paper${!focused ? '-outline' : ''}`}
+              size={Theme.tabIconSize}
+              color={tintColor!}
+            />
+          ) : (
             <MaterialIcons
               name="subject"
               size={Theme.tabIconSize}
@@ -27,8 +36,15 @@ export default TabNavigator(
     Lecturers: {
       screen: Lecturers,
       navigationOptions: {
-        tabBarIcon: ({ tintColor }: TabScene) => {
-          return (
+        tabBarLabel: 'REVIEWS',
+        tabBarIcon: ({ tintColor, focused }: TabScene) => {
+          return Platform.OS === 'ios' ? (
+            <Ionicons
+              name={`ios-chatbubbles${!focused ? '-outline' : ''}`}
+              size={Theme.tabIconSize}
+              color={tintColor!}
+            />
+          ) : (
             <MaterialIcons
               name="assignment-ind"
               size={Theme.tabIconSize}
@@ -41,8 +57,15 @@ export default TabNavigator(
     Media: {
       screen: Media,
       navigationOptions: {
-        tabBarIcon: ({ tintColor }: TabScene) => {
-          return (
+        tabBarLabel: 'MEDIA',
+        tabBarIcon: ({ tintColor, focused }: TabScene) => {
+          return Platform.OS === 'ios' ? (
+            <Ionicons
+              name={`ios-images${!focused ? '-outline' : ''}`}
+              size={Theme.tabIconSize}
+              color={tintColor!}
+            />
+          ) : (
             <MaterialIcons
               name="photo-library"
               size={Theme.tabIconSize}
@@ -55,8 +78,15 @@ export default TabNavigator(
     Archives: {
       screen: Archives,
       navigationOptions: {
-        tabBarIcon: ({ tintColor }: TabScene) => {
-          return (
+        tabBarLabel: 'ARCHIVES',
+        tabBarIcon: ({ tintColor, focused }: TabScene) => {
+          return Platform.OS === 'ios' ? (
+            <Ionicons
+              name={`ios-bookmarks${!focused ? '-outline' : ''}`}
+              size={Theme.tabIconSize}
+              color={tintColor!}
+            />
+          ) : (
             <MaterialIcons
               name="import-contacts"
               size={Theme.tabIconSize}
@@ -68,19 +98,32 @@ export default TabNavigator(
     },
   },
   {
-    initialRouteName: 'Archives',
-    animationEnabled: false,
-    swipeEnabled: false,
+    initialRouteName: 'Lecturers',
     tabBarComponent: props => (
-      <TabBarBottom {...props} style={{ backgroundColor: '#fff' }} />
+      <TabBarBottom
+        {...props}
+        style={{
+          backgroundColor: '#fff',
+          ...(Platform.OS === 'ios' && { height: 56 }),
+        }}
+      />
     ),
     tabBarOptions: {
       activeTintColor: Theme.primary,
-      inactiveTintColor: '#666666',
-      showLabel: false,
+      inactiveTintColor: '#5C5D5E',
       tabStyle: {
         backgroundColor: '#fff',
       },
+      ...(Platform.OS === 'ios'
+        ? {
+            labelStyle: {
+              marginBottom: 8,
+              marginTop: -6,
+              fontFamily: 'NunitoSans-Bold',
+              fontSize: 10,
+            },
+          }
+        : {}),
     },
     tabBarPosition: 'bottom',
   }
