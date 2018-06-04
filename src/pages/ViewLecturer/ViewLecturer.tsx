@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
 import { Icon } from 'react-native-elements'
-import { TabBar, TabViewAnimated } from 'react-native-tab-view'
+import { TabBar, TabView } from 'react-native-tab-view'
 import { connect } from 'react-redux'
 
 import { Course, Lecturer, Review, Store } from '@types'
@@ -122,7 +122,7 @@ class ViewLecturer extends React.Component<Props, State> {
 
   handleIndexChange = (index: number) => this.setState({ index })
 
-  renderHeader = (props: any) => (
+  renderTabBar = (props: any) => (
     <TabBar
       {...props}
       style={{ backgroundColor: Theme.primary }}
@@ -131,14 +131,18 @@ class ViewLecturer extends React.Component<Props, State> {
     />
   )
 
-  renderLabel = ({ route, index }: { route: Route; index: number }) => (
-    <View>
-      <Text style={styles.tabCount}>
-        {index === 0 ? this.state.reviews.length : this.state.courses.length}
-      </Text>
-      <Text style={styles.tabTitle}>{route.title}</Text>
-    </View>
-  )
+  renderLabel = ({ route }: { route: Route; index: number }) => {
+    const index = this.state.routes.indexOf(route)
+
+    return (
+      <View>
+        <Text style={styles.tabCount}>
+          {index === 0 ? this.state.reviews.length : this.state.courses.length}
+        </Text>
+        <Text style={styles.tabTitle}>{route.title}</Text>
+      </View>
+    )
+  }
 
   render() {
     const { lecturer } = this.props.navigation.state.params
@@ -168,10 +172,10 @@ class ViewLecturer extends React.Component<Props, State> {
           />
         </View>
 
-        <TabViewAnimated
+        <TabView
           navigationState={this.state}
           renderScene={this.renderScene}
-          renderHeader={this.renderHeader}
+          renderTabBar={this.renderTabBar}
           onIndexChange={this.handleIndexChange}
           initialLayout={initialLayout}
         />
