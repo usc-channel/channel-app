@@ -2,18 +2,24 @@ import React from 'react'
 import { AppRegistry, StatusBar, View } from 'react-native'
 import { ApolloProvider } from 'react-apollo'
 import { Provider } from 'react-redux'
-import Tabs from './containers/Tabs'
 import { StackNavigator } from 'react-navigation'
-import { graphqlClient, store, Theme } from '@config'
 import { withNetworkConnectivity } from 'react-native-offline'
+
+import Tabs from './containers/Tabs'
+import { graphqlClient, store, Theme } from '@config'
+import { Login } from '@pages'
 
 let ModalStack = StackNavigator(
   {
     main: {
       screen: Tabs,
     },
+    login: {
+      screen: Login,
+    },
   },
   {
+    initialRouteName: 'login',
     navigationOptions: {
       header: null,
     },
