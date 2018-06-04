@@ -13,6 +13,7 @@ import ViewRelease from './ViewRelease'
 import Videos from './Videos'
 
 import More from './More'
+import Login from './Login'
 
 export {
   Posts,
@@ -26,4 +27,5 @@ export {
   ViewCourse,
   NewReview,
   More,
+  Login,
 }
