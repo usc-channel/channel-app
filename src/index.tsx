@@ -1,28 +1,45 @@
+// tslint:disable:quotemark
+// tslint:disable:max-line-length
+
 import React from 'react'
-import { AppRegistry, StatusBar, View } from 'react-native'
+import { AppRegistry, StatusBar, View, YellowBox } from 'react-native'
 import { ApolloProvider } from 'react-apollo'
 import { Provider } from 'react-redux'
-import { StackNavigator } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation'
 import { withNetworkConnectivity } from 'react-native-offline'
 
 import Tabs from './containers/Tabs'
 import { graphqlClient, store, Theme } from '@config'
-import { Login } from '@pages'
+import { Login, NewReview } from '@pages'
+import { Search } from '@components'
 
-let ModalStack = StackNavigator(
+let ModalStack = createStackNavigator(
   {
     main: {
       screen: Tabs,
+      navigationOptions: {
+        header: null,
+      },
     },
     login: {
       screen: Login,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    newReview: {
+      screen: NewReview,
+      navigationOptions: Theme.flatNavigationOptions,
+    },
+    search: {
+      screen: Search,
+      navigationOptions: {
+        header: null,
+      },
     },
   },
   {
-    initialRouteName: 'login',
-    navigationOptions: {
-      header: null,
-    },
+    initialRouteName: 'main',
     mode: 'modal',
   }
 )
@@ -31,7 +48,11 @@ ModalStack = withNetworkConnectivity({
   withRedux: true,
 })(ModalStack)
 
-console.disableYellowBox = true
+YellowBox.ignoreWarnings([
+  'Warning: isMounted(...) is deprecated in plain JavaScript React classes.',
+  "Module RNFetchBlob requires main queue setup since it overrides `constantsToExport` but doesn't implement `requiresMainQueueSetup`. In a future release React Native will default to initializing all native modules on a background thread unless explicitly opted-out of.",
+  "Module RCTImageLoader requires main queue setup since it overrides `init` but doesn't implement `requiresMainQueueSetup`. In a future release React Native will default to initializing all native modules on a background thread unless explicitly opted-out of.",
+])
 
 const AppRoot = () => (
   <Provider store={store}>

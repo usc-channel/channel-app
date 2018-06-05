@@ -1,8 +1,8 @@
-import { StackNavigator } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation'
 
 import { More } from '@pages'
 
-export default StackNavigator(
+export default createStackNavigator(
   {
     more: {
       screen: More,

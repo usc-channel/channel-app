@@ -183,7 +183,7 @@ class Posts extends React.Component<Props, State> {
   }
 
   viewPost = (post: Post) => {
-    this.props.navigation.navigate('viewPost', { post })
+    this.props.navigation.push('viewPost', { post })
   }
 
   loadMore = () => {

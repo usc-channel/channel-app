@@ -14,7 +14,6 @@ type Props = NavigationScreenProps<ScreenProps>
 class ViewRelease extends React.Component<Props> {
   static navigationOptions = ({ navigation }: Props) => ({
     title: navigation.state.params.release.title,
-    tabBarVisible: false,
   })
 
   render() {

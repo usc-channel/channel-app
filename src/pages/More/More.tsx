@@ -2,6 +2,7 @@ import React from 'react'
 import { Platform, ScrollView, StyleSheet, View } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import { connect } from 'react-redux'
+import { NavigationScreenProps } from 'react-navigation'
 
 import { Theme } from '@config'
 import { Store, User } from '@types'
@@ -16,7 +17,7 @@ interface ConnectedProps {
   user: User
 }
 
-type Props = ConnectedProps
+type Props = ConnectedProps & NavigationScreenProps
 
 class More extends React.Component<Props> {
   viewProfile = () => {
@@ -24,7 +25,7 @@ class More extends React.Component<Props> {
   }
 
   login = () => {
-    //
+    this.props.navigation.navigate('login')
   }
 
   logout = () => {

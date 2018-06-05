@@ -1,8 +1,8 @@
-import { StackNavigator } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation'
 import { Posts, SearchPosts, ViewPost } from '@pages'
 import { Theme } from '@config'
 
-export default StackNavigator(
+export default createStackNavigator(
   {
     posts: {
       screen: Posts,
@@ -10,14 +10,10 @@ export default StackNavigator(
     },
     viewPost: {
       screen: ViewPost,
-      navigationOptions: {
-        tabBarVisible: false,
-      },
     },
     searchPosts: {
       screen: SearchPosts,
       navigationOptions: {
-        tabBarVisible: false,
         header: null,
       },
     },
