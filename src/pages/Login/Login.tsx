@@ -4,37 +4,77 @@ import { StatusBar, StyleSheet, Text, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Image from 'react-native-fast-image'
 import { Button } from 'react-native-elements'
-import { TextField, TextFieldProps } from 'react-native-material-textfield'
 import LinearGradient from 'react-native-linear-gradient'
+import validator from 'validator'
 
 import { Theme } from '@config'
+import LoginTextField from './components/LoginTextField'
 
 type Props = NavigationScreenProps<{}>
 
 interface State {
   email: string
+  emailError: string
   password: string
+  passwordError: string
+  loading: boolean
 }
 
-const LoginTextField: React.SFC<TextFieldProps> = props => (
-  <TextField
-    labelTextStyle={{ fontFamily: 'NunitoSans-SemiBold' }}
-    fontSize={18}
-    style={{ fontFamily: 'NunitoSans-Regular' }}
-    labelFontSize={14}
-    containerStyle={{ marginTop: 8 }}
-    {...props}
-  />
-)
-
 export default class Login extends React.Component<Props, State> {
+  password: LoginTextField | null
+  email: LoginTextField | null
+
   constructor(props: Props) {
     super(props)
 
     this.state = {
       email: '',
       password: '',
+      emailError: '',
+      passwordError: '',
+      loading: false,
     }
+  }
+
+  login = () => {
+    this.password!.blur()
+    this.email!.blur()
+    this.setState({ emailError: '', passwordError: '' })
+
+    this.validate()
+      .then(a => {
+        //
+      })
+      .catch(e => {
+        this.setState(e)
+      })
+  }
+
+  validate = () => {
+    return new Promise((resolve, reject) => {
+      const { email, password } = this.state
+
+      if (validator.isEmpty(email) && validator.isEmpty(password)) {
+        reject({
+          emailError: 'Enter your email',
+          passwordError: 'Enter your password',
+        })
+      }
+
+      if (validator.isEmpty(email)) {
+        reject({ emailError: 'Enter your email' })
+      }
+
+      if (!validator.isEmail(email)) {
+        reject({ emailError: 'Enter a valid email' })
+      }
+
+      if (validator.isEmpty(password)) {
+        reject({ passwordError: 'Enter your password' })
+      }
+
+      resolve()
+    })
   }
 
   render() {
@@ -60,15 +100,25 @@ export default class Login extends React.Component<Props, State> {
           <View style={styles.submitContainer}>
             <LoginTextField
               label="Email"
+              ref={ref => (this.email = ref)}
+              keyboardType="email-address"
+              autoCapitalize="none"
               value={this.state.email}
               onChangeText={email => this.setState({ email })}
+              error={this.state.emailError}
+              returnKeyType="next"
+              onSubmitEditing={() => this.password!.focus()}
             />
 
             <LoginTextField
               label="Password"
+              ref={ref => (this.password = ref)}
               value={this.state.password}
               onChangeText={password => this.setState({ password })}
+              error={this.state.passwordError}
               secureTextEntry
+              returnKeyType="go"
+              onSubmitEditing={this.login}
             />
 
             <Button
@@ -88,6 +138,7 @@ export default class Login extends React.Component<Props, State> {
                 marginTop: 70,
                 marginBottom: 20,
               }}
+              onPress={this.login}
             />
 
             <Button
