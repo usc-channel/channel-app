@@ -6,10 +6,11 @@ import { Touchable } from '@components'
 
 interface Props {
   iconName: string
+  color?: string
   onPress: () => void
 }
 
-const NavIcon = (props: Props) => {
+const NavIcon: React.SFC<Props> = props => {
   const Icon = Platform.OS === 'ios' ? Ionicon : MaterialIcon
 
   return (
@@ -17,13 +18,17 @@ const NavIcon = (props: Props) => {
       <View style={{ marginHorizontal: 16 }}>
         <Icon
           size={Platform.OS === 'ios' ? 24 : 24}
-          color="#fff"
+          color={props.color}
           name={props.iconName}
           style={{ paddingVertical: 8 }}
         />
       </View>
     </Touchable>
   )
+}
+
+NavIcon.defaultProps = {
+  color: '#fff',
 }
 
 export default NavIcon

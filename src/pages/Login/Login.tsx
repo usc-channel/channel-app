@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   brandContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    flex: 1,
+    flex: 0.8,
   },
   brandImage: {
     width: 60,
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     color: '#AFAFAF',
   },
   submitContainer: {
-    flex: 1,
+    flex: 1.2,
     flexDirection: 'column',
     justifyContent: 'flex-end',
     paddingBottom: 24,
