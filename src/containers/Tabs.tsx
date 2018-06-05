@@ -1,6 +1,10 @@
 import React from 'react'
 import { Platform } from 'react-native'
-import { createBottomTabNavigator, TabScene } from 'react-navigation'
+import {
+  createBottomTabNavigator,
+  NavigationScreenProps,
+  TabScene,
+} from 'react-navigation'
 import { Theme } from '@config'
 import Posts from './Posts.container'
 import Lecturers from './Lecturers.container'
@@ -10,6 +14,8 @@ import More from './More.container'
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+
+type Navigation = NavigationScreenProps<{ index: number }>
 
 export default createBottomTabNavigator(
   {
@@ -25,27 +31,23 @@ export default createBottomTabNavigator(
         return {
           tabBarVisible,
           tabBarLabel: 'POSTS',
-          tabBarIcon: ({ tintColor, focused }: TabScene) => {
-            return Platform.OS === 'ios' ? (
-              <Ionicons
-                name={`ios-paper${!focused ? '-outline' : ''}`}
-                size={Theme.tabIconSize}
-                color={tintColor!}
-              />
-            ) : (
-              <MaterialIcons
-                name="subject"
-                size={Theme.tabIconSize}
-                color={tintColor!}
-              />
-            )
-          },
+          tabBarIcon: ({ tintColor, focused }: TabScene) => (
+            <Ionicons
+              name={
+                Platform.OS === 'ios'
+                  ? `ios-paper${!focused ? '-outline' : ''}`
+                  : 'md-paper'
+              }
+              size={Theme.tabIconSize}
+              color={tintColor!}
+            />
+          ),
         }
       },
     },
     Lecturers: {
       screen: Lecturers,
-      navigationOptions: ({ navigation }) => {
+      navigationOptions: ({ navigation }: Navigation) => {
         let tabBarVisible = true
 
         if (navigation.state.index > 0) {
@@ -55,21 +57,17 @@ export default createBottomTabNavigator(
         return {
           tabBarVisible,
           tabBarLabel: 'REVIEWS',
-          tabBarIcon: ({ tintColor, focused }: TabScene) => {
-            return Platform.OS === 'ios' ? (
-              <Ionicons
-                name={`ios-chatbubbles${!focused ? '-outline' : ''}`}
-                size={Theme.tabIconSize}
-                color={tintColor!}
-              />
-            ) : (
-              <MaterialIcons
-                name="assignment-ind"
-                size={Theme.tabIconSize}
-                color={tintColor!}
-              />
-            )
-          },
+          tabBarIcon: ({ tintColor, focused }: TabScene) => (
+            <Ionicons
+              name={
+                Platform.OS === 'ios'
+                  ? `ios-chatbubbles${!focused ? '-outline' : ''}`
+                  : 'md-chatbubbles'
+              }
+              size={Theme.tabIconSize}
+              color={tintColor!}
+            />
+          ),
         }
       },
     },
@@ -137,7 +135,7 @@ export default createBottomTabNavigator(
             />
           ) : (
             <MaterialIcons
-              name="more"
+              name="menu"
               size={Theme.tabIconSize}
               color={tintColor!}
             />
@@ -149,10 +147,11 @@ export default createBottomTabNavigator(
   {
     initialRouteName: 'Lecturers',
     tabBarOptions: {
+      showLabel: Platform.OS === 'ios',
       activeTintColor: Theme.primary,
       inactiveTintColor: '#5C5D5E',
       style: {
-        ...(Platform.OS === 'ios' && { height: 56 }),
+        ...(Platform.OS === 'ios' ? { height: 56 } : {}),
       },
       tabStyle: {
         backgroundColor: '#fff',
