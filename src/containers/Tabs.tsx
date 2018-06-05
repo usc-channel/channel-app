@@ -1,6 +1,6 @@
 import React from 'react'
 import { Platform } from 'react-native'
-import { TabBarBottom, TabNavigator, TabScene } from 'react-navigation'
+import { createBottomTabNavigator, TabScene } from 'react-navigation'
 import { Theme } from '@config'
 import Posts from './Posts.container'
 import Lecturers from './Lecturers.container'
@@ -11,48 +11,66 @@ import More from './More.container'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-export default TabNavigator(
+export default createBottomTabNavigator(
   {
     Posts: {
       screen: Posts,
-      navigationOptions: {
-        tabBarLabel: 'POSTS',
-        tabBarIcon: ({ tintColor, focused }: TabScene) => {
-          return Platform.OS === 'ios' ? (
-            <Ionicons
-              name={`ios-paper${!focused ? '-outline' : ''}`}
-              size={Theme.tabIconSize}
-              color={tintColor!}
-            />
-          ) : (
-            <MaterialIcons
-              name="subject"
-              size={Theme.tabIconSize}
-              color={tintColor!}
-            />
-          )
-        },
+      navigationOptions: ({ navigation }: any) => {
+        let tabBarVisible = true
+
+        if (navigation.state.index > 0) {
+          tabBarVisible = false
+        }
+
+        return {
+          tabBarVisible,
+          tabBarLabel: 'POSTS',
+          tabBarIcon: ({ tintColor, focused }: TabScene) => {
+            return Platform.OS === 'ios' ? (
+              <Ionicons
+                name={`ios-paper${!focused ? '-outline' : ''}`}
+                size={Theme.tabIconSize}
+                color={tintColor!}
+              />
+            ) : (
+              <MaterialIcons
+                name="subject"
+                size={Theme.tabIconSize}
+                color={tintColor!}
+              />
+            )
+          },
+        }
       },
     },
     Lecturers: {
       screen: Lecturers,
-      navigationOptions: {
-        tabBarLabel: 'REVIEWS',
-        tabBarIcon: ({ tintColor, focused }: TabScene) => {
-          return Platform.OS === 'ios' ? (
-            <Ionicons
-              name={`ios-chatbubbles${!focused ? '-outline' : ''}`}
-              size={Theme.tabIconSize}
-              color={tintColor!}
-            />
-          ) : (
-            <MaterialIcons
-              name="assignment-ind"
-              size={Theme.tabIconSize}
-              color={tintColor!}
-            />
-          )
-        },
+      navigationOptions: ({ navigation }) => {
+        let tabBarVisible = true
+
+        if (navigation.state.index > 0) {
+          tabBarVisible = false
+        }
+
+        return {
+          tabBarVisible,
+          tabBarLabel: 'REVIEWS',
+          tabBarIcon: ({ tintColor, focused }: TabScene) => {
+            return Platform.OS === 'ios' ? (
+              <Ionicons
+                name={`ios-chatbubbles${!focused ? '-outline' : ''}`}
+                size={Theme.tabIconSize}
+                color={tintColor!}
+              />
+            ) : (
+              <MaterialIcons
+                name="assignment-ind"
+                size={Theme.tabIconSize}
+                color={tintColor!}
+              />
+            )
+          },
+        }
       },
     },
     Media: {
@@ -78,23 +96,32 @@ export default TabNavigator(
     },
     Archives: {
       screen: Archives,
-      navigationOptions: {
-        tabBarLabel: 'ARCHIVES',
-        tabBarIcon: ({ tintColor, focused }: TabScene) => {
-          return Platform.OS === 'ios' ? (
-            <Ionicons
-              name={`ios-bookmarks${!focused ? '-outline' : ''}`}
-              size={Theme.tabIconSize}
-              color={tintColor!}
-            />
-          ) : (
-            <MaterialIcons
-              name="import-contacts"
-              size={Theme.tabIconSize}
-              color={tintColor!}
-            />
-          )
-        },
+      navigationOptions: ({ navigation }: any) => {
+        let tabBarVisible = true
+
+        if (navigation.state.index > 0) {
+          tabBarVisible = false
+        }
+
+        return {
+          tabBarVisible,
+          tabBarLabel: 'ARCHIVES',
+          tabBarIcon: ({ tintColor, focused }: TabScene) => {
+            return Platform.OS === 'ios' ? (
+              <Ionicons
+                name={`ios-bookmarks${!focused ? '-outline' : ''}`}
+                size={Theme.tabIconSize}
+                color={tintColor!}
+              />
+            ) : (
+              <MaterialIcons
+                name="import-contacts"
+                size={Theme.tabIconSize}
+                color={tintColor!}
+              />
+            )
+          },
+        }
       },
     },
     More: {
@@ -120,19 +147,13 @@ export default TabNavigator(
     },
   },
   {
-    initialRouteName: 'More',
-    tabBarComponent: props => (
-      <TabBarBottom
-        {...props}
-        style={{
-          backgroundColor: '#fff',
-          ...(Platform.OS === 'ios' && { height: 56 }),
-        }}
-      />
-    ),
+    initialRouteName: 'Lecturers',
     tabBarOptions: {
       activeTintColor: Theme.primary,
       inactiveTintColor: '#5C5D5E',
+      style: {
+        ...(Platform.OS === 'ios' && { height: 56 }),
+      },
       tabStyle: {
         backgroundColor: '#fff',
       },

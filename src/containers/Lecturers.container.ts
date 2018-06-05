@@ -1,10 +1,9 @@
-import { StackNavigator } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation'
 
-import { Lecturers, NewReview, ViewCourse, ViewLecturer } from '@pages'
-import { Search } from '@components'
+import { Lecturers, ViewCourse, ViewLecturer } from '@pages'
 import { Theme } from '@config'
 
-const PushStack = StackNavigator(
+export default createStackNavigator(
   {
     posts: {
       screen: Lecturers,
@@ -14,49 +13,15 @@ const PushStack = StackNavigator(
     },
     viewLecturer: {
       screen: ViewLecturer,
-      navigationOptions: {
-        ...Theme.flatNavigationOptions,
-        tabBarVisible: false,
-      },
+      navigationOptions: Theme.flatNavigationOptions,
     },
     viewCourse: {
       screen: ViewCourse,
-      navigationOptions: {
-        ...Theme.flatNavigationOptions,
-        tabBarVisible: false,
-      },
+      navigationOptions: Theme.flatNavigationOptions,
     },
   },
   {
     navigationOptions: Theme.navigationOptions,
     headerMode: 'screen',
-  }
-)
-
-export default StackNavigator(
-  {
-    Main: {
-      screen: PushStack,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    newReview: {
-      screen: NewReview,
-      navigationOptions: {
-        ...Theme.flatNavigationOptions,
-        tabBarVisible: false,
-      },
-    },
-    search: {
-      screen: Search,
-      navigationOptions: {
-        header: null,
-        tabBarVisible: false,
-      },
-    },
-  },
-  {
-    mode: 'modal',
   }
 )

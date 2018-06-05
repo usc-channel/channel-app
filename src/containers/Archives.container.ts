@@ -1,8 +1,8 @@
-import { StackNavigator } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation'
 import { Releases, ViewRelease } from '@pages'
 import { Theme } from '@config'
 
-export default StackNavigator(
+export default createStackNavigator(
   {
     Archives: {
       screen: Releases,
