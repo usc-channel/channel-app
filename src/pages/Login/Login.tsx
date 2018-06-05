@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavigationScreenProps } from 'react-navigation'
-import { StatusBar, StyleSheet, Text, View } from 'react-native'
+import { Platform, StatusBar, StyleSheet, Text, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Image from 'react-native-fast-image'
 import { Button } from 'react-native-elements'
@@ -80,7 +80,8 @@ export default class Login extends React.Component<Props, State> {
   render() {
     return (
       <View style={styles.container}>
-        <StatusBar barStyle="dark-content" />
+        {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
+
         <KeyboardAwareScrollView
           contentContainerStyle={styles.content}
           scrollEnabled={false}
@@ -135,7 +136,7 @@ export default class Login extends React.Component<Props, State> {
                 end: { x: 1, y: 0.5 },
               }}
               containerStyle={{
-                marginTop: 70,
+                marginTop: Platform.OS === 'ios' ? 70 : 30,
                 marginBottom: 20,
               }}
               onPress={this.login}
