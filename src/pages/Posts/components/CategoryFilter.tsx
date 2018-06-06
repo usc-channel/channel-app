@@ -89,7 +89,7 @@ class CategoryFilter extends React.Component<Props, State> {
                 borderColor: Theme.accent,
               },
             ]}
-            containerStyle={{ width: '47%' }}
+            containerStyle={{ width: '47%', elevation: 0 }}
           />
 
           <Button
@@ -103,7 +103,7 @@ class CategoryFilter extends React.Component<Props, State> {
                 borderColor: '#fff',
               },
             ]}
-            containerStyle={{ width: '47%' }}
+            containerStyle={{ width: '47%', elevation: 0 }}
           />
         </View>
       </View>
