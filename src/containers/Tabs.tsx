@@ -145,7 +145,7 @@ export default createBottomTabNavigator(
     },
   },
   {
-    initialRouteName: 'Lecturers',
+    initialRouteName: 'Posts',
     tabBarOptions: {
       showLabel: Platform.OS === 'ios',
       activeTintColor: Theme.primary,
