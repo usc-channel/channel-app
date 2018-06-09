@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 import { Icon } from 'react-native-elements'
 import { Touchable } from '@components'
+import { Theme } from '@config'
 
 interface Props extends TextInputProps {
   label: string
@@ -105,13 +106,19 @@ export default class LoginTextField extends React.Component<Props, State> {
   }
 
   render() {
-    const { error, label, password, ...rest } = this.props
+    let { label } = this.props
+    const { error, password, ...rest } = this.props
+
+    if (error) {
+      label = error
+    }
 
     return (
       <View style={styles.container}>
         <Animated.Text
           style={[
             styles.labelStyle,
+            error && styles.labelErrorStyle,
             {
               fontSize: this.state.labelFontSize,
               transform: [{ translateY: this.state.labelTransform }],
@@ -188,6 +195,9 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     color: 'rgba(0,0,0,.54)',
     position: 'absolute',
+  },
+  labelErrorStyle: {
+    color: Theme.error,
   },
   inputStyle: {
     height: 54,
