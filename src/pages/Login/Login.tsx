@@ -1,6 +1,13 @@
 import React from 'react'
 import { NavigationScreenProps } from 'react-navigation'
-import { Platform, StatusBar, StyleSheet, Text, View } from 'react-native'
+import {
+  Dimensions,
+  Platform,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Image from 'react-native-fast-image'
 import { Button } from 'react-native-elements'
@@ -8,6 +15,7 @@ import LinearGradient from 'react-native-linear-gradient'
 import validator from 'validator'
 
 import { Theme } from '@config'
+import { Touchable } from '@components'
 import LoginTextField from './components/LoginTextField'
 
 type Props = NavigationScreenProps<{}>
@@ -18,6 +26,7 @@ interface State {
   password: string
   passwordError: string
   loading: boolean
+  error: string
 }
 
 export default class Login extends React.Component<Props, State> {
@@ -33,6 +42,7 @@ export default class Login extends React.Component<Props, State> {
       emailError: '',
       passwordError: '',
       loading: false,
+      error: '',
     }
   }
 
@@ -85,6 +95,7 @@ export default class Login extends React.Component<Props, State> {
         <KeyboardAwareScrollView
           contentContainerStyle={styles.content}
           scrollEnabled={false}
+          keyboardShouldPersistTaps="handled"
         >
           <View style={styles.brandContainer}>
             <Image
@@ -117,36 +128,60 @@ export default class Login extends React.Component<Props, State> {
               value={this.state.password}
               onChangeText={password => this.setState({ password })}
               error={this.state.passwordError}
-              secureTextEntry
+              password
               returnKeyType="go"
               onSubmitEditing={this.login}
             />
 
+            <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+              <Button
+                title="Forgot Password?"
+                clear
+                titleStyle={{
+                  color: 'rgba(0,0,0,.87)',
+                  fontSize: 16,
+                  fontFamily: 'NunitoSans-SemiBold',
+                  padding: 0,
+                }}
+              />
+            </View>
+
+            <Text style={styles.error}>{this.state.error}</Text>
+
             <Button
-              title="SIGN IN"
+              title="Sign In"
               titleStyle={[styles.titleStyle, styles.signin]}
               buttonStyle={{
-                borderRadius: 30,
-                paddingVertical: 7,
+                height: 54,
               }}
               ViewComponent={LinearGradient}
               linearGradientProps={{
-                colors: [Theme.accent, Theme.primary],
+                colors: ['#4E9CD0', Theme.primary],
                 start: { x: 0, y: 0.5 },
                 end: { x: 1, y: 0.5 },
               }}
               containerStyle={{
-                marginTop: Platform.OS === 'ios' ? 70 : 30,
                 marginBottom: 20,
               }}
               onPress={this.login}
             />
+          </View>
 
-            <Button
-              clear
-              title="SIGN UP FOR AN ACCOUNT"
-              titleStyle={[styles.titleStyle, styles.signup]}
-            />
+          <View style={styles.signupContainer}>
+            <Touchable>
+              <View
+                style={{
+                  width: Dimensions.get('window').width,
+                  height: 53,
+                  justifyContent: 'center',
+                }}
+              >
+                <Text style={styles.signup}>
+                  Don't have an account?{' '}
+                  <Text style={{ fontFamily: 'NunitoSans-Bold' }}>Sign Up</Text>
+                </Text>
+              </View>
+            </Touchable>
           </View>
         </KeyboardAwareScrollView>
       </View>
@@ -158,7 +193,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingHorizontal: '10%',
   },
   content: {
     flex: 1,
@@ -166,7 +200,7 @@ const styles = StyleSheet.create({
   brandContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    flex: 0.8,
+    marginBottom: 30,
   },
   brandImage: {
     width: 60,
@@ -182,15 +216,15 @@ const styles = StyleSheet.create({
   infoText: {
     fontFamily: 'NunitoSans-Regular',
     fontSize: 16,
-    marginTop: 8,
+    marginTop: 4,
     textAlign: 'center',
-    color: '#AFAFAF',
+    color: 'rgba(0,0,0,.54)',
   },
   submitContainer: {
-    flex: 1.2,
+    flex: 1,
     flexDirection: 'column',
-    justifyContent: 'flex-end',
     paddingBottom: 24,
+    paddingHorizontal: 15,
   },
   titleStyle: {
     fontFamily: 'NunitoSans-Bold',
@@ -198,8 +232,22 @@ const styles = StyleSheet.create({
   signin: {
     fontSize: 16,
   },
+  signupContainer: {
+    minHeight: 53,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: 'rgba(0,0,0,.12)',
+  },
   signup: {
-    fontSize: 12,
-    color: '#AFAFAF',
+    fontSize: 16,
+    textAlign: 'center',
+    color: 'rgba(0,0,0,.87)',
+    fontFamily: 'NunitoSans-Regular',
+  },
+  error: {
+    color: Theme.error,
+    textAlign: 'center',
+    marginVertical: 15,
+    fontSize: 16,
+    fontFamily: 'NunitoSans-SemiBold',
   },
 })
