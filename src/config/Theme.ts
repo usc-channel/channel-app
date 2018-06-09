@@ -37,6 +37,7 @@ const Theme = {
   },
   primary: '#2266AA',
   background: '#F3F5FA',
+  error: '#D23D27',
 }
 
 export default Theme
