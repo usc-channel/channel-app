@@ -15,7 +15,7 @@ import LinearGradient from 'react-native-linear-gradient'
 import validator from 'validator'
 
 import { Theme } from '@config'
-import { Touchable } from '@components'
+import { Loading, Touchable } from '@components'
 import LoginTextField from './components/LoginTextField'
 
 type Props = NavigationScreenProps<{}>
@@ -53,7 +53,7 @@ export default class Login extends React.Component<Props, State> {
 
     this.validate()
       .then(a => {
-        //
+        this.setState({ loading: true })
       })
       .catch(e => {
         this.setState(e)
@@ -91,6 +91,8 @@ export default class Login extends React.Component<Props, State> {
     return (
       <View style={styles.container}>
         {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
+
+        <Loading visible={this.state.loading} />
 
         <KeyboardAwareScrollView
           contentContainerStyle={styles.content}

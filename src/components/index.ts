@@ -7,6 +7,7 @@ import InputPicker from './InputPicker'
 import Input from './Input'
 import Search from './Search'
 import ImagePulse from './ImagePulse'
+import Loading from './Loading'
 
 export {
   NavIcon,
@@ -18,4 +19,5 @@ export {
   Input,
   Search,
   ImagePulse,
+  Loading,
 }
