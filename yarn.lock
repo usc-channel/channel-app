@@ -5310,15 +5310,14 @@ react-native-dropdownalert@^3.3.1:
   dependencies:
     prop-types "15.5.10"
 
-react-native-elements@^1.0.0-beta5:
+"react-native-elements@https://github.com/react-native-training/react-native-elements.git#next":
   version "1.0.0-beta5"
-  resolved "https://registry.yarnpkg.com/react-native-elements/-/react-native-elements-1.0.0-beta5.tgz#5445976c22bf5bc0a92b91ccb38dafacac966d2a"
+  resolved "https://github.com/react-native-training/react-native-elements.git#cd736150004feddecb5c56805349c2ada661d06d"
   dependencies:
     lodash.isempty "^4.4.0"
     lodash.times "^4.3.2"
     opencollective "^1.0.3"
     prop-types "^15.5.8"
-    react-native-touchable-scale "2.0.0"
 
 react-native-fast-image@^2.2.4:
   version "2.2.4"
@@ -5423,12 +5422,6 @@ react-native-tab-view@^1.0.0:
 react-native-tab-view@~0.0.78:
   version "0.0.78"
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-0.0.78.tgz#9b90730d89cbd34a03f0e0ab10e74ca7af945560"
-  dependencies:
-    prop-types "^15.6.0"
-
-react-native-touchable-scale@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-touchable-scale/-/react-native-touchable-scale-2.0.0.tgz#13a83a9423e46049cad3e3cc306eba2130883cb1"
   dependencies:
     prop-types "^15.6.0"
 
