@@ -134,6 +134,7 @@ export default class LoginTextField extends React.Component<Props, State> {
           onBlur={this.onBlur}
           style={[styles.inputStyle, password && styles.inputStylePassword]}
           secureTextEntry={this.props.password && !this.state.showPassword}
+          underlineColorAndroid="transparent"
           {...rest}
         />
 

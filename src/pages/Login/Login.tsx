@@ -141,6 +141,7 @@ export default class Login extends React.Component<Props, State> {
                   color: 'rgba(0,0,0,.87)',
                   fontSize: 16,
                   fontFamily: 'NunitoSans-SemiBold',
+                  fontWeight: '400',
                   padding: 0,
                 }}
               />
