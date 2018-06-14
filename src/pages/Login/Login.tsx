@@ -16,8 +16,7 @@ import validator from 'validator'
 import firebase from 'react-native-firebase'
 
 import { Theme } from '@config'
-import { Loading, Touchable } from '@components'
-import LoginTextField from './components/LoginTextField'
+import { Loading, TextField, Touchable } from '@components'
 
 type Props = NavigationScreenProps<{}>
 
@@ -31,8 +30,8 @@ interface State {
 }
 
 export default class Login extends React.Component<Props, State> {
-  password: LoginTextField | null
-  email: LoginTextField | null
+  password: TextField | null
+  email: TextField | null
 
   constructor(props: Props) {
     super(props)
@@ -144,7 +143,7 @@ export default class Login extends React.Component<Props, State> {
           </View>
 
           <View style={styles.submitContainer}>
-            <LoginTextField
+            <TextField
               label="Email"
               ref={ref => (this.email = ref)}
               keyboardType="email-address"
@@ -156,7 +155,7 @@ export default class Login extends React.Component<Props, State> {
               onSubmitEditing={() => this.password!.focus()}
             />
 
-            <LoginTextField
+            <TextField
               label="Password"
               ref={ref => (this.password = ref)}
               value={this.state.password}
