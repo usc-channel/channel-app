@@ -8,6 +8,7 @@ import Input from './Input'
 import Search from './Search'
 import ImagePulse from './ImagePulse'
 import Loading from './Loading'
+import TextField from './TextField'
 
 export {
   NavIcon,
@@ -20,4 +21,5 @@ export {
   Search,
   ImagePulse,
   Loading,
+  TextField,
 }

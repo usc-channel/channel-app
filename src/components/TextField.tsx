@@ -35,7 +35,7 @@ const labelTransforms = {
 
 const AnimationSpeed = 300
 
-export default class LoginTextField extends React.Component<Props, State> {
+export default class TextField extends React.Component<Props, State> {
   state = {
     showPassword: false,
     toggleVisibility: new Animated.Value(0),
