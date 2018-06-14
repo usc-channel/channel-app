@@ -13,6 +13,7 @@ import Image from 'react-native-fast-image'
 import { Button } from 'react-native-elements'
 import LinearGradient from 'react-native-linear-gradient'
 import validator from 'validator'
+import firebase from 'react-native-firebase'
 
 import { Theme } from '@config'
 import { Loading, Touchable } from '@components'
@@ -49,15 +50,46 @@ export default class Login extends React.Component<Props, State> {
   login = () => {
     this.password!.blur()
     this.email!.blur()
-    this.setState({ emailError: '', passwordError: '' })
+    this.setState({ error: '', emailError: '', passwordError: '' })
 
     this.validate()
-      .then(a => {
-        this.setState({ loading: true })
+      .then(() => {
+        this.setState({ loading: true }, this.firebaseLogin)
       })
       .catch(e => {
         this.setState(e)
       })
+  }
+
+  firebaseLogin = async () => {
+    try {
+      const { email, password } = this.state
+
+      const response = await firebase
+        .auth()
+        .signInAndRetrieveDataWithEmailAndPassword(email, password)
+
+      this.setState({ loading: false })
+      // tslint:disable-next-line:no-console
+      console.log(response)
+    } catch (e) {
+      let error = `Couldn't sign in right now, try again later.`
+
+      switch (e.code) {
+        case 'auth/user-not-found':
+          error = 'Email not found. Maybe you want to Sign Up instead?'
+          break
+        case 'auth/wrong-password':
+          error = 'Incorrect password or email address entered.'
+          break
+      }
+
+      this.setState({ loading: false }, () =>
+        setTimeout(() => {
+          this.setState({ error })
+        }, 400)
+      )
+    }
   }
 
   validate = () => {
