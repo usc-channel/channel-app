@@ -148,6 +148,9 @@ android {
 }
 
 dependencies {
+    compile(project(':react-native-firebase')) {
+        transitive = false
+    }
     compile project(':react-native-linear-gradient')
     compile project(':react-native-pdf')
     compile project(':react-native-fetch-blob')
