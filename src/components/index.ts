@@ -9,6 +9,7 @@ import Search from './Search'
 import ImagePulse from './ImagePulse'
 import Loading from './Loading'
 import TextField from './TextField'
+import ImagePicker from './ImagePicker'
 
 export {
   NavIcon,
@@ -22,4 +23,5 @@ export {
   ImagePulse,
   Loading,
   TextField,
+  ImagePicker,
 }
