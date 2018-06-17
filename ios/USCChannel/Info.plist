@@ -46,7 +46,9 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This allows you to upload a photo from your library as your profile avatar</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>

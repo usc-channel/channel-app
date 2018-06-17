@@ -18,9 +18,7 @@ export default createStackNavigator(
         },
         headerLeft: (
           <NavIcon
-            iconName={
-              Platform.OS === 'ios' ? 'ios-arrow-down' : 'keyboard-arrow-down'
-            }
+            iconName={Platform.OS === 'ios' ? 'ios-arrow-down' : 'arrow-back'}
             color={Theme.primary}
             onPress={() => navigation.pop()}
           />
@@ -37,9 +35,7 @@ export default createStackNavigator(
         },
         headerLeft: (
           <NavIcon
-            iconName={
-              Platform.OS === 'ios' ? 'ios-arrow-back' : 'keyboard-arrow-back'
-            }
+            iconName={Platform.OS === 'ios' ? 'ios-arrow-back' : 'arrow-back'}
             color={Theme.primary}
             onPress={() => navigation.pop()}
           />

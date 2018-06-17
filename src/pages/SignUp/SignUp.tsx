@@ -6,18 +6,18 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import Image from 'react-native-fast-image'
-import { Button } from 'react-native-elements'
+import { Avatar, Button, Icon } from 'react-native-elements'
 import LinearGradient from 'react-native-linear-gradient'
 import validator from 'validator'
 import firebase from 'react-native-firebase'
+import ImagePicker, { Image } from 'react-native-image-crop-picker'
 
 import { Theme } from '@config'
 import { Loading, TextField, Touchable } from '@components'
-// import { User } from '@types'
 
 type Props = NavigationScreenProps<{}>
 
@@ -28,6 +28,7 @@ interface State {
   emailError: string
   password: string
   passwordError: string
+  avatar: string
   loading: boolean
   error: string
 }
@@ -43,6 +44,9 @@ export default class SingUp extends React.Component<Props, State> {
     this.state = {
       name: '',
       email: '',
+      avatar:
+        // tslint:disable-next-line:max-line-length
+        'https://firebasestorage.googleapis.com/v0/b/channel-app-1515208712246.appspot.com/o/generic%2Fprofile_default.png?alt=media&token=520f3ceb-9163-4162-beb7-64d87341aafc',
       password: '',
       nameError: '',
       emailError: '',
@@ -81,16 +85,21 @@ export default class SingUp extends React.Component<Props, State> {
         .auth()
         .createUserAndRetrieveDataWithEmailAndPassword(email, password)
 
-      await response.user.updateProfile({
-        displayName: this.state.name,
-      })
-
-      this.setState({ loading: false })
+      // TODO Upload image to firebase
+      // TODO Create User Object
+      // TODO Update firebase with information
+      // TODO Sign In user
 
       // const user: User = {
       //   id: response.user.uid,
       //   name: this.state.name,
       // }
+
+      await response.user.updateProfile({
+        displayName: this.state.name,
+      })
+
+      this.setState({ loading: false })
 
       // tslint:disable-next-line:no-console
       console.log(response)
@@ -151,6 +160,20 @@ export default class SingUp extends React.Component<Props, State> {
     this.props.navigation.pop()
   }
 
+  selectAvatar = async () => {
+    try {
+      const image = (await ImagePicker.openPicker({
+        width: 150,
+        height: 150,
+        cropping: true,
+      })) as Image
+
+      this.setState({ avatar: image.path })
+    } catch (e) {
+      // Do nothing
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -160,22 +183,36 @@ export default class SingUp extends React.Component<Props, State> {
 
         <KeyboardAwareScrollView
           contentContainerStyle={styles.content}
-          scrollEnabled={false}
           keyboardShouldPersistTaps="handled"
         >
-          <View style={styles.brandContainer}>
-            <Image
-              style={styles.brandImage}
-              source={require('../../assets/logo.png')}
-            />
-
-            <Text style={styles.brandText}>Welcome to The Channel</Text>
-            <Text style={styles.infoText}>
-              With an account you can write reviews
-            </Text>
-          </View>
-
           <View style={styles.submitContainer}>
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: 30,
+              }}
+            >
+              <View>
+                <Avatar
+                  size="xlarge"
+                  rounded
+                  source={{
+                    uri: this.state.avatar,
+                  }}
+                  onPress={this.selectAvatar}
+                />
+
+                <Icon
+                  name="edit"
+                  color="#fff"
+                  containerStyle={styles.icon}
+                  onPress={this.selectAvatar}
+                  component={TouchableOpacity}
+                />
+              </View>
+            </View>
+
             <TextField
               label="Name"
               ref={ref => (this.name = ref)}
@@ -258,30 +295,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   content: {
-    flex: 1,
+    // flex: 1,
+    flexGrow: 1,
+    flexShrink: 0,
   },
   brandContainer: {
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 30,
   },
-  brandImage: {
-    width: 60,
-    height: 60,
-  },
-  brandText: {
-    color: Theme.accent,
-    fontFamily: 'NunitoSans-Bold',
-    fontSize: 24,
-    marginTop: 16,
-    textAlign: 'center',
-  },
-  infoText: {
-    fontFamily: 'NunitoSans-Regular',
-    fontSize: 16,
-    marginTop: 4,
-    textAlign: 'center',
-    color: 'rgba(0,0,0,.54)',
+  icon: {
+    backgroundColor: Theme.accent,
+    position: 'absolute',
+    borderRadius: 50,
+    padding: 5,
+    right: 0,
+    bottom: 0,
   },
   submitContainer: {
     flex: 1,

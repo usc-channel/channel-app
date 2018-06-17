@@ -101,13 +101,13 @@ android {
         javaMaxHeapSize "4g"
     }
 
-    compileSdkVersion 23
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
 
     defaultConfig {
         applicationId "com.uscchannel"
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         ndk {
@@ -153,6 +153,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-image-crop-picker')
     implementation(project(':react-native-firebase')) {
         transitive = false
     }
