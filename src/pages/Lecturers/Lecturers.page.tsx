@@ -72,7 +72,7 @@ class Lecturers extends React.Component<Props, State> {
     if (this.props.loggedIn) {
       this.props.navigation.navigate('newReview', { mode: 'all' })
     } else {
-      this.props.navigation.navigate('login')
+      this.props.navigation.navigate('signIn')
     }
   }
 

@@ -9,8 +9,8 @@ import { Store, User } from '@types'
 
 import MoreListItem from './components/MoreListItem'
 import MoreIcon from './components/MoreIcon'
-import LoggedInUser from './components/LoggedInUser'
-import LoggedOutUser from './components/LoggedOutUser'
+import SignedInUser from './components/SignedInUser'
+import SignedOutUser from './components/SignedOutUser'
 
 interface ConnectedProps {
   loggedIn: boolean
@@ -24,11 +24,11 @@ class More extends React.Component<Props> {
     //
   }
 
-  login = () => {
-    this.props.navigation.navigate('login')
+  signIn = () => {
+    this.props.navigation.navigate('signIn')
   }
 
-  logout = () => {
+  signOut = () => {
     //
   }
 
@@ -48,22 +48,22 @@ class More extends React.Component<Props> {
 
         <ScrollView contentContainerStyle={styles.content}>
           {loggedIn ? (
-            <LoggedInUser user={user} onPress={this.viewProfile} />
+            <SignedInUser user={user} onPress={this.viewProfile} />
           ) : (
-            <LoggedOutUser onPress={this.login} />
+            <SignedOutUser onPress={this.signIn} />
           )}
 
           {loggedIn ? (
             <MoreListItem
-              title="Logout"
+              title="Sign Out"
               rightIcon={<MoreIcon name="ios-exit-outline" />}
-              onPress={this.logout}
+              onPress={this.signOut}
             />
           ) : (
             <MoreListItem
-              title="Login"
+              title="Sign In"
               rightIcon={<MoreIcon name="ios-lock-outline" />}
-              onPress={this.login}
+              onPress={this.signIn}
             />
           )}
         </ScrollView>
