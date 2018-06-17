@@ -17,10 +17,13 @@ import firebase from 'react-native-firebase'
 
 import { Theme } from '@config'
 import { Loading, TextField, Touchable } from '@components'
+// import { User } from '@types'
 
 type Props = NavigationScreenProps<{}>
 
 interface State {
+  name: string
+  nameError: string
   email: string
   emailError: string
   password: string
@@ -29,7 +32,8 @@ interface State {
   error: string
 }
 
-export default class SignIn extends React.Component<Props, State> {
+export default class SingUp extends React.Component<Props, State> {
+  name: TextField | null
   password: TextField | null
   email: TextField | null
 
@@ -37,8 +41,10 @@ export default class SignIn extends React.Component<Props, State> {
     super(props)
 
     this.state = {
+      name: '',
       email: '',
       password: '',
+      nameError: '',
       emailError: '',
       passwordError: '',
       loading: false,
@@ -46,40 +52,54 @@ export default class SignIn extends React.Component<Props, State> {
     }
   }
 
-  signIn = () => {
+  signUp = () => {
+    this.name!.blur()
     this.password!.blur()
     this.email!.blur()
-    this.setState({ error: '', emailError: '', passwordError: '' })
+
+    this.setState({
+      error: '',
+      nameError: '',
+      emailError: '',
+      passwordError: '',
+    })
 
     this.validate()
       .then(() => {
-        this.setState({ loading: true }, this.firebaseLogin)
+        this.setState({ loading: true }, this.firebaseSignup)
       })
       .catch(e => {
         this.setState(e)
       })
   }
 
-  firebaseLogin = async () => {
+  firebaseSignup = async () => {
     try {
       const { email, password } = this.state
 
       const response = await firebase
         .auth()
-        .signInAndRetrieveDataWithEmailAndPassword(email, password)
+        .createUserAndRetrieveDataWithEmailAndPassword(email, password)
+
+      await response.user.updateProfile({
+        displayName: this.state.name,
+      })
 
       this.setState({ loading: false })
+
+      // const user: User = {
+      //   id: response.user.uid,
+      //   name: this.state.name,
+      // }
+
       // tslint:disable-next-line:no-console
       console.log(response)
     } catch (e) {
       let error = `Couldn't sign in right now, try again later.`
 
       switch (e.code) {
-        case 'auth/user-not-found':
-          error = 'Email not found. Maybe you want to Sign Up instead?'
-          break
-        case 'auth/wrong-password':
-          error = 'Incorrect password or email address entered.'
+        case 'auth/email-already-in-use':
+          error = 'Email already in use. Maybe you want to Sign In instead?'
           break
       }
 
@@ -93,13 +113,22 @@ export default class SignIn extends React.Component<Props, State> {
 
   validate = () => {
     return new Promise((resolve, reject) => {
-      const { email, password } = this.state
+      const { name, email, password } = this.state
 
-      if (validator.isEmpty(email) && validator.isEmpty(password)) {
+      if (
+        validator.isEmpty(name) &&
+        validator.isEmpty(email) &&
+        validator.isEmpty(password)
+      ) {
         reject({
+          nameError: 'Enter your name',
           emailError: 'Enter your email',
           passwordError: 'Enter your password',
         })
+      }
+
+      if (validator.isEmpty(name)) {
+        reject({ nameError: 'Enter your name' })
       }
 
       if (validator.isEmpty(email)) {
@@ -118,8 +147,8 @@ export default class SignIn extends React.Component<Props, State> {
     })
   }
 
-  signUp = () => {
-    this.props.navigation.push('signUp')
+  signIn = () => {
+    this.props.navigation.pop()
   }
 
   render() {
@@ -139,9 +168,24 @@ export default class SignIn extends React.Component<Props, State> {
               style={styles.brandImage}
               source={require('../../assets/logo.png')}
             />
+
+            <Text style={styles.brandText}>Welcome to The Channel</Text>
+            <Text style={styles.infoText}>
+              With an account you can write reviews
+            </Text>
           </View>
 
           <View style={styles.submitContainer}>
+            <TextField
+              label="Name"
+              ref={ref => (this.name = ref)}
+              value={this.state.name}
+              onChangeText={name => this.setState({ name })}
+              error={this.state.nameError}
+              returnKeyType="next"
+              onSubmitEditing={() => this.email!.focus()}
+            />
+
             <TextField
               label="Email"
               ref={ref => (this.email = ref)}
@@ -162,29 +206,14 @@ export default class SignIn extends React.Component<Props, State> {
               error={this.state.passwordError}
               password
               returnKeyType="go"
-              onSubmitEditing={this.signIn}
+              onSubmitEditing={this.signUp}
             />
-
-            <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-              <Button
-                title="Forgot Password?"
-                clear
-                titleStyle={{
-                  color: 'rgba(0,0,0,.87)',
-                  fontSize: 16,
-                  fontFamily: 'NunitoSans-SemiBold',
-                  padding: 0,
-                }}
-                buttonStyle={{ borderRadius: 0, padding: 8 }}
-                containerStyle={{ marginTop: -8 }}
-              />
-            </View>
 
             <Text style={styles.error}>{this.state.error}</Text>
 
             <Button
-              title="Sign In"
-              titleStyle={[styles.titleStyle, styles.signIn]}
+              title="Sign Up"
+              titleStyle={[styles.titleStyle, styles.signin]}
               buttonStyle={{
                 height: 54,
               }}
@@ -197,12 +226,12 @@ export default class SignIn extends React.Component<Props, State> {
               containerStyle={{
                 marginBottom: 20,
               }}
-              onPress={this.signIn}
+              onPress={this.signUp}
             />
           </View>
 
           <View style={styles.signupContainer}>
-            <Touchable onPress={this.signUp}>
+            <Touchable onPress={this.signIn}>
               <View
                 style={{
                   width: Dimensions.get('window').width,
@@ -211,8 +240,8 @@ export default class SignIn extends React.Component<Props, State> {
                 }}
               >
                 <Text style={styles.signup}>
-                  Don't have an account?{' '}
-                  <Text style={{ fontFamily: 'NunitoSans-Bold' }}>Sign Up</Text>
+                  Already have an account?{' '}
+                  <Text style={{ fontFamily: 'NunitoSans-Bold' }}>Sign In</Text>
                 </Text>
               </View>
             </Touchable>
@@ -232,14 +261,27 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   brandContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 30,
   },
   brandImage: {
     width: 60,
     height: 60,
+  },
+  brandText: {
+    color: Theme.accent,
+    fontFamily: 'NunitoSans-Bold',
+    fontSize: 24,
+    marginTop: 16,
+    textAlign: 'center',
+  },
+  infoText: {
+    fontFamily: 'NunitoSans-Regular',
+    fontSize: 16,
+    marginTop: 4,
+    textAlign: 'center',
+    color: 'rgba(0,0,0,.54)',
   },
   submitContainer: {
     flex: 1,
@@ -250,7 +292,7 @@ const styles = StyleSheet.create({
   titleStyle: {
     fontFamily: 'NunitoSans-Bold',
   },
-  signIn: {
+  signin: {
     fontSize: 16,
   },
   signupContainer: {

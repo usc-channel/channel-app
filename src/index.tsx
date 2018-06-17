@@ -2,16 +2,17 @@
 // tslint:disable:max-line-length
 
 import React from 'react'
-import { AppRegistry, Platform, StatusBar, View, YellowBox } from 'react-native'
+import { AppRegistry, StatusBar, View, YellowBox } from 'react-native'
 import { ApolloProvider } from 'react-apollo'
 import { Provider } from 'react-redux'
-import { createStackNavigator, NavigationScreenProps } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation'
 import { withNetworkConnectivity } from 'react-native-offline'
 
 import Tabs from './containers/Tabs'
+import Auth from './containers/Auth.container'
 import { graphqlClient, store, Theme } from '@config'
-import { NewReview, SignIn } from '@pages'
-import { NavIcon, Search } from '@components'
+import { NewReview } from '@pages'
+import { Search } from '@components'
 
 let ModalStack = createStackNavigator(
   {
@@ -22,23 +23,10 @@ let ModalStack = createStackNavigator(
       },
     },
     signIn: {
-      screen: SignIn,
-      navigationOptions: ({ navigation }: NavigationScreenProps<{}>) => ({
-        headerStyle: {
-          backgroundColor: '#fff',
-          borderBottomWidth: 0,
-          elevation: 0,
-        },
-        headerLeft: (
-          <NavIcon
-            iconName={
-              Platform.OS === 'ios' ? 'ios-arrow-down' : 'keyboard-arrow-down'
-            }
-            color={Theme.primary}
-            onPress={() => navigation.goBack()}
-          />
-        ),
-      }),
+      screen: Auth,
+      navigationOptions: {
+        header: null,
+      },
     },
     newReview: {
       screen: NewReview,
