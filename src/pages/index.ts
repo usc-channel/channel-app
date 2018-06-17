@@ -14,6 +14,7 @@ import Videos from './Videos'
 
 import More from './More'
 import SignIn from './SignIn'
+import SignUp from './SignUp'
 
 export {
   Posts,
@@ -28,4 +29,5 @@ export {
   NewReview,
   More,
   SignIn,
+  SignUp,
 }
