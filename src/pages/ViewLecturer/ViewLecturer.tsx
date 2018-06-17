@@ -116,7 +116,7 @@ class ViewLecturer extends React.Component<Props, State> {
         lecturer: this.props.navigation.state.params.lecturer,
       })
     } else {
-      this.props.navigation.navigate('login')
+      this.props.navigation.navigate('signIn')
     }
   }
 

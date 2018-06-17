@@ -29,7 +29,7 @@ interface State {
   error: string
 }
 
-export default class Login extends React.Component<Props, State> {
+export default class SignIn extends React.Component<Props, State> {
   password: TextField | null
   email: TextField | null
 
@@ -46,7 +46,7 @@ export default class Login extends React.Component<Props, State> {
     }
   }
 
-  login = () => {
+  signIn = () => {
     this.password!.blur()
     this.email!.blur()
     this.setState({ error: '', emailError: '', passwordError: '' })
@@ -163,7 +163,7 @@ export default class Login extends React.Component<Props, State> {
               error={this.state.passwordError}
               password
               returnKeyType="go"
-              onSubmitEditing={this.login}
+              onSubmitEditing={this.signIn}
             />
 
             <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
@@ -198,7 +198,7 @@ export default class Login extends React.Component<Props, State> {
               containerStyle={{
                 marginBottom: 20,
               }}
-              onPress={this.login}
+              onPress={this.signIn}
             />
           </View>
 

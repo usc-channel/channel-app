@@ -10,7 +10,7 @@ import { withNetworkConnectivity } from 'react-native-offline'
 
 import Tabs from './containers/Tabs'
 import { graphqlClient, store, Theme } from '@config'
-import { Login, NewReview } from '@pages'
+import { NewReview, SignIn } from '@pages'
 import { NavIcon, Search } from '@components'
 
 let ModalStack = createStackNavigator(
@@ -21,8 +21,8 @@ let ModalStack = createStackNavigator(
         header: null,
       },
     },
-    login: {
-      screen: Login,
+    signIn: {
+      screen: SignIn,
       navigationOptions: ({ navigation }: NavigationScreenProps<{}>) => ({
         headerStyle: {
           backgroundColor: '#fff',

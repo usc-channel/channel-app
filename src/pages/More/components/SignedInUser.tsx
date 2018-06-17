@@ -7,7 +7,7 @@ interface Props {
   onPress(): void
 }
 
-const LoggedInUser: React.SFC<Props> = ({ user, onPress }) => (
+const SignedInUser: React.SFC<Props> = ({ user, onPress }) => (
   <ListItem
     title={user.name!.substr(0, user.name!.indexOf(' '))}
     titleStyle={{
@@ -37,4 +37,4 @@ const LoggedInUser: React.SFC<Props> = ({ user, onPress }) => (
   />
 )
 
-export default LoggedInUser
+export default SignedInUser

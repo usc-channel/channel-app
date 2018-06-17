@@ -5,9 +5,9 @@ interface Props {
   onPress(): void
 }
 
-const LoggedOutUser: React.SFC<Props> = ({ onPress }) => (
+const SignedOutUser: React.SFC<Props> = ({ onPress }) => (
   <ListItem
-    title="Not Logged In"
+    title="Not Signed In"
     titleStyle={{
       fontFamily: 'NunitoSans-SemiBold',
       color: 'rgba(0,0,0,0.87)',
@@ -17,7 +17,7 @@ const LoggedOutUser: React.SFC<Props> = ({ onPress }) => (
       fontFamily: 'NunitoSans-Regular',
       color: 'rgba(0,0,0,0.87)',
     }}
-    subtitle="Adding Reviews requires you to log in."
+    subtitle="Adding Reviews requires you to sign in."
     containerStyle={{
       paddingHorizontal: 0,
       marginBottom: 10,
@@ -26,4 +26,4 @@ const LoggedOutUser: React.SFC<Props> = ({ onPress }) => (
   />
 )
 
-export default LoggedOutUser
+export default SignedOutUser
