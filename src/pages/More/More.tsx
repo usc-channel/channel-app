@@ -5,7 +5,8 @@ import { connect } from 'react-redux'
 import { NavigationScreenProps } from 'react-navigation'
 
 import { Theme } from '@config'
-import { Store, User } from '@types'
+import { Dispatch, Store, User } from '@types'
+import { signOut } from '@actions'
 
 import MoreListItem from './components/MoreListItem'
 import MoreIcon from './components/MoreIcon'
@@ -17,7 +18,13 @@ interface ConnectedProps {
   user: User
 }
 
-type Props = ConnectedProps & NavigationScreenProps
+interface ConnectedDispatch {
+  logout(): void
+}
+
+type OwnProps = NavigationScreenProps
+
+type Props = ConnectedProps & ConnectedDispatch & OwnProps
 
 class More extends React.Component<Props> {
   viewProfile = () => {
@@ -29,7 +36,7 @@ class More extends React.Component<Props> {
   }
 
   signOut = () => {
-    //
+    this.props.logout()
   }
 
   render() {
@@ -47,7 +54,7 @@ class More extends React.Component<Props> {
         )}
 
         <ScrollView contentContainerStyle={styles.content}>
-          {loggedIn ? (
+          {loggedIn && user ? (
             <SignedInUser user={user} onPress={this.viewProfile} />
           ) : (
             <SignedOutUser onPress={this.signIn} />
@@ -89,4 +96,8 @@ const mapStateToProps = ({ userState }: Store) => ({
   user: userState.user,
 })
 
-export default connect(mapStateToProps)(More)
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  logout: () => dispatch(signOut()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(More)

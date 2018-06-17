@@ -17,8 +17,17 @@ import firebase from 'react-native-firebase'
 
 import { Theme } from '@config'
 import { Loading, TextField, Touchable } from '@components'
+import { Dispatch, User } from '@types'
+import { signIn } from '@actions'
+import { connect } from 'react-redux'
 
-type Props = NavigationScreenProps<{}>
+type OwnProps = NavigationScreenProps<{}>
+
+interface ConnectedDispatch {
+  signIn(user: User): void
+}
+
+type Props = OwnProps & ConnectedDispatch
 
 interface State {
   email: string
@@ -29,7 +38,7 @@ interface State {
   error: string
 }
 
-export default class SignIn extends React.Component<Props, State> {
+class SignIn extends React.Component<Props, State> {
   password: TextField | null
   email: TextField | null
 
@@ -69,8 +78,15 @@ export default class SignIn extends React.Component<Props, State> {
         .signInAndRetrieveDataWithEmailAndPassword(email, password)
 
       this.setState({ loading: false })
-      // tslint:disable-next-line:no-console
-      console.log(response)
+
+      const user: User = {
+        id: response.user.uid,
+        name: response.user.displayName ? response.user.displayName : '',
+        avatar: response.user.photoURL ? response.user.photoURL : '',
+      }
+
+      this.props.signIn(user)
+      this.props.navigation.dismiss()
     } catch (e) {
       let error = `Couldn't sign in right now, try again later.`
 
@@ -222,6 +238,15 @@ export default class SignIn extends React.Component<Props, State> {
     )
   }
 }
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  signIn: (user: User) => dispatch(signIn(user)),
+})
+
+export default connect<{}, ConnectedDispatch, OwnProps>(
+  null,
+  mapDispatchToProps
+)(SignIn)
 
 const styles = StyleSheet.create({
   container: {

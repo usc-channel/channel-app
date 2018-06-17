@@ -14,11 +14,20 @@ import { Avatar, Button, Icon } from 'react-native-elements'
 import LinearGradient from 'react-native-linear-gradient'
 import validator from 'validator'
 import firebase from 'react-native-firebase'
+import { connect } from 'react-redux'
 
 import { Theme } from '@config'
 import { ImagePicker, Loading, TextField, Touchable } from '@components'
+import { Dispatch, User } from '@types'
+import { signIn } from '@actions'
 
-type Props = NavigationScreenProps<{}>
+interface ConnectedDispatch {
+  login(user: User): void
+}
+
+type OwnProps = NavigationScreenProps<{}>
+
+type Props = ConnectedDispatch & OwnProps
 
 interface State {
   name: string
@@ -36,7 +45,7 @@ interface State {
   showPicker: boolean
 }
 
-export default class SignUp extends React.Component<Props, State> {
+class SignUp extends React.Component<Props, State> {
   name: TextField | null
   password: TextField | null
   email: TextField | null
@@ -146,9 +155,15 @@ export default class SignUp extends React.Component<Props, State> {
         photoURL,
       })
 
-      // TODO Sign In user (store user info locally)
+      // Sign In user (store user info locally)
+      const user: User = {
+        id: response.user.uid,
+        name: this.state.name,
+        avatar: photoURL,
+      }
 
-      this.setState({ loading: false })
+      this.props.login(user)
+      this.setState({ loading: false }, () => this.props.navigation.dismiss())
     } catch (e) {
       let error = `Couldn't sign in right now, try again later.`
 
@@ -315,6 +330,15 @@ export default class SignUp extends React.Component<Props, State> {
     )
   }
 }
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  login: (user: User) => dispatch(signIn(user)),
+})
+
+export default connect<null, ConnectedDispatch, OwnProps>(
+  null,
+  mapDispatchToProps
+)(SignUp)
 
 const styles = StyleSheet.create({
   container: {

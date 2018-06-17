@@ -1,3 +1,4 @@
+import { AuthAction } from '@actions'
 import { Dispatch as ReduxDispatch } from 'react-redux'
 
 export interface Category {
@@ -46,13 +47,6 @@ export interface Author {
   }
 }
 
-export interface Store {
-  network: {
-    isConnected: boolean
-    actionQueue: any[]
-  }
-}
-
 export interface Video {
   videoId: string
   publishedAt: string
@@ -84,7 +78,7 @@ export interface Course {
 }
 
 export interface User {
-  id: number
+  id: string
   name: string
   avatar: string
 }
@@ -100,13 +94,15 @@ export interface Review {
 }
 
 export interface Store {
+  network: {
+    isConnected: boolean
+    actionQueue: any[]
+  }
   userState: UserState
 }
 
 export interface UserState {
   user: User | null
-  loading: boolean
-  error: string | null
 }
 
-export type Dispatch = ReduxDispatch<Store>
+export type Dispatch = ReduxDispatch<AuthAction>
