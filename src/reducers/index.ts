@@ -6,4 +6,4 @@ import { Store } from '@types'
 export default combineReducers<Store>({
   userState,
   network,
-} as any)
+})

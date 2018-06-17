@@ -2,33 +2,21 @@ import * as actions from '@actions'
 import { UserState } from '@types'
 
 const defaultState: UserState = {
-  loading: false,
   user: null,
-  error: null,
 }
 
 export default (
   state: UserState = defaultState,
-  action: actions.UserAction
+  action: actions.AuthAction
 ): UserState => {
   switch (action.type) {
-    case actions.CREATE_USER_STARTED:
+    case actions.SIGNIN:
       return {
-        loading: true,
-        user: null,
-        error: null,
-      }
-    case actions.CREATE_USER_SUCCESS:
-      return {
-        loading: false,
         user: action.payload,
-        error: null,
       }
-    case actions.CREATE_USER_FAILED:
+    case actions.SIGNOUT:
       return {
-        loading: false,
         user: null,
-        error: action.payload,
       }
     default:
       return state
