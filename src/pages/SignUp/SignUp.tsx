@@ -14,10 +14,9 @@ import { Avatar, Button, Icon } from 'react-native-elements'
 import LinearGradient from 'react-native-linear-gradient'
 import validator from 'validator'
 import firebase from 'react-native-firebase'
-import ImagePicker, { Image } from 'react-native-image-crop-picker'
 
 import { Theme } from '@config'
-import { Loading, TextField, Touchable } from '@components'
+import { ImagePicker, Loading, TextField, Touchable } from '@components'
 
 type Props = NavigationScreenProps<{}>
 
@@ -34,9 +33,10 @@ interface State {
   }
   loading: boolean
   error: string
+  showPicker: boolean
 }
 
-export default class SingUp extends React.Component<Props, State> {
+export default class SignUp extends React.Component<Props, State> {
   name: TextField | null
   password: TextField | null
   email: TextField | null
@@ -59,6 +59,7 @@ export default class SingUp extends React.Component<Props, State> {
       passwordError: '',
       loading: false,
       error: '',
+      showPicker: false,
     }
   }
 
@@ -123,18 +124,8 @@ export default class SingUp extends React.Component<Props, State> {
     this.props.navigation.pop()
   }
 
-  selectAvatar = async () => {
-    try {
-      const image = (await ImagePicker.openPicker({
-        width: 150,
-        height: 150,
-        cropping: true,
-      })) as Image
-
-      this.setState({ avatar: { path: image.path, stock: false } })
-    } catch (e) {
-      // Do nothing
-    }
+  selectAvatar = () => {
+    this.setState({ showPicker: true })
   }
 
   firebaseSignup = async () => {
@@ -311,6 +302,15 @@ export default class SingUp extends React.Component<Props, State> {
             </Touchable>
           </View>
         </KeyboardAwareScrollView>
+
+        <ImagePicker
+          title="Select avatar"
+          isVisible={this.state.showPicker}
+          onRequestClose={() => this.setState({ showPicker: false })}
+          onSelectImage={path =>
+            this.setState({ avatar: { stock: false, path } })
+          }
+        />
       </View>
     )
   }
