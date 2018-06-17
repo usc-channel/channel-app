@@ -28,7 +28,10 @@ interface State {
   emailError: string
   password: string
   passwordError: string
-  avatar: string
+  avatar: {
+    path: string
+    stock: boolean
+  }
   loading: boolean
   error: string
 }
@@ -44,9 +47,12 @@ export default class SingUp extends React.Component<Props, State> {
     this.state = {
       name: '',
       email: '',
-      avatar:
-        // tslint:disable-next-line:max-line-length
-        'https://firebasestorage.googleapis.com/v0/b/channel-app-1515208712246.appspot.com/o/generic%2Fprofile_default.png?alt=media&token=520f3ceb-9163-4162-beb7-64d87341aafc',
+      avatar: {
+        path:
+          // tslint:disable-next-line:max-line-length
+          'https://firebasestorage.googleapis.com/v0/b/channel-app-1515208712246.appspot.com/o/generic%2Fprofile_default.png?alt=media&token=520f3ceb-9163-4162-beb7-64d87341aafc',
+        stock: true,
+      },
       password: '',
       nameError: '',
       emailError: '',
@@ -75,49 +81,6 @@ export default class SingUp extends React.Component<Props, State> {
       .catch(e => {
         this.setState(e)
       })
-  }
-
-  firebaseSignup = async () => {
-    try {
-      const { email, password } = this.state
-
-      const response = await firebase
-        .auth()
-        .createUserAndRetrieveDataWithEmailAndPassword(email, password)
-
-      // TODO Upload image to firebase
-      // TODO Create User Object
-      // TODO Update firebase with information
-      // TODO Sign In user
-
-      // const user: User = {
-      //   id: response.user.uid,
-      //   name: this.state.name,
-      // }
-
-      await response.user.updateProfile({
-        displayName: this.state.name,
-      })
-
-      this.setState({ loading: false })
-
-      // tslint:disable-next-line:no-console
-      console.log(response)
-    } catch (e) {
-      let error = `Couldn't sign in right now, try again later.`
-
-      switch (e.code) {
-        case 'auth/email-already-in-use':
-          error = 'Email already in use. Maybe you want to Sign In instead?'
-          break
-      }
-
-      this.setState({ loading: false }, () =>
-        setTimeout(() => {
-          this.setState({ error })
-        }, 400)
-      )
-    }
   }
 
   validate = () => {
@@ -156,7 +119,7 @@ export default class SingUp extends React.Component<Props, State> {
     })
   }
 
-  signIn = () => {
+  backToSignIn = () => {
     this.props.navigation.pop()
   }
 
@@ -168,10 +131,74 @@ export default class SingUp extends React.Component<Props, State> {
         cropping: true,
       })) as Image
 
-      this.setState({ avatar: image.path })
+      this.setState({ avatar: { path: image.path, stock: false } })
     } catch (e) {
       // Do nothing
     }
+  }
+
+  firebaseSignup = async () => {
+    try {
+      const { email, password } = this.state
+
+      // Create user
+      const response = await firebase
+        .auth()
+        .createUserAndRetrieveDataWithEmailAndPassword(email, password)
+
+      // Upload image to firebase storage
+      const photoURL = await this.uploadImage(response.user.uid)
+
+      // Update user profile firebase with new information
+      await response.user.updateProfile({
+        displayName: this.state.name,
+        photoURL,
+      })
+
+      // TODO Sign In user (store user info locally)
+
+      this.setState({ loading: false })
+    } catch (e) {
+      let error = `Couldn't sign in right now, try again later.`
+
+      switch (e.code) {
+        case 'auth/email-already-in-use':
+          error = 'Email already in use. Maybe you want to Sign In instead?'
+          break
+      }
+
+      this.setState({ loading: false }, () =>
+        setTimeout(() => {
+          this.setState({ error })
+        }, 400)
+      )
+    }
+  }
+
+  uploadImage = (id: string): Promise<string> => {
+    return new Promise(async (resolve, reject) => {
+      const { avatar } = this.state
+
+      if (avatar.stock) {
+        resolve(avatar.path)
+      } else {
+        const fileExtension = avatar.path.substring(
+          avatar.path.lastIndexOf('.'),
+          avatar.path.length
+        )
+
+        try {
+          const response = await firebase
+            .storage()
+            .ref(`avatars/${id}${fileExtension}`)
+            .putFile(avatar.path)
+
+          resolve(response.downloadURL)
+        } catch (e) {
+          reject(e)
+        }
+      }
+    })
   }
 
   render() {
@@ -198,7 +225,7 @@ export default class SingUp extends React.Component<Props, State> {
                   size="xlarge"
                   rounded
                   source={{
-                    uri: this.state.avatar,
+                    uri: this.state.avatar.path,
                   }}
                   onPress={this.selectAvatar}
                 />
@@ -268,7 +295,7 @@ export default class SingUp extends React.Component<Props, State> {
           </View>
 
           <View style={styles.signupContainer}>
-            <Touchable onPress={this.signIn}>
+            <Touchable onPress={this.backToSignIn}>
               <View
                 style={{
                   width: Dimensions.get('window').width,
