@@ -66,7 +66,8 @@ export interface Lecturer {
   totalReviews: number
   totalCourses: number
   averageRating: number
-  School?: {
+  School: {
+    id: string
     name: string
   }
 }
