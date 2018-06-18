@@ -132,9 +132,7 @@ class ViewLecturer extends React.Component<Props, State> {
         <View style={styles.header}>
           <View>
             <Text style={styles.name}>{lecturer.name}</Text>
-            <Text style={styles.school}>
-              {lecturer.School && lecturer.School.name}
-            </Text>
+            <Text style={styles.school}>{lecturer.School.name}</Text>
           </View>
 
           <Icon
