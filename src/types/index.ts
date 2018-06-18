@@ -61,11 +61,12 @@ export interface Release {
 }
 
 export interface Lecturer {
-  id: number
+  id: string
   name: string
   totalReviews: number
-  averageRating: number | null
-  School: {
+  totalCourses: number
+  averageRating: number
+  School?: {
     name: string
   }
 }
