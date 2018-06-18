@@ -165,6 +165,7 @@ dependencies {
 
     implementation "com.google.firebase:firebase-auth:15.1.0"
     implementation "com.google.firebase:firebase-storage:15.0.2"
+    implementation "com.google.firebase:firebase-firestore:16.0.0"
 
     implementation project(':react-native-linear-gradient')
     implementation project(':react-native-pdf')

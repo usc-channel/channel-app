@@ -7,6 +7,7 @@ import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import io.invertase.firebase.storage.RNFirebaseStoragePackage;
+import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import org.wonday.pdf.RCTPdfView;
 import com.RNFetchBlob.RNFetchBlobPackage;
@@ -33,6 +34,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new PickerPackage(),
+            new RNFirebaseFirestorePackage(),
             new RNFirebaseStoragePackage(),
             new RNFirebaseAuthPackage(),
             new RNFirebasePackage(),
