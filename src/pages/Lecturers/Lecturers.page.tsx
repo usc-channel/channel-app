@@ -7,8 +7,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { getStatusBarHeight } from 'react-native-status-bar-height'
-import SearchBar from 'react-native-material-design-searchbar'
 import { NavigationScreenProps } from 'react-navigation'
 import { Icon } from 'react-native-elements'
 import { connect } from 'react-redux'
@@ -17,14 +15,19 @@ import { Theme } from '@config'
 import { Lecturer as LecturerModel, Store } from '@types'
 import firebase from 'react-native-firebase'
 import Lecturer from './components/Lecturer'
+import { NavIcon } from '@components'
+
+interface ScreenProps {
+  onSearch(): VoidFunction
+}
 
 type OwnProps = NavigationScreenProps<{}>
 
-interface StateProps {
+interface ConnectedProps {
   loggedIn: boolean
 }
 
-type Props = StateProps & OwnProps
+type Props = ConnectedProps & OwnProps
 
 interface State {
   loading: boolean
@@ -34,6 +37,22 @@ interface State {
 }
 
 class Lecturers extends React.Component<Props, State> {
+  static navigationOptions = ({
+    navigation,
+  }: NavigationScreenProps<ScreenProps>) => {
+    const onSearch = navigation.getParam('onSearch')
+
+    return {
+      title: 'Reviews',
+      headerRight: (
+        <NavIcon
+          iconName={Platform.OS === 'android' ? 'search' : 'ios-search-outline'}
+          onPress={onSearch}
+        />
+      ),
+    }
+  }
+
   constructor(props: Props) {
     super(props)
 
@@ -46,7 +65,15 @@ class Lecturers extends React.Component<Props, State> {
   }
 
   componentDidMount() {
+    this.props.navigation.setParams({
+      onSearch: this.onSearch,
+    })
+
     this.setState({ loading: true }, this.getLecturers)
+  }
+
+  onSearch = () => {
+    // TODO: Navigate to search screen
   }
 
   getLecturers = async () => {
@@ -69,10 +96,6 @@ class Lecturers extends React.Component<Props, State> {
     }
   }
 
-  updateSearch = (search: string) => {
-    this.setState({ search })
-  }
-
   addReview = () => {
     if (this.props.loggedIn) {
       this.props.navigation.navigate('newReview', { mode: 'all' })
@@ -85,16 +108,6 @@ class Lecturers extends React.Component<Props, State> {
     this.props.navigation.navigate('viewLecturer', { lecturer })
   }
 
-  filterLecturers = () => {
-    if (this.state.search === '') {
-      return this.state.lecturers
-    }
-
-    return this.state.lecturers.filter(a =>
-      a.name.toLowerCase().includes(this.state.search.toLowerCase())
-    )
-  }
-
   onRefresh = () => {
     this.setState({ refreshing: true }, () => {
       this.getLecturers()
@@ -102,42 +115,10 @@ class Lecturers extends React.Component<Props, State> {
   }
 
   render() {
-    const lecturers = this.filterLecturers()
-    const { loading, refreshing } = this.state
+    const { loading, refreshing, lecturers } = this.state
 
     return (
       <View style={styles.container}>
-        {Platform.OS === 'ios' && (
-          <View
-            style={{
-              paddingTop: getStatusBarHeight(),
-              backgroundColor: Theme.primary,
-            }}
-          />
-        )}
-
-        <SearchBar
-          onSearchChange={this.updateSearch}
-          onBlur={() => this.updateSearch('')}
-          height={50}
-          padding={0}
-          placeholder="Search lecturers"
-          autoCorrect={false}
-          returnKeyType={'search'}
-          inputProps={{ value: this.state.search }}
-          inputStyle={{
-            backgroundColor: '#fff',
-            borderWidth: 0,
-            borderBottomWidth: Platform.OS === 'ios' ? 1 : 0,
-            borderBottomColor: 'rgba(0,0,0,.12)',
-            elevation: 2,
-          }}
-          textStyle={{
-            fontSize: 16,
-            fontFamily: 'NunitoSans-Regular',
-          }}
-        />
-
         {loading ? (
           <ActivityIndicator style={{ margin: 16 }} />
         ) : (

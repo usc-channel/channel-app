@@ -1,3 +1,4 @@
+import { Platform } from 'react-native'
 import { createStackNavigator } from 'react-navigation'
 
 import { Lecturers, ViewCourse, ViewLecturer } from '@pages'
@@ -8,7 +9,15 @@ export default createStackNavigator(
     posts: {
       screen: Lecturers,
       navigationOptions: {
-        header: null,
+        ...Theme.navigationOptions,
+        headerTitleStyle: {
+          ...Theme.navigationOptions.headerTitleStyle,
+          ...(Platform.OS === 'ios'
+            ? {
+                marginLeft: -50,
+              }
+            : {}),
+        },
       },
     },
     viewLecturer: {
