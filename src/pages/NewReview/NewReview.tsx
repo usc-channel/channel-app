@@ -166,11 +166,12 @@ export default class NewReview extends React.Component<Props, State> {
             <Icon
               component={TouchableOpacity}
               name="check"
-              color="#fff"
+              color={Theme.accent}
+              reverse
               size={24}
               raised
               iconStyle={{ fontSize: 20 }}
-              containerStyle={{ backgroundColor: Theme.accent, marginRight: 0 }}
+              containerStyle={{ marginRight: 0 }}
               onPress={this.addReview}
             />
           </View>
