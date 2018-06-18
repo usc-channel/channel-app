@@ -22,8 +22,7 @@
     "react-native": "0.55.4",
     "react-native-collapsible": "^0.10.0",
     "react-native-dropdownalert": "^3.3.1",
-    "react-native-elements":
-      "https://github.com/react-native-training/react-native-elements.git#next",
+    "react-native-elements": "https://github.com/react-native-training/react-native-elements.git#next",
     "react-native-fast-image": "^2.2.4",
     "react-native-fetch-blob": "^0.10.8",
     "react-native-firebase": "^4.2.0",
@@ -83,9 +82,13 @@
     "preset": "react-native"
   },
   "rnpm": {
-    "assets": ["./src/assets/fonts/"]
+    "assets": [
+      "./src/assets/fonts/"
+    ]
   },
   "lint-staged": {
-    "*.{ts,tsx}": ["tslint 'src/**/*.ts?(x)' --format stylish"]
+    "*.{ts,tsx}": [
+      "tslint 'src/**/*.ts?(x)' --format stylish"
+    ]
   }
 }
