@@ -13,9 +13,9 @@ import { NavigationScreenProps } from 'react-navigation'
 import { Icon } from 'react-native-elements'
 import { connect } from 'react-redux'
 
-import { API, Theme } from '@config'
+import { Theme } from '@config'
 import { Lecturer as LecturerModel, Store } from '@types'
-import { SearchEmpty } from '@components'
+import firebase from 'react-native-firebase'
 import Lecturer from './components/Lecturer'
 
 type OwnProps = NavigationScreenProps<{}>
@@ -51,16 +51,21 @@ class Lecturers extends React.Component<Props, State> {
 
   getLecturers = async () => {
     try {
-      const request = await fetch(`${API}/lecturers`)
-      const lecturers = await request.json()
+      const response = await firebase
+        .firestore()
+        .collection('lecturers')
+        .get()
 
-      this.setState({
-        lecturers,
-        loading: false,
-        refreshing: false,
-      })
+      const lecturers = response.docs.map(a => ({
+        id: a.ref.id,
+        ...a.data(),
+      })) as LecturerModel[]
+
+      this.setState({ lecturers, loading: false })
     } catch (e) {
-      // TODO: Display error screen
+      // tslint:disable-next-line:no-console
+      console.log(e)
+      // TODO: Show error message
     }
   }
 
@@ -135,7 +140,7 @@ class Lecturers extends React.Component<Props, State> {
 
         {loading ? (
           <ActivityIndicator style={{ margin: 16 }} />
-        ) : lecturers.length > 0 ? (
+        ) : (
           <View style={{ flex: 1 }}>
             <FlatList
               data={lecturers}
@@ -168,8 +173,6 @@ class Lecturers extends React.Component<Props, State> {
               onPress={this.addReview}
             />
           </View>
-        ) : (
-          <SearchEmpty search={this.state.search} />
         )}
       </View>
     )

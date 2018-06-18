@@ -12,7 +12,7 @@ import { TabBar, TabView } from 'react-native-tab-view'
 import { connect } from 'react-redux'
 
 import { Course, Lecturer, Review, Store } from '@types'
-import { API, Theme } from '@config'
+import { Theme } from '@config'
 import Reviews from './components/Reviews'
 import Courses from './components/Courses'
 
@@ -60,11 +60,6 @@ class ViewLecturer extends React.Component<Props, State> {
     }
   }
 
-  componentDidMount() {
-    this.getCourses()
-    this.getReviews()
-  }
-
   renderScene = ({ route }: { route: Route }) => {
     switch (route.key) {
       case 'first':
@@ -78,42 +73,26 @@ class ViewLecturer extends React.Component<Props, State> {
     }
   }
 
-  getCourses = async () => {
-    const { id } = this.props.navigation.state.params.lecturer
-    const request = await fetch(`${API}/lecturers/${id}/courses`)
-    const courses = await request.json()
-
-    this.setState({
-      courses: courses.rows,
-    })
-  }
-
-  getReviews = async () => {
-    const { id } = this.props.navigation.state.params.lecturer
-    const request = await fetch(`${API}/lecturers/${id}/reviews`)
-    const reviews = await request.json()
-
-    this.setState({
-      reviews: reviews.rows,
-    })
-  }
-
   viewReview = (review: Review) => {
     this.props.navigation.navigate('viewReview', { review })
   }
 
   viewCourse = (course: Course) => {
+    const lecturer = this.props.navigation.getParam('lecturer')
+
     this.props.navigation.navigate('viewCourse', {
-      lecturer: this.props.navigation.state.params.lecturer,
+      lecturer,
       course,
     })
   }
 
   makeReview = () => {
     if (this.props.isLoggedIn) {
+      const lecturer = this.props.navigation.getParam('lecturer')
+
       this.props.navigation.navigate('newReview', {
         mode: 'single',
-        lecturer: this.props.navigation.state.params.lecturer,
+        lecturer,
       })
     } else {
       this.props.navigation.navigate('signIn')
@@ -133,11 +112,12 @@ class ViewLecturer extends React.Component<Props, State> {
 
   renderLabel = ({ route }: { route: Route; index: number }) => {
     const index = this.state.routes.indexOf(route)
+    const lecturer = this.props.navigation.getParam('lecturer')
 
     return (
       <View>
         <Text style={styles.tabCount}>
-          {index === 0 ? this.state.reviews.length : this.state.courses.length}
+          {index === 0 ? lecturer.totalReviews : lecturer.totalCourses}
         </Text>
         <Text style={styles.tabTitle}>{route.title}</Text>
       </View>
@@ -145,14 +125,16 @@ class ViewLecturer extends React.Component<Props, State> {
   }
 
   render() {
-    const { lecturer } = this.props.navigation.state.params
+    const lecturer = this.props.navigation.getParam('lecturer')
 
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <View>
             <Text style={styles.name}>{lecturer.name}</Text>
-            <Text style={styles.school}>{lecturer.School.name}</Text>
+            <Text style={styles.school}>
+              {lecturer.School && lecturer.School.name}
+            </Text>
           </View>
 
           <Icon

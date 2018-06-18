@@ -45,7 +45,7 @@ export default createBottomTabNavigator(
         }
       },
     },
-    Lecturers: {
+    Reviews: {
       screen: Lecturers,
       navigationOptions: ({ navigation }: Navigation) => {
         let tabBarVisible = true
@@ -145,7 +145,7 @@ export default createBottomTabNavigator(
     },
   },
   {
-    initialRouteName: 'Posts',
+    initialRouteName: 'Reviews',
     tabBarOptions: {
       showLabel: Platform.OS === 'ios',
       activeTintColor: Theme.primary,
