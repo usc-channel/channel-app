@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "apollo-client-preset": "^1.0.8",
+    "axios": "^0.18.0",
     "graphql": "^0.13.0",
     "graphql-tag": "^2.7.3",
     "he": "^1.1.1",

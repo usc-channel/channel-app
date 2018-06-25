@@ -11,9 +11,8 @@ import { NavigationScreenProps } from 'react-navigation'
 import { Icon } from 'react-native-elements'
 import { connect } from 'react-redux'
 
-import { Theme } from '@config'
+import { API, Theme } from '@config'
 import { Lecturer as LecturerModel, Store } from '@types'
-import firebase from 'react-native-firebase'
 import Lecturer from './components/Lecturer'
 import { NavIcon } from '@components'
 
@@ -78,15 +77,8 @@ class Lecturers extends React.Component<Props, State> {
 
   getLecturers = async () => {
     try {
-      const response = await firebase
-        .firestore()
-        .collection('lecturers')
-        .get()
-
-      const lecturers = response.docs.map(a => ({
-        id: a.ref.id,
-        ...a.data(),
-      })) as LecturerModel[]
+      const request = await fetch(`${API}/lecturers_reviews`)
+      const lecturers = await request.json()
 
       this.setState({ lecturers, loading: false })
     } catch (e) {
