@@ -40,7 +40,7 @@ class ViewPost extends React.Component<Props> {
     headerRight: (
       <NavIcon
         iconName={Platform.OS === 'ios' ? 'ios-share-outline' : 'share'}
-        onPress={navigation.state.params.onShare}
+        onPress={navigation.getParam('onShare')}
       />
     ),
   })
@@ -53,13 +53,13 @@ class ViewPost extends React.Component<Props> {
 
   onShare = () => {
     Share.share({
-      title: this.props.navigation.state.params.post.title,
+      title: this.props.navigation.getParam('post').title,
       url: this.props.data!.url!,
     })
   }
 
   render() {
-    const { post } = this.props.navigation.state.params
+    const post = this.props.navigation.getParam('post')
 
     if (this.props.data!.loading) {
       return (
@@ -211,7 +211,7 @@ const withPost = graphql<Response, any, OwnProps>(postQuery, {
     }
   },
   options: ({ navigation }: OwnProps) => ({
-    variables: { id: navigation.state.params.post.id },
+    variables: { id: navigation.getParam('post').id },
   }),
 })
 

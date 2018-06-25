@@ -66,8 +66,6 @@ class Posts extends React.Component<Props, State> {
   static navigationOptions = ({
     navigation,
   }: NavigationScreenProps<ScreenProps>) => {
-    const params = navigation.state.params || {}
-
     return {
       headerLeft: (
         <Image
@@ -86,13 +84,13 @@ class Posts extends React.Component<Props, State> {
             iconName={
               Platform.OS === 'android' ? 'search' : 'ios-search-outline'
             }
-            onPress={params.onSearch}
+            onPress={navigation.getParam('onSearch')}
           />
           <NavIcon
             iconName={
               Platform.OS === 'android' ? 'filter-list' : 'ios-options-outline'
             }
-            onPress={params.onFilter}
+            onPress={navigation.getParam('onFilter')}
           />
         </View>
       ),

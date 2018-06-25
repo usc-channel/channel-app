@@ -58,7 +58,7 @@
     "@types/react-native-star-rating": "^1.0.0",
     "@types/react-native-tab-view": "^1.0.0",
     "@types/react-native-vector-icons": "^4.4.2",
-    "@types/react-navigation": "^2.0.5",
+    "@types/react-navigation": "^2.0.6",
     "@types/react-redux": "^6.0.2",
     "@types/redux-logger": "^3.0.6",
     "@types/validator": "^9.4.1",
