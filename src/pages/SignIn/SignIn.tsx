@@ -138,6 +138,10 @@ class SignIn extends React.Component<Props, State> {
     this.props.navigation.push('signUp')
   }
 
+  forgotPassword = () => {
+    this.props.navigation.push('forgotPassword')
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -193,6 +197,7 @@ class SignIn extends React.Component<Props, State> {
                 }}
                 buttonStyle={{ borderRadius: 0, padding: 8 }}
                 containerStyle={{ marginTop: -8 }}
+                onPress={this.forgotPassword}
               />
             </View>
 

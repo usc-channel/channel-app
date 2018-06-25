@@ -15,6 +15,7 @@ import Videos from './Videos'
 import More from './More'
 import SignIn from './SignIn'
 import SignUp from './SignUp'
+import ForgotPassword from './ForgotPassword'
 
 export {
   Posts,
@@ -30,4 +31,5 @@ export {
   More,
   SignIn,
   SignUp,
+  ForgotPassword,
 }

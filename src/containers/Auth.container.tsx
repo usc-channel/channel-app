@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Platform } from 'react-native'
 import { createStackNavigator, NavigationScreenProps } from 'react-navigation'
-import { SignIn, SignUp } from '@pages'
+import { ForgotPassword, SignIn, SignUp } from '@pages'
 import { NavIcon } from '@components'
 import { Theme } from '@config'
 
@@ -27,6 +27,23 @@ export default createStackNavigator(
     },
     signUp: {
       screen: SignUp,
+      navigationOptions: ({ navigation }: NavigationScreenProps<{}>) => ({
+        headerStyle: {
+          backgroundColor: '#fff',
+          borderBottomWidth: 0,
+          elevation: 0,
+        },
+        headerLeft: (
+          <NavIcon
+            iconName={Platform.OS === 'ios' ? 'ios-arrow-back' : 'arrow-back'}
+            color={Theme.primary}
+            onPress={() => navigation.pop()}
+          />
+        ),
+      }),
+    },
+    forgotPassword: {
+      screen: ForgotPassword,
       navigationOptions: ({ navigation }: NavigationScreenProps<{}>) => ({
         headerStyle: {
           backgroundColor: '#fff',
