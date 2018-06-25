@@ -2,6 +2,7 @@ import React from 'react'
 import { NavigationScreenProps } from 'react-navigation'
 import {
   Dimensions,
+  LayoutAnimation,
   Platform,
   StatusBar,
   StyleSheet,
@@ -77,6 +78,7 @@ class SignUp extends React.Component<Props, State> {
     this.password!.blur()
     this.email!.blur()
 
+    LayoutAnimation.easeInEaseOut()
     this.setState({
       error: '',
       nameError: '',
@@ -175,6 +177,7 @@ class SignUp extends React.Component<Props, State> {
 
       this.setState({ loading: false }, () =>
         setTimeout(() => {
+          LayoutAnimation.easeInEaseOut()
           this.setState({ error })
         }, 400)
       )
@@ -279,7 +282,16 @@ class SignUp extends React.Component<Props, State> {
               onSubmitEditing={this.signUp}
             />
 
-            <Text style={styles.error}>{this.state.error}</Text>
+            <Text
+              style={[
+                styles.error,
+                !!this.state.error && {
+                  marginVertical: 15,
+                },
+              ]}
+            >
+              {this.state.error}
+            </Text>
 
             <Button
               title="Sign Up"
@@ -346,7 +358,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   content: {
-    // flex: 1,
     flexGrow: 1,
     flexShrink: 0,
   },
@@ -389,7 +400,6 @@ const styles = StyleSheet.create({
   error: {
     color: Theme.error,
     textAlign: 'center',
-    marginVertical: 15,
     fontSize: 16,
     fontFamily: 'NunitoSans-SemiBold',
   },
