@@ -2,11 +2,10 @@ import React from 'react'
 import { NavigationScreenProps } from 'react-navigation'
 import { Platform, View } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
-import AndroidSearchBar from 'react-native-material-design-searchbar'
 import debounce from 'lodash.debounce'
 
 import { PageInfo, Post } from '@types'
-import { SearchEmpty } from '@components'
+import { SearchBar, SearchEmpty } from '@components'
 import { graphqlClient, Theme } from '@config'
 import { postsTransform, searchQuery } from '../../graphql'
 import PostList from '../Posts/components/PostList'
@@ -66,7 +65,7 @@ class SearchPosts extends React.Component<Props, State> {
 
   renderSearch = () => {
     const Bar = (
-      <AndroidSearchBar
+      <SearchBar
         onSearchChange={this.updateSearch}
         height={50}
         padding={0}
@@ -85,6 +84,7 @@ class SearchPosts extends React.Component<Props, State> {
           fontSize: 16,
           fontFamily: 'NunitoSans-Regular',
         }}
+        value={this.state.text}
       />
     )
 
