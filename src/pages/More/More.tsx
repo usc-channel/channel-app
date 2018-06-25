@@ -12,6 +12,7 @@ import MoreListItem from './components/MoreListItem'
 import MoreIcon from './components/MoreIcon'
 import SignedInUser from './components/SignedInUser'
 import SignedOutUser from './components/SignedOutUser'
+import { Loading } from '@components'
 
 interface ConnectedProps {
   loggedIn: boolean
@@ -26,7 +27,15 @@ type OwnProps = NavigationScreenProps
 
 type Props = ConnectedProps & ConnectedDispatch & OwnProps
 
-class More extends React.Component<Props> {
+interface State {
+  modalShowing: boolean
+}
+
+class More extends React.Component<Props, State> {
+  state = {
+    modalShowing: false,
+  }
+
   viewProfile = () => {
     //
   }
@@ -36,7 +45,12 @@ class More extends React.Component<Props> {
   }
 
   signOut = () => {
-    this.props.logout()
+    this.setState({ modalShowing: true }, () => {
+      setTimeout(() => {
+        this.setState({ modalShowing: false })
+        this.props.logout()
+      }, 500)
+    })
   }
 
   render() {
@@ -74,6 +88,8 @@ class More extends React.Component<Props> {
             />
           )}
         </ScrollView>
+
+        <Loading visible={this.state.modalShowing} />
       </View>
     )
   }
