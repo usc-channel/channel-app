@@ -40,7 +40,8 @@ class ViewCourse extends React.Component<Props, State> {
 
   getReviews = () => {
     this.setState({ loading: true }, async () => {
-      const { lecturer, course } = this.props.navigation.state.params
+      const lecturer = this.props.navigation.getParam('lecturer')
+      const course = this.props.navigation.getParam('course')
 
       const request = await fetch(
         `${API}/lecturers/${lecturer.id}/reviews/${course.id}`
@@ -52,7 +53,8 @@ class ViewCourse extends React.Component<Props, State> {
   }
 
   render() {
-    const { course, lecturer } = this.props.navigation.state.params
+    const lecturer = this.props.navigation.getParam('lecturer')
+    const course = this.props.navigation.getParam('course')
 
     return (
       <View style={styles.container}>

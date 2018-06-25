@@ -37,26 +37,30 @@ interface State {
 export default class NewReview extends React.Component<Props, State> {
   static navigationOptions = ({
     navigation,
-  }: NavigationScreenProps<ScreenParams>) => ({
-    title: navigation.state.params.mode === 'all' ? 'New Lecturer Review' : '',
-    headerLeft: (
-      <NavIcon
-        iconName={
-          Platform.OS === 'ios' ? 'ios-arrow-down' : 'keyboard-arrow-down'
-        }
-        onPress={() => navigation.goBack()}
-      />
-    ),
-    headerRight:
-      navigation.state.params.mode === 'all' ? (
+  }: NavigationScreenProps<ScreenParams>) => {
+    const mode = navigation.getParam('mode')
+
+    return {
+      title: mode === 'all' ? 'New Lecturer Review' : '',
+      headerLeft: (
         <NavIcon
-          iconName={Platform.OS === 'ios' ? 'md-checkmark' : 'check'}
-          onPress={() =>
-            navigation.state.params && navigation.state.params.addReview()
+          iconName={
+            Platform.OS === 'ios' ? 'ios-arrow-down' : 'keyboard-arrow-down'
           }
+          onPress={() => navigation.goBack()}
         />
-      ) : null,
-  })
+      ),
+      headerRight:
+        mode === 'all' ? (
+          <NavIcon
+            iconName={Platform.OS === 'ios' ? 'md-checkmark' : 'check'}
+            onPress={() =>
+              navigation.state.params && navigation.state.params.addReview()
+            }
+          />
+        ) : null,
+    }
+  }
 
   constructor(props: Props) {
     super(props)
@@ -143,9 +147,9 @@ export default class NewReview extends React.Component<Props, State> {
   }
 
   render() {
-    const { mode } = this.props.navigation.state.params
+    const mode = this.props.navigation.getParam('mode')
     const lecturer =
-      this.props.navigation.state.params.lecturer || this.state.lecturer
+      this.props.navigation.getParam('lecturer') || this.state.lecturer
 
     return (
       <KeyboardAwareScrollView

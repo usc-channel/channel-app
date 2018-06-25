@@ -54,12 +54,12 @@ class SearchPosts extends React.Component<Props, State> {
   }
 
   getResults = async (search: string) => {
-    const data = await this.props.navigation.state.params.getResults(search)
+    const data = await this.props.navigation.getParam('getResults')(search)
     this.setState({ loading: false, data })
   }
 
   renderSearch = () => {
-    const { placeholder } = this.props.navigation.state.params
+    const placeholder = this.props.navigation.getParam('placeholder')
 
     const Bar = (
       <AndroidSearchBar
@@ -117,7 +117,7 @@ class SearchPosts extends React.Component<Props, State> {
   }
 
   renderItem = ({ item }: ListRenderItemInfo<any>) => {
-    const { renderItem } = this.props.navigation.state.params
+    const renderItem = this.props.navigation.getParam('renderItem')
     return renderItem(item, this.onSelect)
   }
 
@@ -137,7 +137,7 @@ class SearchPosts extends React.Component<Props, State> {
           <FlatList
             keyboardShouldPersistTaps="always"
             data={this.state.data}
-            keyExtractor={this.props.navigation.state.params.keyExtractor}
+            keyExtractor={this.props.navigation.getParam('keyExtractor')}
             renderItem={this.renderItem}
           />
         )}

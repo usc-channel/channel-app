@@ -13,7 +13,7 @@ type Props = NavigationScreenProps<ScreenProps>
 
 class ViewRelease extends React.Component<Props> {
   static navigationOptions = ({ navigation }: Props) => ({
-    title: navigation.state.params.release.title,
+    title: navigation.getParam('release').title,
   })
 
   render() {
@@ -23,7 +23,7 @@ class ViewRelease extends React.Component<Props> {
           flex: 1,
           width: Dimensions.get('window').width,
         }}
-        source={{ uri: this.props.navigation.state.params.release.magazine }}
+        source={{ uri: this.props.navigation.getParam('release').magazine }}
       />
     )
   }
