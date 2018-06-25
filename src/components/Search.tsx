@@ -8,10 +8,9 @@ import {
   View,
 } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
-import AndroidSearchBar from 'react-native-material-design-searchbar'
 import debounce from 'lodash.debounce'
 
-import { SearchEmpty } from '@components'
+import { SearchBar, SearchEmpty } from '@components'
 import { Theme } from '@config'
 
 interface ScreenParams {
@@ -62,7 +61,7 @@ class SearchPosts extends React.Component<Props, State> {
     const placeholder = this.props.navigation.getParam('placeholder')
 
     const Bar = (
-      <AndroidSearchBar
+      <SearchBar
         onSearchChange={this.updateSearch}
         height={50}
         padding={0}
@@ -81,6 +80,7 @@ class SearchPosts extends React.Component<Props, State> {
           fontSize: 16,
           fontFamily: 'NunitoSans-Regular',
         }}
+        value={this.state.text}
       />
     )
 
