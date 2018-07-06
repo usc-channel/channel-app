@@ -11,5 +11,6 @@
     "ios": true,
     "src/assets/fonts": true,
     "android": true
-  }
+  },
+  "eslint.enable": false
 }
