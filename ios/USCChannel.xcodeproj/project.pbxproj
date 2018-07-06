@@ -45,7 +45,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* USCChannelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* USCChannelTests.m */; };
 		389754240386430F991051BD /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 265E906666314973B649CD20 /* Octicons.ttf */; };
 		3CBAF007011AE9A6A4129B7B /* libPods-USCChannelTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 638759431E2B200DA1E820D3 /* libPods-USCChannelTests.a */; };
-		3D2D76BA20D2178300F51CA1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3D2D76B920D2178300F51CA1 /* GoogleService-Info.plist */; };
+		3D65BAE820EF274C0083D10C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3D65BAE720EF274C0083D10C /* GoogleService-Info.plist */; };
 		45A4BAF7127747BDBE7E451E /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2843E421B60343B08BF5F486 /* Ionicons.ttf */; };
 		50032F3CFB534392A731A358 /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 51EEB6A4260A4CFC833DEA54 /* libRNFetchBlob.a */; };
 		52305FC071194B9A8EFBF452 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7B973D79EE9B4D06B2590368 /* MaterialIcons.ttf */; };
@@ -442,7 +442,7 @@
 		2D02E4901E0B4A5D006451C7 /* USCChannel-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "USCChannel-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E1F11AE03E5439BBFB7C472 /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
-		3D2D76B920D2178300F51CA1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3D65BAE720EF274C0083D10C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3E2027011B3EF950E2E3073E /* libPods-USCChannel-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-USCChannel-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FDDFB0BDEC24CE0B3BF0690 /* imageCropPicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = imageCropPicker.xcodeproj; path = "../node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj"; sourceTree = "<group>"; };
 		41ADB657584401B9258F7321 /* Pods-USCChannel-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-USCChannel-tvOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-USCChannel-tvOSTests/Pods-USCChannel-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -637,10 +637,10 @@
 			isa = PBXGroup;
 			children = (
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
+				3D65BAE720EF274C0083D10C /* GoogleService-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
-				3D2D76B920D2178300F51CA1 /* GoogleService-Info.plist */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
@@ -1447,7 +1447,7 @@
 				389754240386430F991051BD /* Octicons.ttf in Resources */,
 				0826E8ED91134B08982861E1 /* SimpleLineIcons.ttf in Resources */,
 				1193D6E933CB441E80891E2F /* Zocial.ttf in Resources */,
-				3D2D76BA20D2178300F51CA1 /* GoogleService-Info.plist in Resources */,
+				3D65BAE820EF274C0083D10C /* GoogleService-Info.plist in Resources */,
 				9209C590267243ADAB0F840B /* NunitoSans-Black.ttf in Resources */,
 				1A53EA5CCB92454A8AF25AE6 /* NunitoSans-BlackItalic.ttf in Resources */,
 				8C6C8885AB7C48BEA4FEF40C /* NunitoSans-Bold.ttf in Resources */,
