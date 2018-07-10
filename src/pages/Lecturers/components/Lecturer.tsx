@@ -16,9 +16,9 @@ const Lecturer: React.SFC<Props> = ({ lecturer, onPress }) => (
     <View style={styles.container}>
       <View>
         <Text style={styles.name}>{lecturer.name}</Text>
-        <Text style={styles.reviews}>{`${
-          lecturer.totalReviews
-        } review${lecturer.totalReviews !== 1 && 's'}`}</Text>
+        <Text style={styles.reviews}>{`${lecturer.totalReviews} review${
+          lecturer.totalReviews !== 1 ? 's' : ''
+        }`}</Text>
       </View>
 
       <StarRating
