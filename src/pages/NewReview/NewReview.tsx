@@ -42,14 +42,16 @@ export default class NewReview extends React.Component<Props, State> {
 
     return {
       title: mode === 'all' ? 'New Lecturer Review' : '',
-      headerLeft: (
-        <NavIcon
-          iconName={
-            Platform.OS === 'ios' ? 'ios-arrow-down' : 'keyboard-arrow-down'
+      ...(Platform.OS === 'ios'
+        ? {
+            headerLeft: (
+              <NavIcon
+                iconName="ios-arrow-down"
+                onPress={() => navigation.goBack()}
+              />
+            ),
           }
-          onPress={() => navigation.goBack()}
-        />
-      ),
+        : {}),
       headerRight:
         mode === 'all' ? (
           <NavIcon
