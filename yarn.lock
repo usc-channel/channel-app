@@ -5343,9 +5343,9 @@ react-native-linear-gradient@^2.4.0:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-modal@^6.3.0:
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-6.3.0.tgz#872c5c66b1250eb7135f5b087e30c8c8c3e853a2"
+react-native-modal@^6.4.0:
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-6.4.0.tgz#a6c2599b4c9d53ac99071bc658215367ee81e278"
   dependencies:
     prop-types "^15.6.1"
     react-native-animatable "^1.2.4"
