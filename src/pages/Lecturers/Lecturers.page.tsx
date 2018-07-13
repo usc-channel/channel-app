@@ -13,8 +13,9 @@ import { connect } from 'react-redux'
 
 import { API, Theme } from '@config'
 import { Lecturer as LecturerModel, Store } from '@types'
-import Lecturer from './components/Lecturer'
 import { NavIcon } from '@components'
+import Lecturer from './components/Lecturer'
+import NoReviews from './components/NoReviews'
 
 interface ScreenProps {
   onSearch(): VoidFunction
@@ -115,19 +116,23 @@ class Lecturers extends React.Component<Props, State> {
           <ActivityIndicator style={{ margin: 16 }} />
         ) : (
           <View style={{ flex: 1 }}>
-            <FlatList
-              data={lecturers}
-              keyExtractor={(a: LecturerModel) => a.id.toString()}
-              contentContainerStyle={styles.content}
-              numColumns={2}
-              refreshing={refreshing}
-              onRefresh={this.getLecturers}
-              renderItem={({ item }) => (
-                <View style={{ flex: 1, maxWidth: '50%' }}>
-                  <Lecturer onPress={this.viewLecturer} lecturer={item} />
-                </View>
-              )}
-            />
+            {lecturers.length === 0 ? (
+              <NoReviews />
+            ) : (
+              <FlatList
+                data={lecturers}
+                keyExtractor={(a: LecturerModel) => a.id.toString()}
+                contentContainerStyle={styles.content}
+                numColumns={2}
+                refreshing={refreshing}
+                onRefresh={this.getLecturers}
+                renderItem={({ item }) => (
+                  <View style={{ flex: 1, maxWidth: '50%' }}>
+                    <Lecturer onPress={this.viewLecturer} lecturer={item} />
+                  </View>
+                )}
+              />
+            )}
 
             <Icon
               component={TouchableOpacity}
