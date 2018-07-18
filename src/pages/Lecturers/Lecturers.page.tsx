@@ -13,7 +13,7 @@ import { connect } from 'react-redux'
 
 import { API, Theme } from '@config'
 import { Lecturer as LecturerModel, Store } from '@types'
-import { NavIcon } from '@components'
+import { Error, NavIcon } from '@components'
 import Lecturer from './components/Lecturer'
 import NoReviews from './components/NoReviews'
 
@@ -33,6 +33,7 @@ interface State {
   loading: boolean
   refreshing: boolean
   search: string
+  error: boolean
   lecturers: LecturerModel[]
 }
 
@@ -57,10 +58,11 @@ class Lecturers extends React.Component<Props, State> {
     super(props)
 
     this.state = {
-      loading: false,
+      loading: true,
       refreshing: false,
       search: '',
       lecturers: [],
+      error: false,
     }
   }
 
@@ -69,7 +71,7 @@ class Lecturers extends React.Component<Props, State> {
       onSearch: this.onSearch,
     })
 
-    this.setState({ loading: true }, this.getLecturers)
+    this.getLecturers()
   }
 
   onSearch = () => {
@@ -83,10 +85,16 @@ class Lecturers extends React.Component<Props, State> {
 
       this.setState({ lecturers, loading: false })
     } catch (e) {
-      // tslint:disable-next-line:no-console
-      console.log(e)
-      // TODO: Show error message
+      this.setState({ loading: false, error: true })
     }
+  }
+
+  refresh = () => {
+    this.setState({ loading: true }, () => {
+      setTimeout(() => {
+        this.getLecturers()
+      }, 1000)
+    })
   }
 
   addReview = () => {
@@ -108,12 +116,17 @@ class Lecturers extends React.Component<Props, State> {
   }
 
   render() {
-    const { loading, refreshing, lecturers } = this.state
+    const { error, loading, refreshing, lecturers } = this.state
 
     return (
       <View style={styles.container}>
         {loading ? (
           <ActivityIndicator style={{ margin: 16 }} />
+        ) : error ? (
+          <Error
+            message="There's been a problem getting the latest reviews."
+            action={{ message: 'Try again?', callback: this.refresh }}
+          />
         ) : (
           <View style={{ flex: 1 }}>
             {lecturers.length === 0 ? (
