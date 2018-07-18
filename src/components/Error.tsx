@@ -27,7 +27,11 @@ const Error: React.SFC<ErrorProps> = ({ message, action }) => (
       <Button
         containerStyle={{ marginTop: 15 }}
         clear
-        titleStyle={{ fontFamily: 'NunitoSans-Regular', color: Theme.primary }}
+        titleStyle={{
+          fontFamily: 'NunitoSans-Regular',
+          color: Theme.primary,
+          fontSize: 16,
+        }}
         title={action.message}
         onPress={action.callback}
       />
@@ -40,6 +44,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: Theme.background,
   },
   image: {
     width: 150,
