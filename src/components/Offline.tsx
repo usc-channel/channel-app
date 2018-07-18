@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Platform, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, View } from 'react-native'
 import { Button } from 'react-native-elements'
 
 import { Theme } from '@config'
@@ -12,14 +12,18 @@ interface Props {
 
 const Offline: React.SFC<Props> = ({ message, retrying, action }) => (
   <View style={styles.container}>
-    <Image style={styles.image} source={require('../assets/tv-empty.png')} />
-
-    <Text style={styles.text}>
+    <Image
+      source={require('../assets/tv-empty.png')}
+      style={styles.image}
+      resizeMode="contain"
+    />
+    <Text style={styles.title}>Oops!</Text>
+    <Text style={styles.sub}>
       This might be easier with an internet connection.
     </Text>
 
     <Button
-      titleStyle={{ color: Theme.primary }}
+      titleStyle={{ color: Theme.primary, fontFamily: 'NunitoSans-Regular' }}
       containerStyle={{ marginTop: 15 }}
       clear
       loading={retrying}
@@ -43,17 +47,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     position: 'relative',
   },
-  text: {
-    color: 'rgba(0,0,0,0.87)',
-    fontSize: 18,
-    fontFamily: 'NunitoSans-SemiBold',
-    textAlign: 'center',
-  },
   image: {
-    marginBottom: 16,
-    width: 196,
-    height: 162,
-    marginTop: Platform.OS === 'ios' ? -50 : -30,
+    width: 150,
+    height: 120,
+    marginBottom: 20,
+    marginTop: -60,
+  },
+  title: {
+    fontFamily: 'NunitoSans-Bold',
+    color: Theme.primary,
+    fontSize: 20,
+  },
+  sub: {
+    fontFamily: 'NunitoSans-Regular',
+    fontSize: 16,
+    maxWidth: 300,
+    marginTop: 5,
+    lineHeight: 20,
+    textAlign: 'center',
+    color: 'rgba(0,0,0,.54)',
   },
 })
 
