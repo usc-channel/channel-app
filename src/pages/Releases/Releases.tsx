@@ -5,22 +5,25 @@ import { NavigationScreenProps } from 'react-navigation'
 import ReleaseThumbnail from './components/ReleaseThumbnail'
 import { Release } from '@types'
 import { API } from '@config'
+import { Error } from '@components'
 
 type Props = NavigationScreenProps<{}>
 
 interface State {
+  error: boolean
   loading: boolean
   releases: Release[]
 }
 
 class Releases extends React.Component<Props, State> {
   state = {
-    loading: false,
+    error: false,
+    loading: true,
     releases: [],
   }
 
   componentDidMount() {
-    this.setState({ loading: true }, this.getReleases)
+    this.getReleases()
   }
 
   getReleases = async () => {
@@ -30,9 +33,7 @@ class Releases extends React.Component<Props, State> {
 
       this.setState({ releases, loading: false })
     } catch (e) {
-      // tslint:disable-next-line:no-console
-      console.log(e)
-      // TODO: Show error message
+      this.setState({ loading: false, error: true })
     }
   }
 
@@ -40,11 +41,24 @@ class Releases extends React.Component<Props, State> {
     this.props.navigation.navigate('ViewRelease', { release })
   }
 
+  refresh = () => {
+    this.setState({ loading: true }, () => {
+      setTimeout(() => {
+        this.getReleases()
+      }, 1000)
+    })
+  }
+
   render() {
-    const { loading, releases } = this.state
+    const { loading, releases, error } = this.state
 
     return loading ? (
       <ActivityIndicator style={{ paddingVertical: 15 }} />
+    ) : error ? (
+      <Error
+        message="There's been a problem getting the magazine releases."
+        action={{ message: 'Try again?', callback: this.refresh }}
+      />
     ) : (
       <FlatList
         data={releases}
