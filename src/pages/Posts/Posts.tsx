@@ -15,7 +15,7 @@ import DropdownAlert from 'react-native-dropdownalert'
 import { connect } from 'react-redux'
 
 import { graphqlClient, Theme } from '@config'
-import { NavIcon, Offline } from '@components'
+import { Error, NavIcon } from '@components'
 import {
   filteredPostsQuery,
   postsCategoriesQuery,
@@ -306,10 +306,13 @@ class Posts extends React.Component<Props, State> {
         <View style={{ flex: 1 }}>
           {this.offlineAlert()}
 
-          <Offline
-            action={this.retryOffline}
-            retrying={this.state.retrying}
-            message={this.state.retryingMessage}
+          <Error
+            action={{
+              message: this.state.retryingMessage,
+              callback: this.retryOffline,
+            }}
+            loading={this.state.retrying}
+            message="This might be easier with an internet connection."
           />
         </View>
       )

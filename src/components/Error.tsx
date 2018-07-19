@@ -1,7 +1,8 @@
 import React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { Button } from 'react-native-elements'
 import { Theme } from '@config'
+import Image from 'react-native-fast-image'
 
 interface Action {
   message: string
@@ -11,9 +12,10 @@ interface Action {
 interface ErrorProps {
   message: string
   action?: Action
+  loading?: boolean
 }
 
-const Error: React.SFC<ErrorProps> = ({ message, action }) => (
+const Error: React.SFC<ErrorProps> = ({ message, action, loading }) => (
   <View style={styles.container}>
     <Image
       source={require('../assets/tv-empty.png')}
@@ -34,6 +36,9 @@ const Error: React.SFC<ErrorProps> = ({ message, action }) => (
         }}
         title={action.message}
         onPress={action.callback}
+        loading={loading}
+        loadingProps={{ color: Theme.primary }}
+        loadingStyle={{ paddingVertical: 9 }}
       />
     )}
   </View>
