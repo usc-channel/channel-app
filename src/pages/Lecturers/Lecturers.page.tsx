@@ -83,14 +83,19 @@ class Lecturers extends React.Component<Props, State> {
       const request = await fetch(`${API}/lecturers_reviews`)
       const lecturers = await request.json()
 
-      this.setState({ lecturers, loading: false })
+      this.setState({
+        lecturers,
+        loading: false,
+        refreshing: false,
+        error: false,
+      })
     } catch (e) {
-      this.setState({ loading: false, error: true })
+      this.setState({ loading: false, error: true, refreshing: false })
     }
   }
 
   refresh = () => {
-    this.setState({ loading: true }, () => {
+    this.setState({ refreshing: true }, () => {
       setTimeout(() => {
         this.getLecturers()
       }, 1000)
@@ -126,6 +131,7 @@ class Lecturers extends React.Component<Props, State> {
           <Error
             message="There's been a problem getting the latest reviews."
             action={{ message: 'Try again?', callback: this.refresh }}
+            loading={refreshing}
           />
         ) : (
           <View style={{ flex: 1 }}>

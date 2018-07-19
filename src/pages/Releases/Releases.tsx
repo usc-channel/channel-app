@@ -12,6 +12,7 @@ type Props = NavigationScreenProps<{}>
 interface State {
   error: boolean
   loading: boolean
+  refreshing: boolean
   releases: Release[]
 }
 
@@ -19,6 +20,7 @@ class Releases extends React.Component<Props, State> {
   state = {
     error: false,
     loading: true,
+    refreshing: false,
     releases: [],
   }
 
@@ -31,9 +33,14 @@ class Releases extends React.Component<Props, State> {
       const request = await fetch(`${API}/releases`)
       const releases = await request.json()
 
-      this.setState({ releases, loading: false })
+      this.setState({
+        releases,
+        loading: false,
+        refreshing: false,
+        error: false,
+      })
     } catch (e) {
-      this.setState({ loading: false, error: true })
+      this.setState({ loading: false, error: true, refreshing: false })
     }
   }
 
@@ -42,7 +49,7 @@ class Releases extends React.Component<Props, State> {
   }
 
   refresh = () => {
-    this.setState({ loading: true }, () => {
+    this.setState({ refreshing: true }, () => {
       setTimeout(() => {
         this.getReleases()
       }, 1000)
@@ -50,7 +57,7 @@ class Releases extends React.Component<Props, State> {
   }
 
   render() {
-    const { loading, releases, error } = this.state
+    const { loading, releases, error, refreshing } = this.state
 
     return loading ? (
       <ActivityIndicator style={{ paddingVertical: 15 }} />
@@ -58,6 +65,7 @@ class Releases extends React.Component<Props, State> {
       <Error
         message="There's been a problem getting the magazine releases."
         action={{ message: 'Try again?', callback: this.refresh }}
+        loading={refreshing}
       />
     ) : (
       <FlatList
