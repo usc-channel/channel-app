@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavigationScreenProps } from 'react-navigation'
 import {
+  ActivityIndicator,
   FlatList,
   Keyboard,
   ListRenderItemInfo,
@@ -130,6 +131,10 @@ class SearchPosts extends React.Component<Props, State> {
         }}
       >
         {this.renderSearch()}
+
+        {this.state.loading && (
+          <ActivityIndicator style={{ marginVertical: 15 }} />
+        )}
 
         {this.isEmpty() ? (
           <SearchEmpty search={this.state.text} />
