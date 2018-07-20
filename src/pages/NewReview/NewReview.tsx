@@ -114,7 +114,7 @@ export default class NewReview extends React.Component<Props, State> {
 
   lookupCourse = () => {
     this.props.navigation.navigate('search', {
-      placeholder: 'Search Course ID or Course Name',
+      placeholder: 'Search Course Code or Course Name',
       getResults: this.getCourses,
       keyExtractor: (item: Course) => item.id.toString(),
       emptyMessage: `Couldn't find any Courses with the name or code`,
