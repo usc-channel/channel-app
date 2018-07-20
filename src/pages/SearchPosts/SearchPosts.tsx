@@ -160,7 +160,10 @@ class SearchPosts extends React.Component<Props, State> {
         {this.renderSearch()}
 
         {this.isEmpty() ? (
-          <SearchEmpty search={this.state.text} />
+          <SearchEmpty
+            search={this.state.text}
+            message="No post results found for"
+          />
         ) : (
           <PostList
             otherPosts={this.state.posts}

@@ -117,6 +117,7 @@ export default class NewReview extends React.Component<Props, State> {
       placeholder: 'Search Course ID or Course Name',
       getResults: this.getCourses,
       keyExtractor: (item: Course) => item.id.toString(),
+      emptyMessage: `Couldn't find any Courses with the name or code`,
       renderItem: (item: Course, onSelect: () => void) => (
         <ListItem
           title={`${item.code} - ${item.name}`}
@@ -135,6 +136,7 @@ export default class NewReview extends React.Component<Props, State> {
       placeholder: 'Search Lecturers',
       getResults: this.getLecturers,
       keyExtractor: (item: Lecturer) => item.id.toString(),
+      emptyMessage: `Couldn't find any Lecturers with the name`,
       renderItem: (item: Lecturer, onSelect: () => void) => (
         <ListItem
           title={item.name}
