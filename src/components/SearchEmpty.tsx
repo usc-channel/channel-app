@@ -8,6 +8,7 @@ import {
   Text,
   View,
 } from 'react-native'
+import { Theme } from '@config'
 
 interface State {
   top: Animated.Value
@@ -15,11 +16,16 @@ interface State {
 
 interface Props {
   search: string
+  message?: string
 }
 
 const SpringValue = Platform.OS === 'ios' ? -50 : -70
 
 class SearchEmpty extends React.Component<Props, State> {
+  static defaultProps: Partial<Props> = {
+    message: 'No results found for',
+  }
+
   constructor(props: Props) {
     super(props)
 
@@ -53,7 +59,7 @@ class SearchEmpty extends React.Component<Props, State> {
   }
 
   render() {
-    const { search } = this.props
+    const { search, message } = this.props
 
     return (
       <View style={styles.container}>
@@ -61,6 +67,8 @@ class SearchEmpty extends React.Component<Props, State> {
           style={{
             marginTop: -100,
             transform: [{ translateY: this.state.top }],
+            alignItems: 'center',
+            maxWidth: '90%',
           }}
         >
           <Image
@@ -69,8 +77,8 @@ class SearchEmpty extends React.Component<Props, State> {
             source={require('../assets/tv-empty.png')}
           />
 
-          <Text style={styles.text}>No results found for</Text>
-          <Text style={styles.text}>"{search}"</Text>
+          <Text style={styles.text}>{message}</Text>
+          <Text style={[styles.text, styles.search]}>"{search}"</Text>
         </Animated.View>
       </View>
     )
@@ -96,6 +104,10 @@ const styles = StyleSheet.create({
     width: 150,
     height: 120,
     position: 'relative',
+  },
+  search: {
+    marginTop: 8,
+    color: Theme.accent,
   },
 })
 

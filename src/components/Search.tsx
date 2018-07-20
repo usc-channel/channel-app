@@ -16,6 +16,7 @@ import { Theme } from '@config'
 
 interface ScreenParams {
   placeholder: string
+  emptyMessage?: string
   keyExtractor(item: any): string
   renderItem(item: any, onSelect: () => void): React.ReactElement<any> | null
   getResults(search: string): Promise<any[]>
@@ -123,6 +124,8 @@ class SearchPosts extends React.Component<Props, State> {
   }
 
   render() {
+    const emptyMessage = this.props.navigation.getParam('emptyMessage')
+
     return (
       <View
         style={{
@@ -137,7 +140,7 @@ class SearchPosts extends React.Component<Props, State> {
         )}
 
         {this.isEmpty() ? (
-          <SearchEmpty search={this.state.text} />
+          <SearchEmpty search={this.state.text} message={emptyMessage} />
         ) : (
           <FlatList
             keyboardShouldPersistTaps="always"
