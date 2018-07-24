@@ -11,10 +11,11 @@ import { NavigationScreenProps } from 'react-navigation'
 import { ButtonGroup, Icon, ListItem } from 'react-native-elements'
 import StarRating from 'react-native-star-rating'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { connect } from 'react-redux'
 
 import { Input, InputPicker, NavIcon } from '@components'
 import { API, Theme } from '@config'
-import { Course, Lecturer } from '@types'
+import { Course, CourseState, Lecturer, Store } from '@types'
 
 interface ScreenParams {
   lecturer: Lecturer
@@ -22,7 +23,11 @@ interface ScreenParams {
   addReview(): void
 }
 
-type Props = NavigationScreenProps<ScreenParams>
+interface ConnectedProps {
+  course: CourseState
+}
+
+type Props = NavigationScreenProps<ScreenParams> & ConnectedProps
 
 interface State {
   semester: number
@@ -34,7 +39,7 @@ interface State {
   lecturer: Lecturer | null
 }
 
-export default class NewReview extends React.Component<Props, State> {
+class NewReview extends React.Component<Props, State> {
   static navigationOptions = ({
     navigation,
   }: NavigationScreenProps<ScreenParams>) => {
@@ -119,7 +124,7 @@ export default class NewReview extends React.Component<Props, State> {
       newItem: {
         message: 'Add new course',
         subtitle: 'Enter information for a new course',
-        action: () => alert('uea'),
+        action: () => this.props.navigation.navigate('newCourse'),
       },
       keyExtractor: (item: Course) => item.id.toString(),
       emptyMessage: `Couldn't find any Courses with the name or code`,
@@ -164,6 +169,8 @@ export default class NewReview extends React.Component<Props, State> {
     const mode = this.props.navigation.getParam('mode')
     const lecturer =
       this.props.navigation.getParam('lecturer') || this.state.lecturer
+
+    const course = this.props.course || this.state.course
 
     return (
       <KeyboardAwareScrollView
@@ -232,11 +239,7 @@ export default class NewReview extends React.Component<Props, State> {
 
         <InputPicker
           label="Course"
-          value={
-            this.state.course
-              ? `${this.state.course.code} - ${this.state.course.name}`
-              : 'Select course'
-          }
+          value={course ? `${course.code} - ${course.name}` : 'Select course'}
           onPress={this.lookupCourse}
         />
 
@@ -329,3 +332,9 @@ const styles = StyleSheet.create({
     color: 'rgba(0,0,0,.87)',
   },
 })
+
+const mapStateToProps = (state: Store) => ({
+  course: state.course,
+})
+
+export default connect(mapStateToProps)(NewReview)
