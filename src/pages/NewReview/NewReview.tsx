@@ -116,6 +116,11 @@ export default class NewReview extends React.Component<Props, State> {
     this.props.navigation.navigate('search', {
       placeholder: 'Search Course Code or Course Name',
       getResults: this.getCourses,
+      newItem: {
+        message: 'Add new course',
+        subtitle: 'Enter information for a new course',
+        action: () => alert('uea'),
+      },
       keyExtractor: (item: Course) => item.id.toString(),
       emptyMessage: `Couldn't find any Courses with the name or code`,
       renderItem: (item: Course, onSelect: () => void) => (
@@ -135,6 +140,11 @@ export default class NewReview extends React.Component<Props, State> {
     this.props.navigation.navigate('search', {
       placeholder: 'Search Lecturers',
       getResults: this.getLecturers,
+      newItem: {
+        message: 'Add new lecturer',
+        subtitle: 'Enter information for a new lecturer',
+        action: () => alert('uea'),
+      },
       keyExtractor: (item: Lecturer) => item.id.toString(),
       emptyMessage: `Couldn't find any Lecturers with the name`,
       renderItem: (item: Lecturer, onSelect: () => void) => (
