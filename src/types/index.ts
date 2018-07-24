@@ -1,5 +1,5 @@
 import { AuthAction } from '@actions'
-import { Dispatch as ReduxDispatch } from 'react-redux'
+import { Dispatch as ReduxDispatch, Omit } from 'react-redux'
 
 export interface Category {
   categoryId: number
@@ -101,10 +101,13 @@ export interface Store {
     actionQueue: any[]
   }
   userState: UserState
+  course: CourseState
 }
 
 export interface UserState {
   user: User | null
 }
+
+export type CourseState = Omit<Course, 'reviews'> | null
 
 export type Dispatch = ReduxDispatch<AuthAction>

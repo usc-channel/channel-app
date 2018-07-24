@@ -152,12 +152,14 @@ class SearchPosts extends React.Component<Props, State> {
             newItem={newItem}
           />
         ) : (
-          <FlatList
-            keyboardShouldPersistTaps="always"
-            data={this.state.data}
-            keyExtractor={this.props.navigation.getParam('keyExtractor')}
-            renderItem={this.renderItem}
-          />
+          !this.state.loading && (
+            <FlatList
+              keyboardShouldPersistTaps="always"
+              data={this.state.data}
+              keyExtractor={this.props.navigation.getParam('keyExtractor')}
+              renderItem={this.renderItem}
+            />
+          )
         )}
       </View>
     )
