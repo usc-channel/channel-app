@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native'
 import { Theme } from '@config'
+import { ListItem } from 'react-native-elements'
 
 interface State {
   top: Animated.Value
@@ -17,6 +18,11 @@ interface State {
 interface Props {
   search: string
   message?: string
+  newItem?: {
+    message: string
+    subtitle: string
+    action(): void
+  }
 }
 
 const SpringValue = Platform.OS === 'ios' ? -50 : -70
@@ -59,27 +65,57 @@ class SearchEmpty extends React.Component<Props, State> {
   }
 
   render() {
-    const { search, message } = this.props
+    const { search, message, newItem } = this.props
 
     return (
-      <View style={styles.container}>
-        <Animated.View
-          style={{
-            marginTop: -100,
-            transform: [{ translateY: this.state.top }],
-            alignItems: 'center',
-            maxWidth: '90%',
-          }}
-        >
-          <Image
-            resizeMode="contain"
-            style={styles.image}
-            source={require('../assets/tv-empty.png')}
+      <View style={[{ flex: 1 }, newItem ? { zIndex: 3 } : {}]}>
+        {newItem && (
+          <ListItem
+            title={newItem.message}
+            subtitle={newItem.subtitle}
+            leftIcon={{
+              name: 'md-add-circle',
+              color: '#fff',
+              type: 'ionicon',
+            }}
+            containerStyle={{
+              backgroundColor: Theme.accent,
+              paddingVertical: 10,
+            }}
+            titleStyle={{
+              fontFamily: 'NunitoSans-SemiBold',
+              color: '#fff',
+              fontSize: 16,
+            }}
+            subtitleStyle={{
+              fontFamily: 'NunitoSans-Regular',
+              fontSize: 13,
+              marginTop: -2,
+              color: 'rgba(255,255,255,0.9)',
+            }}
+            onPress={newItem.action}
           />
+        )}
 
-          <Text style={styles.text}>{message}</Text>
-          <Text style={[styles.text, styles.search]}>"{search}"</Text>
-        </Animated.View>
+        <View style={styles.container}>
+          <Animated.View
+            style={{
+              marginTop: -100,
+              transform: [{ translateY: this.state.top }],
+              alignItems: 'center',
+              maxWidth: '90%',
+            }}
+          >
+            <Image
+              resizeMode="contain"
+              style={styles.image}
+              source={require('../assets/tv-empty.png')}
+            />
+
+            <Text style={styles.text}>{message}</Text>
+            <Text style={[styles.text, styles.search]}>"{search}"</Text>
+          </Animated.View>
+        </View>
       </View>
     )
   }
