@@ -2,7 +2,7 @@ import Posts from './Posts'
 import ViewPost from './ViewPost'
 import SearchPosts from './SearchPosts'
 
-import Lecturers from './Lecturers'
+import Reviews from './Reviews'
 import ViewLecturer from './ViewLecturer'
 import ViewCourse from './ViewCourse'
 import NewReview from './NewReview'
@@ -21,7 +21,7 @@ import ForgotPassword from './ForgotPassword'
 
 export {
   Posts,
-  Lecturers,
+  Reviews,
   Releases,
   ViewPost,
   SearchPosts,

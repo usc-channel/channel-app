@@ -11,7 +11,7 @@ interface Props {
   onPress(lecturer: Partial<LecturerModel>): void
 }
 
-const Lecturer: React.SFC<Props> = ({ lecturer, onPress }) => (
+const LecturerCard: React.SFC<Props> = ({ lecturer, onPress }) => (
   <Touchable onPress={() => onPress(lecturer)}>
     <View style={styles.container}>
       <View>
@@ -60,4 +60,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Lecturer
+export default LecturerCard

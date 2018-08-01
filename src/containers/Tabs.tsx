@@ -7,7 +7,7 @@ import {
 } from 'react-navigation'
 import { Theme } from '@config'
 import Posts from './Posts.container'
-import Lecturers from './Lecturers.container'
+import Reviews from './Reviews.container'
 import Media from './Media.container'
 import Archives from './Archives.container'
 import More from './More.container'
@@ -46,7 +46,7 @@ export default createBottomTabNavigator(
       },
     },
     Reviews: {
-      screen: Lecturers,
+      screen: Reviews,
       navigationOptions: ({ navigation }: Navigation) => {
         let tabBarVisible = true
 

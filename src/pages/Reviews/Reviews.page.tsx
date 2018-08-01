@@ -12,9 +12,9 @@ import { Icon } from 'react-native-elements'
 import { connect } from 'react-redux'
 
 import { API, Theme } from '@config'
-import { Lecturer as LecturerModel, Store } from '@types'
+import { Lecturer, Store } from '@types'
 import { Error, NavIcon } from '@components'
-import Lecturer from './components/Lecturer'
+import LecturerCard from './components/LecturerCard'
 import NoReviews from './components/NoReviews'
 
 interface ScreenProps {
@@ -34,10 +34,10 @@ interface State {
   refreshing: boolean
   search: string
   error: boolean
-  lecturers: LecturerModel[]
+  lecturers: Lecturer[]
 }
 
-class Lecturers extends React.Component<Props, State> {
+class Reviews extends React.Component<Props, State> {
   static navigationOptions = ({
     navigation,
   }: NavigationScreenProps<ScreenProps>) => {
@@ -110,7 +110,7 @@ class Lecturers extends React.Component<Props, State> {
     }
   }
 
-  viewLecturer = (lecturer: LecturerModel) => {
+  viewLecturer = (lecturer: Lecturer) => {
     this.props.navigation.navigate('viewLecturer', { lecturer })
   }
 
@@ -140,14 +140,14 @@ class Lecturers extends React.Component<Props, State> {
             ) : (
               <FlatList
                 data={lecturers}
-                keyExtractor={(a: LecturerModel) => a.id.toString()}
+                keyExtractor={(a: Lecturer) => a.id.toString()}
                 contentContainerStyle={styles.content}
                 numColumns={2}
                 refreshing={refreshing}
                 onRefresh={this.getLecturers}
                 renderItem={({ item }) => (
                   <View style={{ flex: 1, maxWidth: '50%' }}>
-                    <Lecturer onPress={this.viewLecturer} lecturer={item} />
+                    <LecturerCard onPress={this.viewLecturer} lecturer={item} />
                   </View>
                 )}
               />
@@ -190,4 +190,4 @@ const mapStateToProps = ({ userState }: Store) => ({
   loggedIn: !!userState.user,
 })
 
-export default connect(mapStateToProps)(Lecturers)
+export default connect(mapStateToProps)(Reviews)
