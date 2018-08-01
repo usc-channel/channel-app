@@ -34,7 +34,6 @@ interface State {
   semester: number
   year: string | null
   course: Course | null
-  courseLookup: string
   rating: number | null
   review: string
   lecturer: Lecturer | null
@@ -80,7 +79,6 @@ class NewReview extends React.Component<Props, State> {
       rating: null,
       lecturer: null,
       review: '',
-      courseLookup: '',
     }
   }
 
@@ -169,11 +167,11 @@ class NewReview extends React.Component<Props, State> {
   render() {
     const mode = this.props.navigation.getParam('mode')
     const lecturer =
-      this.props.navigation.getParam('lecturer') ||
+      this.state.lecturer ||
       this.props.lecturer ||
-      this.state.lecturer
+      this.props.navigation.getParam('lecturer')
 
-    const course = this.props.course || this.state.course
+    const course = this.state.course || this.props.course
 
     return (
       <KeyboardAwareScrollView
