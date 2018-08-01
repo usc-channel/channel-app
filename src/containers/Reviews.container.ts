@@ -1,13 +1,13 @@
 import { Platform } from 'react-native'
 import { createStackNavigator } from 'react-navigation'
 
-import { Lecturers, ViewCourse, ViewLecturer } from '@pages'
+import { Reviews, ViewCourse, ViewLecturer } from '@pages'
 import { Theme } from '@config'
 
 export default createStackNavigator(
   {
     posts: {
-      screen: Lecturers,
+      screen: Reviews,
       navigationOptions: {
         ...Theme.navigationOptions,
         headerTitleStyle: {
