@@ -32,6 +32,7 @@ interface State {
   name: string
   nameError: string
   loading: boolean
+  disabled: boolean
   message: {
     text: string
     error: boolean
@@ -55,6 +56,7 @@ class NewCourse extends React.Component<Props, State> {
         text: '',
         error: false,
       },
+      disabled: false,
     }
   }
 
@@ -71,7 +73,7 @@ class NewCourse extends React.Component<Props, State> {
 
     this.validate()
       .then(() => {
-        this.setState({ loading: true }, this.addCourse)
+        this.setState({ loading: true, disabled: true }, this.addCourse)
       })
       .catch(e => {
         this.setState(e)
@@ -204,16 +206,21 @@ class NewCourse extends React.Component<Props, State> {
 
             <Button
               title="Add Course"
+              disabled={this.state.disabled}
               titleStyle={[styles.titleStyle, styles.main]}
               buttonStyle={{
                 height: 54,
               }}
-              ViewComponent={LinearGradient}
-              linearGradientProps={{
-                colors: ['#4E9CD0', Theme.primary],
-                start: { x: 0, y: 0.5 },
-                end: { x: 1, y: 0.5 },
-              }}
+              ViewComponent={this.state.disabled ? View : LinearGradient}
+              {...(this.state.disabled
+                ? {}
+                : {
+                    linearGradientProps: {
+                      colors: ['#4E9CD0', Theme.primary],
+                      start: { x: 0, y: 0.5 },
+                      end: { x: 1, y: 0.5 },
+                    },
+                  })}
               containerStyle={{
                 marginBottom: 20,
               }}

@@ -88,7 +88,7 @@ class NewLecturer extends React.Component<Props, State> {
 
     this.validate()
       .then(() => {
-        this.setState({ loading: true }, this.addLecturer)
+        this.setState({ loading: true, disabled: true }, this.addLecturer)
       })
       .catch(e => {
         this.setState(e)
@@ -133,7 +133,7 @@ class NewLecturer extends React.Component<Props, State> {
 
       this.props.setLecturer(data)
 
-      this.setState({ loading: false, disabled: true }, () =>
+      this.setState({ loading: false }, () =>
         setTimeout(() => {
           LayoutAnimation.easeInEaseOut()
 
@@ -152,7 +152,7 @@ class NewLecturer extends React.Component<Props, State> {
     } catch (e) {
       const text = `Couldn't create lecturer right now, try again later.`
 
-      this.setState({ loading: false }, () =>
+      this.setState({ loading: false, disabled: false }, () =>
         setTimeout(() => {
           LayoutAnimation.easeInEaseOut()
           this.setState({
@@ -230,16 +230,20 @@ class NewLecturer extends React.Component<Props, State> {
               buttonStyle={{
                 height: 54,
               }}
-              ViewComponent={LinearGradient}
-              linearGradientProps={{
-                colors: ['#4E9CD0', Theme.primary],
-                start: { x: 0, y: 0.5 },
-                end: { x: 1, y: 0.5 },
-              }}
+              ViewComponent={this.state.disabled ? View : LinearGradient}
               containerStyle={{
                 marginBottom: 20,
               }}
               onPress={this.submit}
+              {...(this.state.disabled
+                ? {}
+                : {
+                    linearGradientProps: {
+                      colors: ['#4E9CD0', Theme.primary],
+                      start: { x: 0, y: 0.5 },
+                      end: { x: 1, y: 0.5 },
+                    },
+                  })}
             />
           </View>
         </KeyboardAwareScrollView>
