@@ -7,6 +7,7 @@ import ViewLecturer from './ViewLecturer'
 import ViewCourse from './ViewCourse'
 import NewReview from './NewReview'
 import NewCourse from './NewCourse'
+import NewLecturer from './NewLecturer'
 
 import Releases from './Releases'
 import ViewRelease from './ViewRelease'
@@ -34,4 +35,5 @@ export {
   SignUp,
   ForgotPassword,
   NewCourse,
+  NewLecturer,
 }
