@@ -53,7 +53,7 @@ class Picker<T> extends React.Component<Props<T>, State> {
       <>
         <View style={styles.container}>
           <Touchable style={{ flex: 1 }} onPress={this.togglePicker}>
-            <View>
+            <View style={{ height: 54 }}>
               <Text
                 style={[
                   styles.titleStyle,
