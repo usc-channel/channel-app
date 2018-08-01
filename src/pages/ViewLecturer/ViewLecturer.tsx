@@ -130,7 +130,7 @@ class ViewLecturer extends React.Component<Props, State> {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <View>
+          <View style={{ flex: 1 }}>
             <Text style={styles.name}>{lecturer.name}</Text>
             <Text style={styles.school}>{lecturer.School.name}</Text>
           </View>
