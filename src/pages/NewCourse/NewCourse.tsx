@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavigationScreenProps } from 'react-navigation'
 import {
+  Keyboard,
   LayoutAnimation,
   Platform,
   StatusBar,
@@ -16,7 +17,7 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 
 import { API, Theme } from '@config'
-import { Loading, TextField } from '@components'
+import { Loading, NavIcon, TextField } from '@components'
 import { CourseState, Dispatch } from '@types'
 import { setCourse } from '@actions'
 
@@ -40,6 +41,24 @@ interface State {
 }
 
 class NewCourse extends React.Component<Props, State> {
+  static navigationOptions = ({ navigation }: NavigationScreenProps<{}>) => ({
+    headerStyle: {
+      backgroundColor: '#fff',
+      borderBottomWidth: 0,
+      elevation: 0,
+    },
+    headerLeft: (
+      <NavIcon
+        iconName={Platform.OS === 'ios' ? 'ios-arrow-back' : 'arrow-back'}
+        color={Theme.primary}
+        onPress={() => {
+          Keyboard.dismiss()
+          navigation.pop()
+        }}
+      />
+    ),
+  })
+
   code: TextField | null
   name: TextField | null
 

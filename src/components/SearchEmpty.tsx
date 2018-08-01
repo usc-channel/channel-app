@@ -93,7 +93,10 @@ class SearchEmpty extends React.Component<Props, State> {
               marginTop: -2,
               color: 'rgba(255,255,255,0.9)',
             }}
-            onPress={newItem.action}
+            onPress={() => {
+              Keyboard.dismiss()
+              newItem.action()
+            }}
           />
         )}
 

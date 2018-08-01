@@ -40,37 +40,9 @@ let ModalStack = createStackNavigator(
     },
     newCourse: {
       screen: NewCourse,
-      navigationOptions: ({ navigation }: NavigationScreenProps<{}>) => ({
-        headerStyle: {
-          backgroundColor: '#fff',
-          borderBottomWidth: 0,
-          elevation: 0,
-        },
-        headerLeft: (
-          <NavIcon
-            iconName={Platform.OS === 'ios' ? 'ios-arrow-back' : 'arrow-back'}
-            color={Theme.primary}
-            onPress={() => navigation.pop()}
-          />
-        ),
-      }),
     },
     newLecturer: {
       screen: NewLecturer,
-      navigationOptions: ({ navigation }: NavigationScreenProps<{}>) => ({
-        headerStyle: {
-          backgroundColor: '#fff',
-          borderBottomWidth: 0,
-          elevation: 0,
-        },
-        headerLeft: (
-          <NavIcon
-            iconName={Platform.OS === 'ios' ? 'ios-arrow-back' : 'arrow-back'}
-            color={Theme.primary}
-            onPress={() => navigation.pop()}
-          />
-        ),
-      }),
     },
   },
   {

@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavigationScreenProps } from 'react-navigation'
 import {
+  Keyboard,
   LayoutAnimation,
   Platform,
   StatusBar,
@@ -16,7 +17,7 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 
 import { API, Theme } from '@config'
-import { Loading, Picker, TextField } from '@components'
+import { Loading, NavIcon, Picker, TextField } from '@components'
 import { Dispatch, Lecturer, LecturerState, School } from '@types'
 import { setLecturer } from '@actions'
 
@@ -43,6 +44,24 @@ interface State {
 const SchoolPicker = Picker as new () => Picker<School>
 
 class NewLecturer extends React.Component<Props, State> {
+  static navigationOptions = ({ navigation }: NavigationScreenProps<{}>) => ({
+    headerStyle: {
+      backgroundColor: '#fff',
+      borderBottomWidth: 0,
+      elevation: 0,
+    },
+    headerLeft: (
+      <NavIcon
+        iconName={Platform.OS === 'ios' ? 'ios-arrow-back' : 'arrow-back'}
+        color={Theme.primary}
+        onPress={() => {
+          Keyboard.dismiss()
+          navigation.pop()
+        }}
+      />
+    ),
+  })
+
   name: TextField | null
 
   constructor(props: Props) {
