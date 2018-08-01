@@ -170,7 +170,9 @@ class NewLecturer extends React.Component<Props, State> {
     const { loading, message } = this.state
     return (
       <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
+        {Platform.OS === 'ios' && (
+          <StatusBar barStyle="dark-content" animated />
+        )}
 
         <Loading visible={loading} />
 

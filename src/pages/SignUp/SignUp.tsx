@@ -168,9 +168,12 @@ class SignUp extends React.Component<Props, State> {
       await this.createUser(user)
 
       this.props.login(user)
-      this.setState({ loading: false }, () => this.props.navigation.dismiss())
+      this.setState({ loading: false }, () => {
+        StatusBar.setBarStyle('light-content', true)
+        this.props.navigation.dismiss()
+      })
     } catch (e) {
-      let error = `Couldn't sign in right now, try again later.`
+      let error = `Couldn't sign up right now, try again later.`
 
       switch (e.code) {
         case 'auth/email-already-in-use':
