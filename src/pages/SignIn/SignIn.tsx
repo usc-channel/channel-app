@@ -88,6 +88,7 @@ class SignIn extends React.Component<Props, State> {
       }
 
       this.props.signIn(user)
+      StatusBar.setBarStyle('light-content', true)
       this.props.navigation.dismiss()
     } catch (e) {
       let error = `Couldn't sign in right now, try again later.`
@@ -148,7 +149,9 @@ class SignIn extends React.Component<Props, State> {
   render() {
     return (
       <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
+        {Platform.OS === 'ios' && (
+          <StatusBar barStyle="dark-content" animated />
+        )}
 
         <Loading visible={this.state.loading} />
 
