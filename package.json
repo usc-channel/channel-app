@@ -10,7 +10,7 @@
     "check": "tsc --noEmit --pretty"
   },
   "dependencies": {
-    "apollo-client-preset": "^1.0.8",
+    "apollo-boost": "^0.1.12",
     "axios": "^0.18.0",
     "graphql": "^0.13.0",
     "graphql-tag": "^2.7.3",
@@ -19,9 +19,9 @@
     "moment": "^2.20.1",
     "query-string": "^5.1.0",
     "react": "16.4.1",
-    "react-apollo": "^2.0.4",
+    "react-apollo": "^2.1.9",
     "react-native": "0.56.0",
-    "react-native-collapsible": "^0.10.0",
+    "react-native-collapsible": "^0.13.0",
     "react-native-dropdownalert": "^3.3.1",
     "react-native-elements": "https://github.com/react-native-training/react-native-elements.git#next",
     "react-native-fast-image": "^2.2.4",

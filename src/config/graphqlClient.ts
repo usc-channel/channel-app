@@ -1,10 +1,7 @@
-import { ApolloClient } from 'apollo-client'
-import { HttpLink } from 'apollo-link-http'
-import { InMemoryCache } from 'apollo-cache-inmemory'
+import ApolloClient from 'apollo-boost'
 
 const client = new ApolloClient({
-  link: new HttpLink({ uri: 'http://uscchannel.com/graphql' }),
-  cache: new InMemoryCache(),
+  uri: 'http://uscchannel.com/graphql',
 })
 
 export default client
