@@ -15,7 +15,7 @@ import { connect } from 'react-redux'
 
 import { Input, InputPicker, NavIcon } from '@components'
 import { API, Theme } from '@config'
-import { Course, CourseState, Lecturer, Store } from '@types'
+import { Course, CourseState, Lecturer, LecturerState, Store } from '@types'
 
 interface ScreenParams {
   lecturer: Lecturer
@@ -25,6 +25,7 @@ interface ScreenParams {
 
 interface ConnectedProps {
   course: CourseState
+  lecturer: LecturerState
 }
 
 type Props = NavigationScreenProps<ScreenParams> & ConnectedProps
@@ -148,7 +149,7 @@ class NewReview extends React.Component<Props, State> {
       newItem: {
         message: 'Add new lecturer',
         subtitle: 'Enter information for a new lecturer',
-        action: () => alert('uea'),
+        action: () => this.props.navigation.navigate('newLecturer'),
       },
       keyExtractor: (item: Lecturer) => item.id.toString(),
       emptyMessage: `Couldn't find any Lecturers with the name`,
@@ -168,7 +169,9 @@ class NewReview extends React.Component<Props, State> {
   render() {
     const mode = this.props.navigation.getParam('mode')
     const lecturer =
-      this.props.navigation.getParam('lecturer') || this.state.lecturer
+      this.props.navigation.getParam('lecturer') ||
+      this.props.lecturer ||
+      this.state.lecturer
 
     const course = this.props.course || this.state.course
 
@@ -246,9 +249,7 @@ class NewReview extends React.Component<Props, State> {
         {mode === 'all' && (
           <InputPicker
             label="Lecturer"
-            value={
-              this.state.lecturer ? this.state.lecturer.name : 'Select lecturer'
-            }
+            value={lecturer ? lecturer.name : 'Select lecturer'}
             onPress={this.lookupLectures}
           />
         )}
@@ -335,6 +336,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state: Store) => ({
   course: state.course,
+  lecturer: state.lecturer,
 })
 
 export default connect(mapStateToProps)(NewReview)

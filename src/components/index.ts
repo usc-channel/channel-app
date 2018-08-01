@@ -11,6 +11,7 @@ import TextField from './TextField'
 import ImagePicker from './ImagePicker'
 import SearchBar from './SearchBar'
 import Error from './Error'
+import Picker from './Picker'
 
 export {
   NavIcon,
@@ -26,4 +27,5 @@ export {
   SearchBar,
   ImagePicker,
   Error,
+  Picker,
 }

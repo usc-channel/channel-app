@@ -11,7 +11,7 @@ import { withNetworkConnectivity } from 'react-native-offline'
 import Tabs from './containers/Tabs'
 import Auth from './containers/Auth.container'
 import { graphqlClient, store, Theme } from '@config'
-import { NewCourse, NewReview } from '@pages'
+import { NewCourse, NewLecturer, NewReview } from '@pages'
 import { NavIcon, Search } from '@components'
 
 let ModalStack = createStackNavigator(
@@ -40,6 +40,23 @@ let ModalStack = createStackNavigator(
     },
     newCourse: {
       screen: NewCourse,
+      navigationOptions: ({ navigation }: NavigationScreenProps<{}>) => ({
+        headerStyle: {
+          backgroundColor: '#fff',
+          borderBottomWidth: 0,
+          elevation: 0,
+        },
+        headerLeft: (
+          <NavIcon
+            iconName={Platform.OS === 'ios' ? 'ios-arrow-back' : 'arrow-back'}
+            color={Theme.primary}
+            onPress={() => navigation.pop()}
+          />
+        ),
+      }),
+    },
+    newLecturer: {
+      screen: NewLecturer,
       navigationOptions: ({ navigation }: NavigationScreenProps<{}>) => ({
         headerStyle: {
           backgroundColor: '#fff',

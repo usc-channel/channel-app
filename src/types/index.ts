@@ -1,6 +1,11 @@
 import { AuthAction } from '@actions'
 import { Dispatch as ReduxDispatch, Omit } from 'react-redux'
 
+export interface School {
+  id: number
+  name: string
+}
+
 export interface Category {
   categoryId: number
   name: string
@@ -66,10 +71,7 @@ export interface Lecturer {
   totalReviews: number
   totalCourses: number
   averageRating: number
-  School: {
-    id: string
-    name: string
-  }
+  School: School
 }
 
 export interface Course {
@@ -102,6 +104,7 @@ export interface Store {
   }
   userState: UserState
   course: CourseState
+  lecturer: LecturerState
 }
 
 export interface UserState {
@@ -109,5 +112,6 @@ export interface UserState {
 }
 
 export type CourseState = Omit<Course, 'reviews'> | null
+export type LecturerState = Lecturer | null
 
 export type Dispatch = ReduxDispatch<AuthAction>
