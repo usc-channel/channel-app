@@ -1,5 +1,12 @@
 import React from 'react'
-import { FlatList, Platform, StyleSheet, Text, View } from 'react-native'
+import {
+  FlatList,
+  Keyboard,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native'
 import { Icon, ListItem } from 'react-native-elements'
 import Modal from 'react-native-modal'
 
@@ -27,6 +34,7 @@ class Picker<T> extends React.Component<Props<T>, State> {
   }
 
   togglePicker = () => {
+    Keyboard.dismiss()
     this.setState(({ isVisible }) => ({ isVisible: !isVisible }))
   }
 
