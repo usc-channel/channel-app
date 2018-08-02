@@ -154,7 +154,6 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-image-crop-picker')
     implementation(project(':react-native-firebase')) {
         transitive = false
     }
@@ -166,9 +165,10 @@ dependencies {
     implementation "com.google.firebase:firebase-auth:15.1.0"
     implementation "com.google.firebase:firebase-storage:15.0.2"
 
-    implementation project(':react-native-linear-gradient')
     implementation project(':react-native-pdf')
-    implementation project(':react-native-fetch-blob')
+    implementation project(':react-native-image-crop-picker')
+    implementation project(':rn-fetch-blob')
+    implementation project(':react-native-linear-gradient')
     implementation project(':react-native-fast-image')
     implementation project(':react-native-vector-icons')
     implementation fileTree(dir: "libs", include: ["*.jar"])
