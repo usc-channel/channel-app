@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Platform, StatusBar } from 'react-native'
+import { Keyboard, Platform, StatusBar } from 'react-native'
 import { createStackNavigator, NavigationScreenProps } from 'react-navigation'
 import { ForgotPassword, SignIn, SignUp } from '@pages'
 import { NavIcon } from '@components'
@@ -21,6 +21,7 @@ export default createStackNavigator(
             iconName={Platform.OS === 'ios' ? 'ios-arrow-down' : 'arrow-back'}
             color={Theme.primary}
             onPress={() => {
+              Keyboard.dismiss()
               StatusBar.setBarStyle('light-content', true)
               navigation.pop()
             }}
