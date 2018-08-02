@@ -10,9 +10,16 @@ import {
 } from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
 import Collapsible from 'react-native-collapsible'
-import { ChildProps, graphql, QueryProps } from 'react-apollo'
+import {
+  ChildProps,
+  compose,
+  DataValue,
+  graphql,
+  GraphqlQueryControls,
+} from 'react-apollo'
 import DropdownAlert from 'react-native-dropdownalert'
 import { connect } from 'react-redux'
+import { OperationVariables } from 'apollo-boost'
 
 import { graphqlClient, Theme } from '@config'
 import { Error, NavIcon } from '@components'
@@ -375,15 +382,17 @@ interface Response {
   }
 }
 
-const withPosts = graphql<Response, any, OwnProps>(postsCategoriesQuery, {
-  props: ({ data }) => {
-    return postCategoriesResolver(data as any)
-  },
+const withPosts = graphql<{}, Response, {}, Return>(postsCategoriesQuery, {
+  props: ({ data }) => postCategoriesResolver(data!),
 })
 
+interface Return {
+  data: Partial<GraphProps> & Partial<GraphqlQueryControls>
+}
+
 const postCategoriesResolver = (
-  data: QueryProps & Response
-): ChildProps<{}, GraphProps> => {
+  data: DataValue<Response, OperationVariables>
+): Return => {
   let returnData = {}
 
   if (data!.categories) {
@@ -396,9 +405,9 @@ const postCategoriesResolver = (
   if (data!.featured && data!.other) {
     returnData = {
       ...returnData,
-      other: postsTransform(data!.other),
-      featured: postsTransform(data!.featured),
-      pageInfo: data!.other.pageInfo,
+      other: postsTransform(data!.other!),
+      featured: postsTransform(data!.featured!),
+      pageInfo: data!.other!.pageInfo,
     }
   }
 
@@ -408,12 +417,12 @@ const postCategoriesResolver = (
       error: data!.error,
       loading: data!.loading,
       refetch: data!.refetch,
-    } as any,
+    },
   }
 }
 
-const mapStateToProps = (state: Store) => ({
-  isConnected: state.network.isConnected,
+const mapStateToProps = ({ network }: Store) => ({
+  isConnected: network.isConnected,
 })
 
-export default withPosts(connect(mapStateToProps)(Posts))
+export default compose(withPosts, connect(mapStateToProps))(Posts)
