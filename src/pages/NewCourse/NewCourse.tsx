@@ -52,6 +52,7 @@ class NewCourse extends React.Component<Props, State> {
         iconName={Platform.OS === 'ios' ? 'ios-arrow-back' : 'arrow-back'}
         color={Theme.primary}
         onPress={() => {
+          StatusBar.setBarStyle('light-content', true)
           Keyboard.dismiss()
           navigation.pop()
         }}
