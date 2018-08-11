@@ -147,6 +147,7 @@ class NewCourse extends React.Component<Props, State> {
           })
 
           setTimeout(() => {
+            StatusBar.setBarStyle('light-content')
             this.props.navigation.pop(2)
           }, 3000)
         }, 400)
