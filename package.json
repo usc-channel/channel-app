@@ -27,7 +27,7 @@
     "react-native-fast-image": "^4.0.14",
     "react-native-firebase": "^4.2.0",
     "react-native-image-crop-picker": "^0.20.3",
-    "react-native-keyboard-aware-scroll-view": "https://github.com/iRoachie/react-native-keyboard-aware-scroll-view.git#typings",
+    "react-native-keyboard-aware-scroll-view": "^0.7.0",
     "react-native-linear-gradient": "^2.4.0",
     "react-native-modal": "^6.4.0",
     "react-native-offline": "^3.7.3",
