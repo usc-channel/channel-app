@@ -98,7 +98,13 @@ class Picker<T> extends React.Component<Props<T>, State> {
               )}
 
               {value && (
-                <Text style={[styles.valueStyle, valueStyle]}>
+                <Text
+                  style={[
+                    styles.valueStyle,
+                    valueStyle,
+                    showDropdown && { paddingRight: 36 },
+                  ]}
+                >
                   {value[displayValue]}
                 </Text>
               )}
@@ -178,7 +184,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'rgba(0,0,0,.87)',
     marginTop: 24,
-    paddingRight: 36,
     fontFamily: 'NunitoSans-SemiBold',
     marginLeft: 15,
   },
