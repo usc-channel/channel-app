@@ -3,9 +3,12 @@ import {
   FlatList,
   Keyboard,
   Platform,
+  StyleProp,
   StyleSheet,
   Text,
+  TextStyle,
   View,
+  ViewStyle,
 } from 'react-native'
 import { Icon, ListItem } from 'react-native-elements'
 import Modal from 'react-native-modal'
@@ -21,6 +24,10 @@ interface Props<T> {
   displayKey: keyof T
   displayValue: keyof T
   error?: string
+  containerStyle?: StyleProp<ViewStyle>
+  buttonStyle?: StyleProp<ViewStyle>
+  valueStyle?: StyleProp<TextStyle>
+  showDropdown?: boolean
   onPress(item: T): void
 }
 
@@ -52,6 +59,10 @@ class Picker<T> extends React.Component<Props<T>, State> {
       error,
       displayKey,
       displayValue,
+      containerStyle,
+      buttonStyle,
+      showDropdown = true,
+      valueStyle,
     } = this.props
     const { isVisible } = this.state
 
@@ -59,8 +70,11 @@ class Picker<T> extends React.Component<Props<T>, State> {
 
     return (
       <>
-        <View style={styles.container}>
-          <Touchable style={{ flex: 1 }} onPress={this.togglePicker}>
+        <View style={[styles.container, containerStyle]}>
+          <Touchable
+            style={[{ flex: 1 }, buttonStyle]}
+            onPress={this.togglePicker}
+          >
             <View style={{ height: 54 }}>
               <Text
                 style={[
@@ -74,14 +88,19 @@ class Picker<T> extends React.Component<Props<T>, State> {
               >
                 {error || label}
               </Text>
-              <Icon
-                containerStyle={{ position: 'absolute', right: 15, top: 16 }}
-                type="ionicon"
-                name="md-arrow-dropdown"
-              />
+
+              {showDropdown && (
+                <Icon
+                  containerStyle={{ position: 'absolute', right: 15, top: 16 }}
+                  type="ionicon"
+                  name="md-arrow-dropdown"
+                />
+              )}
 
               {value && (
-                <Text style={styles.valueStyle}>{value[displayValue]}</Text>
+                <Text style={[styles.valueStyle, valueStyle]}>
+                  {value[displayValue]}
+                </Text>
               )}
             </View>
           </Touchable>
@@ -102,17 +121,21 @@ class Picker<T> extends React.Component<Props<T>, State> {
             <FlatList
               data={values}
               keyExtractor={a => String(a[displayKey])}
-              renderItem={({ item }) => (
-                <ListItem
-                  title={String(item[displayValue])}
-                  titleStyle={[
-                    styles.itemStyle,
-                    item === value && styles.itemStyleSelectedText,
-                  ]}
-                  containerStyle={[item === value && styles.itemStyleSelected]}
-                  onPress={() => this.makeSelection(item)}
-                />
-              )}
+              renderItem={({ item }) => {
+                const isSelected =
+                  value && item[displayKey] === value[displayKey]
+                return (
+                  <ListItem
+                    title={String(item[displayValue])}
+                    titleStyle={[
+                      styles.itemStyle,
+                      isSelected && styles.itemStyleSelectedText,
+                    ]}
+                    containerStyle={[isSelected && styles.itemStyleSelected]}
+                    onPress={() => this.makeSelection(item)}
+                  />
+                )
+              }}
             />
 
             <ListItem
@@ -163,6 +186,7 @@ const styles = StyleSheet.create({
     fontFamily:
       Platform.OS === 'ios' ? 'NunitoSans-Regular' : 'NunitoSans-SemiBold',
     color: 'rgba(0,0,0,.87)',
+    fontSize: 16,
   },
   itemStyleSelected: {
     backgroundColor: Theme.accent,

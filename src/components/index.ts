@@ -3,7 +3,6 @@ import Touchable from './Touchable'
 import PostMeta from './PostMeta'
 import SearchEmpty from './SearchEmpty'
 import InputPicker from './InputPicker'
-import Input from './Input'
 import Search from './Search'
 import ImagePulse from './ImagePulse'
 import Loading from './Loading'
@@ -19,7 +18,6 @@ export {
   PostMeta,
   SearchEmpty,
   InputPicker,
-  Input,
   Search,
   ImagePulse,
   Loading,

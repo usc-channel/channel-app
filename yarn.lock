@@ -553,6 +553,12 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-native@^0.56.7":
+  version "0.56.7"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.56.7.tgz#f7907b4975fb459272e9970ac79ce026eeda8f3a"
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-navigation@^2.0.6":
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/@types/react-navigation/-/react-navigation-2.0.6.tgz#16ef87a163aebb7e6d2b5223f2c1f692a9f03726"
@@ -5236,9 +5242,9 @@ react-native-iphone-x-helper@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.0.2.tgz#7dbca530930f7c1ce8633cc8fd13ba94102992e1"
 
-react-native-keyboard-aware-scroll-view@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-0.5.0.tgz#57ab933089375bf62f4324797e8be949ad97849d"
+"react-native-keyboard-aware-scroll-view@https://github.com/iRoachie/react-native-keyboard-aware-scroll-view.git#typings":
+  version "0.6.0"
+  resolved "https://github.com/iRoachie/react-native-keyboard-aware-scroll-view.git#fc465f00a92cb40de360ca830eed9e09e36dfb1c"
   dependencies:
     prop-types "^15.6.0"
     react-native-iphone-x-helper "^1.0.1"
