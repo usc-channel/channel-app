@@ -45,7 +45,9 @@ class SearchPosts extends React.Component<Props, State> {
       loading: false,
       data: [],
     }
+  }
 
+  componentDidMount() {
     this.getResults = debounce(this.getResults, 500)
   }
 
