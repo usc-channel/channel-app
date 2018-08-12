@@ -13,7 +13,8 @@
           "@types": "./src/types",
           "@util": "./src/util",
           "@actions": "./src/actions",
-          "@reducers": "./src/reducers"
+          "@reducers": "./src/reducers",
+          "@data": "./src/data"
         }
       }
     ]

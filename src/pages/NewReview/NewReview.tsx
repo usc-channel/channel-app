@@ -1,5 +1,7 @@
 import React from 'react'
 import {
+  findNodeHandle,
+  Keyboard,
   Platform,
   StyleSheet,
   Text,
@@ -12,32 +14,67 @@ import { ButtonGroup, Icon, ListItem } from 'react-native-elements'
 import StarRating from 'react-native-star-rating'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { connect } from 'react-redux'
+import validator from 'validator'
 
-import { Input, InputPicker, NavIcon } from '@components'
+import { InputPicker, Loading, NavIcon, Picker } from '@components'
 import { API, Theme } from '@config'
-import { Course, CourseState, Lecturer, LecturerState, Store } from '@types'
+import {
+  Course,
+  CourseState,
+  Dispatch,
+  Lecturer,
+  LecturerState,
+  Store,
+  User,
+} from '@types'
+import { semesters } from '@data'
+import { setCourse, setLecturer } from '@actions'
 
 interface ScreenParams {
-  lecturer: Lecturer
   mode: 'all' | 'single'
-  addReview(): void
+  unsetValues(): void
+  submit(): void
 }
 
 interface ConnectedProps {
+  user: User
   course: CourseState
   lecturer: LecturerState
 }
 
-type Props = NavigationScreenProps<ScreenParams> & ConnectedProps
+interface ConnectedDispatch {
+  setCourse(course: CourseState): void
+  setLecturer(lecturer: LecturerState): void
+}
+
+type Props = NavigationScreenProps<ScreenParams> &
+  ConnectedProps &
+  ConnectedDispatch
 
 interface State {
   semester: number
-  year: string | null
-  course: Course | null
-  rating: number | null
+  year: Year
+  courseError: string | null
+  rating: number
+  ratingError: string | null
   review: string
-  lecturer: Lecturer | null
+  reviewError: string | null
+  lecturerError: string | null
+  loading: boolean
 }
+
+interface Year {
+  value: string
+  label: string
+}
+
+const YearPicker = Picker as new () => Picker<Year>
+const Year = new Date().getFullYear()
+
+const Years = Array.from(Array(5)).map((_, i) => ({
+  value: (Year - i).toString(),
+  label: (Year - i).toString(),
+}))
 
 class NewReview extends React.Component<Props, State> {
   static navigationOptions = ({
@@ -52,7 +89,10 @@ class NewReview extends React.Component<Props, State> {
             headerLeft: (
               <NavIcon
                 iconName="ios-arrow-down"
-                onPress={() => navigation.goBack()}
+                onPress={() => {
+                  navigation.getParam('unsetValues')()
+                  navigation.goBack()
+                }}
               />
             ),
           }
@@ -61,43 +101,135 @@ class NewReview extends React.Component<Props, State> {
         mode === 'all' ? (
           <NavIcon
             iconName={Platform.OS === 'ios' ? 'md-checkmark' : 'check'}
-            onPress={() =>
-              navigation.state.params && navigation.state.params.addReview()
-            }
+            onPress={() => navigation.getParam('submit')()}
           />
         ) : null,
     }
   }
+
+  scrollView: KeyboardAwareScrollView | null
 
   constructor(props: Props) {
     super(props)
 
     this.state = {
       semester: 0,
-      year: (new Date().getFullYear() - 1).toString(),
-      course: null,
-      rating: null,
-      lecturer: null,
+      year: { label: Year.toString(), value: Year.toString() },
+      courseError: null,
+      lecturerError: null,
+      rating: 0,
+      ratingError: null,
       review: '',
+      reviewError: null,
+      loading: false,
     }
   }
 
   componentDidMount() {
     this.props.navigation.setParams({
-      addReview: this.addReview,
+      submit: this.submit,
+      unsetValues: this.unsetValues,
     })
   }
 
-  addReview = () => {
-    this.props.navigation.goBack()
+  // * Clear Any Errors that were there before redux store update
+  componentDidUpdate() {
+    if (this.state.lecturerError && this.props.lecturer) {
+      this.setState({ lecturerError: null })
+    }
+
+    if (this.state.courseError && this.props.course) {
+      this.setState({ courseError: null })
+    }
+  }
+
+  // * Clear Redux State after closing modal
+  unsetValues = () => {
+    this.props.setCourse(null)
+    this.props.setLecturer(null)
+  }
+
+  submit = () => {
+    Keyboard.dismiss()
+
+    this.setState(
+      {
+        courseError: null,
+        lecturerError: null,
+        ratingError: null,
+        reviewError: null,
+      },
+      () => {
+        this.validate()
+          .then(() => {
+            this.setState({ loading: true }, this.addReview)
+          })
+          .catch(e => {
+            this.setState(e)
+          })
+      }
+    )
+  }
+
+  validate = () => {
+    return new Promise((resolve, reject) => {
+      const { course, lecturer } = this.props
+      const { rating, review } = this.state
+
+      const errors: Partial<State> = {}
+
+      if (!course) {
+        errors.courseError = 'Missing me!'
+      }
+
+      if (!lecturer) {
+        errors.lecturerError = 'Missing me!'
+      }
+
+      if (rating === 0) {
+        errors.ratingError = 'A rating would be nice'
+      }
+
+      if (!validator.isEmpty(review) && review.length < 15) {
+        errors.reviewError = 'Optional Review must at least 15 characters'
+      }
+
+      if (Object.keys(errors).length > 0) {
+        reject(errors)
+      }
+
+      resolve()
+    })
+  }
+
+  addReview = async () => {
+    const review = {
+      semester: semesters[this.state.semester],
+      year: this.state.year.value,
+      course_id: this.props.course!.id,
+      lecturer_id: this.props.lecturer!.id,
+      rating: this.state.rating,
+      user_id: this.props.user.id,
+    } as any
+
+    if (this.state.review.length > 0) {
+      review.comment = this.state.review
+    }
+
+    // tslint:disable-next-line:no-console
+    console.log(review)
+
+    // * Make Request
+
+    // this.props.navigation.goBack()
   }
 
   selectCourse = (course: Course) => {
-    this.setState({ course })
+    this.props.setCourse(course)
   }
 
   selectLecturer = (lecturer: Lecturer) => {
-    this.setState({ lecturer })
+    this.props.setLecturer(lecturer)
   }
 
   getLecturers = (search: string) => {
@@ -164,17 +296,17 @@ class NewReview extends React.Component<Props, State> {
     })
   }
 
+  scrollToInput = (reactNode: number | null) => {
+    this.scrollView!.scrollToFocusedInput(reactNode!)
+  }
+
   render() {
     const mode = this.props.navigation.getParam('mode')
-    const lecturer =
-      this.state.lecturer ||
-      this.props.lecturer ||
-      this.props.navigation.getParam('lecturer')
-
-    const course = this.state.course || this.props.course
+    const { lecturer, course } = this.props
 
     return (
       <KeyboardAwareScrollView
+        ref={scrollView => (this.scrollView = scrollView)}
         bounces={false}
         enableOnAndroid
         extraScrollHeight={Platform.OS === 'android' ? 80 : 0}
@@ -204,14 +336,24 @@ class NewReview extends React.Component<Props, State> {
         )}
 
         <View style={{ flexDirection: 'row' }}>
-          <Input
+          <YearPicker
             label="Year"
-            value={this.state.year || ''}
-            inputProps={{ keyboardType: 'numeric', maxLength: 4 }}
-            onChangeText={year => this.setState({ year })}
-            style={{
+            message="What year did you do this course?"
+            values={Years}
+            value={this.state.year}
+            displayKey="label"
+            displayValue="value"
+            onPress={year => this.setState({ year })}
+            containerStyle={{
+              backgroundColor: '#fff',
+              height: '100%',
               width: 80,
+              borderBottomWidth: StyleSheet.hairlineWidth,
+              borderBottomColor: 'rgba(0,0,0,.12)',
             }}
+            buttonStyle={{ justifyContent: 'center' }}
+            showDropdown={false}
+            valueStyle={{ fontFamily: 'NunitoSans-Regular' }}
           />
 
           <ButtonGroup
@@ -230,7 +372,7 @@ class NewReview extends React.Component<Props, State> {
             }}
             innerBorderStyle={{ width: StyleSheet.hairlineWidth }}
             selectedButtonStyle={{ backgroundColor: Theme.accent }}
-            buttons={['September', 'January', 'Summer']}
+            buttons={semesters}
             selectedIndex={this.state.semester}
             onPress={semester => this.setState({ semester })}
             buttonStyle={{ borderRadius: 0 }}
@@ -240,45 +382,76 @@ class NewReview extends React.Component<Props, State> {
 
         <InputPicker
           label="Course"
-          value={course ? `${course.code} - ${course.name}` : 'Select course'}
+          placeholder="Select course"
+          value={course ? `${course.code} - ${course.name}` : ''}
+          error={this.state.courseError}
           onPress={this.lookupCourse}
         />
 
         {mode === 'all' && (
           <InputPicker
             label="Lecturer"
-            value={lecturer ? lecturer.name : 'Select lecturer'}
+            placeholder="Select lecturer"
+            value={lecturer ? lecturer.name : ''}
+            error={this.state.lecturerError}
             onPress={this.lookupLectures}
           />
         )}
 
         <View style={styles.ratingBox}>
-          <Text style={styles.subheader}>Rating</Text>
+          <Text
+            style={[
+              styles.subheader,
+              this.state.ratingError ? styles.error : {},
+            ]}
+          >
+            {this.state.ratingError || 'Rating'}
+          </Text>
 
           <StarRating
-            rating={this.state.rating ? this.state.rating : 0}
+            rating={this.state.rating}
             fullStarColor={Theme.accent}
             containerStyle={{
               marginVertical: 8,
               justifyContent: 'center',
             }}
             starStyle={{ marginRight: 8 }}
-            selectedStar={rating => this.setState({ rating })}
+            selectedStar={rating =>
+              this.setState({ rating, ratingError: null })
+            }
             starSize={36}
           />
         </View>
 
         <View style={styles.review}>
-          <Text style={styles.subheader}>Review</Text>
+          <Text
+            style={[
+              styles.subheader,
+              this.state.reviewError ? styles.error : {},
+            ]}
+          >
+            {this.state.reviewError || 'Review ( Optional )'}
+          </Text>
 
           <TextInput
             multiline
             placeholder="Be Honest..."
             style={styles.reviewText}
             value={this.state.review}
-            onChangeText={review => this.setState({ review })}
+            onChangeText={review => {
+              if (review.length > 15) {
+                this.setState({ review, reviewError: null })
+              } else {
+                this.setState({ review })
+              }
+            }}
+            onFocus={event => {
+              this.scrollToInput(findNodeHandle(event.target))
+            }}
           />
         </View>
+
+        <Loading visible={this.state.loading} />
       </KeyboardAwareScrollView>
     )
   }
@@ -308,9 +481,12 @@ const styles = StyleSheet.create({
     fontFamily: 'NunitoSans-ExtraBold',
   },
   subheader: {
-    color: 'rgba(0,0,0,.38)',
-    fontSize: 14,
+    color: 'rgba(0,0,0,.54)',
+    fontSize: 12,
     fontFamily: 'NunitoSans-SemiBold',
+  },
+  error: {
+    color: Theme.error,
   },
   ratingBox: {
     padding: 16,
@@ -335,6 +511,12 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state: Store) => ({
   course: state.course,
   lecturer: state.lecturer,
+  user: state.userState.user,
 })
 
-export default connect(mapStateToProps)(NewReview)
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  setCourse: (course: Course) => dispatch(setCourse(course)),
+  setLecturer: (lecturer: Lecturer) => dispatch(setLecturer(lecturer)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewReview)

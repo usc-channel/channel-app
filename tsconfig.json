@@ -20,7 +20,8 @@
       "@types": ["types"],
       "@util": ["util"],
       "@actions": ["actions"],
-      "@reducers": ["reducers"]
+      "@reducers": ["reducers"],
+      "@data": ["data"]
     },
     "lib": ["es2017", "dom"]
   },

@@ -9,12 +9,13 @@ import {
 import { NavigationScreenProps } from 'react-navigation'
 import { Icon } from 'react-native-elements'
 import { TabBar, TabView } from 'react-native-tab-view'
-import { connect } from 'react-redux'
+import { connect, Dispatch } from 'react-redux'
 
 import { Course, Lecturer, Review, Store } from '@types'
 import { Theme } from '@config'
 import Reviews from './components/Reviews'
 import Courses from './components/Courses'
+import { setLecturer } from '@actions'
 
 interface ScreenParams {
   lecturer: Lecturer
@@ -26,7 +27,11 @@ interface StateProps {
   isLoggedIn: boolean
 }
 
-type Props = OwnProps & StateProps
+interface ConnectedDispatch {
+  setLecturer(lecturer: Lecturer): void
+}
+
+type Props = OwnProps & StateProps & ConnectedDispatch
 
 interface Route {
   key: string
@@ -89,10 +94,10 @@ class ViewLecturer extends React.Component<Props, State> {
   makeReview = () => {
     if (this.props.isLoggedIn) {
       const lecturer = this.props.navigation.getParam('lecturer')
+      this.props.setLecturer(lecturer)
 
       this.props.navigation.navigate('newReview', {
         mode: 'single',
-        lecturer,
       })
     } else {
       this.props.navigation.navigate('signIn')
@@ -204,4 +209,8 @@ const mapStateToProps = ({ userState }: Store) => ({
   isLoggedIn: !!userState.user,
 })
 
-export default connect(mapStateToProps)(ViewLecturer)
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  setLecturer: (lecturer: Lecturer) => dispatch(setLecturer(lecturer)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ViewLecturer)
