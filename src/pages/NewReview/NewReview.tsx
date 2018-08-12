@@ -9,7 +9,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { NavigationScreenProps } from 'react-navigation'
+import {
+  NavigationEventSubscription,
+  NavigationScreenProps,
+} from 'react-navigation'
 import { ButtonGroup, Icon, ListItem } from 'react-native-elements'
 import StarRating from 'react-native-star-rating'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -32,7 +35,6 @@ import { setCourse, setLecturer } from '@actions'
 
 interface ScreenParams {
   mode: 'all' | 'single'
-  unsetValues(): void
   submit(): void
 }
 
@@ -90,7 +92,6 @@ class NewReview extends React.Component<Props, State> {
               <NavIcon
                 iconName="ios-arrow-down"
                 onPress={() => {
-                  navigation.getParam('unsetValues')()
                   navigation.goBack()
                 }}
               />
@@ -108,6 +109,7 @@ class NewReview extends React.Component<Props, State> {
   }
 
   scrollView: KeyboardAwareScrollView | null
+  navListener: NavigationEventSubscription
 
   constructor(props: Props) {
     super(props)
@@ -128,8 +130,22 @@ class NewReview extends React.Component<Props, State> {
   componentDidMount() {
     this.props.navigation.setParams({
       submit: this.submit,
-      unsetValues: this.unsetValues,
     })
+
+    this.navListener = this.props.navigation.addListener(
+      'didBlur',
+      navState => {
+        if (
+          (this.props.navigation.getParam('mode') === 'single' &&
+            typeof navState.state === 'undefined') ||
+          (this.props.navigation.getParam('mode') === 'all' &&
+            typeof navState.state === 'undefined')
+        ) {
+          this.unsetValues()
+          this.navListener.remove()
+        }
+      }
+    )
   }
 
   // * Clear Any Errors that were there before redux store update
