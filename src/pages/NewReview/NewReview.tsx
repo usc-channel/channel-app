@@ -461,7 +461,7 @@ class NewReview extends React.Component<Props, State> {
             style={styles.reviewText}
             value={this.state.review}
             onChangeText={review => {
-              if (review.length > 15) {
+              if (review.length > 15 || review.length === 0) {
                 this.setState({ review, reviewError: null })
               } else {
                 this.setState({ review })
