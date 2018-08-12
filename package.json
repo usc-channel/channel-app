@@ -86,8 +86,8 @@
     ]
   },
   "lint-staged": {
-    "*.{ts,tsx}": [
-      "tslint 'src/**/*.ts?(x)' --format stylish"
-    ]
+    "linters": {
+      "*.{ts,tsx}": ["tslint 'src/**/*.ts?(x)' --format stylish"]
+    }
   }
 }
