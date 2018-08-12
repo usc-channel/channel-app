@@ -81,6 +81,9 @@ class SearchPosts extends React.Component<Props, State> {
         inputStyle={{
           backgroundColor: '#fff',
           borderWidth: 0,
+          borderBottomColor: 'rgba(0,0,0,.12)',
+          borderBottomWidth:
+            Platform.Version < 21 && Platform.OS === 'android' ? 1 : 0,
           elevation: 2,
         }}
         textStyle={{

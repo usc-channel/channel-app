@@ -282,7 +282,10 @@ class NewReview extends React.Component<Props, State> {
             this.selectCourse(item)
             onSelect()
           }}
-          titleStyle={{ fontFamily: 'NunitoSans-Regular' }}
+          titleStyle={{
+            fontFamily: 'NunitoSans-Regular',
+            color: 'rgba(0,0,0,0.87)',
+          }}
         />
       ),
     })
@@ -306,7 +309,10 @@ class NewReview extends React.Component<Props, State> {
             this.selectLecturer(item)
             onSelect()
           }}
-          titleStyle={{ fontFamily: 'NunitoSans-Regular' }}
+          titleStyle={{
+            fontFamily: 'NunitoSans-Regular',
+            color: 'rgba(0,0,0,0.87)',
+          }}
         />
       ),
     })
@@ -461,6 +467,7 @@ class NewReview extends React.Component<Props, State> {
                 this.setState({ review })
               }
             }}
+            placeholderTextColor="rgba(0,0,0,.26)"
             onFocus={event => {
               this.scrollToInput(findNodeHandle(event.target))
             }}
