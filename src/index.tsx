@@ -4,6 +4,7 @@ import { ApolloProvider } from 'react-apollo'
 import { Provider } from 'react-redux'
 import { createStackNavigator } from 'react-navigation'
 import { withNetworkConnectivity } from 'react-native-offline'
+import FlashMessage from 'react-native-flash-message'
 
 import Tabs from './containers/Tabs'
 import Auth from './containers/Auth.container'
@@ -61,6 +62,7 @@ const AppRoot = () => (
           barStyle="light-content"
         />
         <ModalStack />
+        <FlashMessage position="bottom" />
       </View>
     </ApolloProvider>
   </Provider>

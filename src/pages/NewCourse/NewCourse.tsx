@@ -150,7 +150,7 @@ class NewCourse extends React.Component<Props, State> {
             StatusBar.setBarStyle('light-content')
             this.props.navigation.pop(2)
           }, 3000)
-        }, 400)
+        }, Theme.loadingTimeout)
       )
     } catch (e) {
       const text = `Couldn't create course right now, try again later.`
@@ -164,7 +164,7 @@ class NewCourse extends React.Component<Props, State> {
               error: true,
             },
           })
-        }, 400)
+        }, Theme.loadingTimeout)
       )
     }
   }

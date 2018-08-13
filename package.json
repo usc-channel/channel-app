@@ -26,6 +26,7 @@
     "react-native-elements": "https://github.com/react-native-training/react-native-elements.git#next",
     "react-native-fast-image": "^4.0.14",
     "react-native-firebase": "^4.2.0",
+    "react-native-flash-message": "^0.1.9",
     "react-native-image-crop-picker": "^0.20.3",
     "react-native-keyboard-aware-scroll-view": "^0.7.0",
     "react-native-linear-gradient": "^2.4.0",
@@ -87,7 +88,9 @@
   },
   "lint-staged": {
     "linters": {
-      "*.{ts,tsx}": ["tslint 'src/**/*.ts?(x)' --format stylish"]
+      "*.{ts,tsx}": [
+        "tslint 'src/**/*.ts?(x)' --format stylish"
+      ]
     }
   }
 }

@@ -82,7 +82,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
             StatusBar.setBarStyle('light-content', true)
             this.props.navigation.dismiss()
           }, 3000)
-        }, 400)
+        }, Theme.loadingTimeout)
       )
     } catch (e) {
       let text = `Couldn't sign in right now, try again later.`
@@ -102,7 +102,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
               error: true,
             },
           })
-        }, 400)
+        }, Theme.loadingTimeout)
       )
     }
   }
