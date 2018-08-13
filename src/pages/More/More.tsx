@@ -36,10 +36,6 @@ class More extends React.Component<Props, State> {
     modalShowing: false,
   }
 
-  viewProfile = () => {
-    //
-  }
-
   signIn = () => {
     this.props.navigation.navigate('signIn')
   }
@@ -69,7 +65,7 @@ class More extends React.Component<Props, State> {
 
         <ScrollView contentContainerStyle={styles.content}>
           {loggedIn && user ? (
-            <SignedInUser user={user} onPress={this.viewProfile} />
+            <SignedInUser user={user} />
           ) : (
             <SignedOutUser onPress={this.signIn} />
           )}
