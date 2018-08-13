@@ -356,6 +356,7 @@ class NewReview extends React.Component<Props, State> {
       renderItem: (item: Lecturer, onSelect: () => void) => (
         <ListItem
           title={item.name}
+          subtitle={item.School.name}
           onPress={() => {
             this.selectLecturer(item)
             onSelect()
@@ -363,6 +364,10 @@ class NewReview extends React.Component<Props, State> {
           titleStyle={{
             fontFamily: 'NunitoSans-Regular',
             color: 'rgba(0,0,0,0.87)',
+          }}
+          subtitleStyle={{
+            fontFamily: 'NunitoSans-Regular',
+            color: 'rgba(0,0,0,0.54)',
           }}
         />
       ),
