@@ -9,6 +9,7 @@ interface Props {
   label: string
   placeholder?: string
   value: string
+  disabled?: boolean
   style?: StyleProp<ViewStyle>
   error?: string | null
   onPress(): void
@@ -20,12 +21,13 @@ const InputPicker: React.SFC<Props> = ({
   value,
   label,
   onPress,
+  disabled,
   placeholder,
 }) => {
   const isEmpty = value === ''
 
   return (
-    <Touchable onPress={onPress}>
+    <Touchable onPress={onPress} disabled={disabled}>
       <View style={[styles.container, style]}>
         <View>
           <Text style={[styles.label, error ? styles.error : {}]}>

@@ -39,6 +39,7 @@ const Theme = {
   background: '#F3F5FA',
   error: '#D23D27',
   success: '#4EC85C',
+  loadingTimeout: 400,
 }
 
 export default Theme

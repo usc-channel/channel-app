@@ -32,6 +32,7 @@ import {
 } from '@types'
 import { semesters } from '@data'
 import { setCourse, setLecturer } from '@actions'
+import { showBanner } from '@util'
 
 interface ScreenParams {
   mode: 'all' | 'single'
@@ -54,6 +55,7 @@ type Props = NavigationScreenProps<ScreenParams> &
   ConnectedDispatch
 
 interface State {
+  disabled: boolean
   semester: number
   year: Year
   courseError: string | null
@@ -124,6 +126,7 @@ class NewReview extends React.Component<Props, State> {
       review: '',
       reviewError: null,
       loading: false,
+      disabled: false,
     }
   }
 
@@ -166,6 +169,10 @@ class NewReview extends React.Component<Props, State> {
   }
 
   submit = () => {
+    if (this.state.disabled) {
+      return
+    }
+
     Keyboard.dismiss()
 
     this.setState(
@@ -178,7 +185,7 @@ class NewReview extends React.Component<Props, State> {
       () => {
         this.validate()
           .then(() => {
-            this.setState({ loading: true }, this.addReview)
+            this.setState({ loading: true, disabled: true }, this.addReview)
           })
           .catch(e => {
             this.setState(e)
@@ -218,7 +225,7 @@ class NewReview extends React.Component<Props, State> {
     })
   }
 
-  addReview = async () => {
+  addReview = () => {
     const review = {
       semester: semesters[this.state.semester],
       year: this.state.year.value,
@@ -232,12 +239,46 @@ class NewReview extends React.Component<Props, State> {
       review.comment = this.state.review
     }
 
-    // tslint:disable-next-line:no-console
-    console.log(review)
+    fetch(`${API}/reviews`, {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(review),
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ loading: false }, () =>
+          setTimeout(async () => {
+            if (data.statusCode) {
+              showBanner({
+                message: `Couldn't Add Review`,
+                description: data.message,
+                type: 'danger',
+              })
 
-    // * Make Request
+              this.setState({ disabled: false })
+            } else {
+              await showBanner({
+                message: 'Success',
+                description: 'Review added.',
+                type: 'success',
+              })
 
-    // this.props.navigation.goBack()
+              this.props.navigation.goBack()
+            }
+          }, Theme.loadingTimeout)
+        )
+      })
+      .catch(() => {
+        this.setState({ loading: false, disabled: false }, () =>
+          setTimeout(() => {
+            showBanner({
+              message: `Ugh!`,
+              description: 'Could not add review at this time.',
+              type: 'danger',
+            })
+          }, Theme.loadingTimeout)
+        )
+      })
   }
 
   selectCourse = (course: Course) => {
@@ -352,7 +393,7 @@ class NewReview extends React.Component<Props, State> {
               raised
               iconStyle={{ fontSize: 20 }}
               containerStyle={{ marginRight: 0 }}
-              onPress={this.addReview}
+              onPress={this.submit}
             />
           </View>
         )}
@@ -396,7 +437,11 @@ class NewReview extends React.Component<Props, State> {
             selectedButtonStyle={{ backgroundColor: Theme.accent }}
             buttons={semesters}
             selectedIndex={this.state.semester}
-            onPress={semester => this.setState({ semester })}
+            onPress={semester => {
+              if (!this.state.disabled) {
+                this.setState({ semester })
+              }
+            }}
             buttonStyle={{ borderRadius: 0 }}
             textStyle={{ fontFamily: 'NunitoSans-Regular', fontSize: 16 }}
           />
@@ -408,6 +453,7 @@ class NewReview extends React.Component<Props, State> {
           value={course ? `${course.code} - ${course.name}` : ''}
           error={this.state.courseError}
           onPress={this.lookupCourse}
+          disabled={this.state.disabled}
         />
 
         {mode === 'all' && (
@@ -417,6 +463,7 @@ class NewReview extends React.Component<Props, State> {
             value={lecturer ? lecturer.name : ''}
             error={this.state.lecturerError}
             onPress={this.lookupLectures}
+            disabled={this.state.disabled}
           />
         )}
 
@@ -441,6 +488,7 @@ class NewReview extends React.Component<Props, State> {
             selectedStar={rating =>
               this.setState({ rating, ratingError: null })
             }
+            disabled={this.state.disabled}
             starSize={36}
           />
         </View>
@@ -457,6 +505,7 @@ class NewReview extends React.Component<Props, State> {
 
           <TextInput
             multiline
+            editable={!this.state.disabled}
             placeholder="Be Honest..."
             style={styles.reviewText}
             value={this.state.review}

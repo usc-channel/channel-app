@@ -106,7 +106,7 @@ class SignIn extends React.Component<Props, State> {
         setTimeout(() => {
           LayoutAnimation.easeInEaseOut()
           this.setState({ error })
-        }, 400)
+        }, Theme.loadingTimeout)
       )
     }
   }

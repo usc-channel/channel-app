@@ -5234,6 +5234,12 @@ react-native-firebase@^4.2.0:
     postinstall-build "^5.0.1"
     prop-types "^15.6.1"
 
+react-native-flash-message@^0.1.9:
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/react-native-flash-message/-/react-native-flash-message-0.1.9.tgz#aa69ab099ebd179837fcfd8517a7f749a805728b"
+  dependencies:
+    prop-types "^15.6.1"
+
 react-native-image-crop-picker@^0.20.3:
   version "0.20.3"
   resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.20.3.tgz#565d69c1764e96abef23871fe4d6d58b1ee35e18"

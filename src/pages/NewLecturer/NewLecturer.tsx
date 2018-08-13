@@ -168,7 +168,7 @@ class NewLecturer extends React.Component<Props, State> {
             StatusBar.setBarStyle('light-content')
             this.props.navigation.pop(2)
           }, 3000)
-        }, 400)
+        }, Theme.loadingTimeout)
       )
     } catch (e) {
       const text = `Couldn't create lecturer right now, try again later.`
@@ -182,7 +182,7 @@ class NewLecturer extends React.Component<Props, State> {
               error: true,
             },
           })
-        }, 400)
+        }, Theme.loadingTimeout)
       )
     }
   }
