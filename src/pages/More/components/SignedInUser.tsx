@@ -4,10 +4,9 @@ import { Avatar, ListItem } from 'react-native-elements'
 
 interface Props {
   user: Partial<User>
-  onPress(): void
 }
 
-const SignedInUser: React.SFC<Props> = ({ user, onPress }) => (
+const SignedInUser: React.SFC<Props> = ({ user }) => (
   <ListItem
     title={user.name!.substr(0, user.name!.indexOf(' '))}
     titleStyle={{
@@ -19,7 +18,7 @@ const SignedInUser: React.SFC<Props> = ({ user, onPress }) => (
       fontFamily: 'NunitoSans-Regular',
       color: 'rgba(0,0,0,0.87)',
     }}
-    subtitle="View and edit account"
+    subtitle={`Yes, it's your account`}
     rightAvatar={
       <Avatar
         rounded
@@ -33,7 +32,6 @@ const SignedInUser: React.SFC<Props> = ({ user, onPress }) => (
       paddingHorizontal: 0,
       marginBottom: 10,
     }}
-    onPress={onPress}
   />
 )
 
