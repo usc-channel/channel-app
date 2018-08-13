@@ -111,23 +111,8 @@ class ViewLecturer extends React.Component<Props, State> {
       {...props}
       style={{ backgroundColor: Theme.primary }}
       indicatorStyle={{ backgroundColor: '#fff' }}
-      renderLabel={this.renderLabel}
     />
   )
-
-  renderLabel = ({ route }: { route: Route; index: number }) => {
-    const index = this.state.routes.indexOf(route)
-    const lecturer = this.props.navigation.getParam('lecturer')
-
-    return (
-      <View>
-        <Text style={styles.tabCount}>
-          {index === 0 ? lecturer.totalReviews : lecturer.totalCourses}
-        </Text>
-        <Text style={styles.tabTitle}>{route.title}</Text>
-      </View>
-    )
-  }
 
   render() {
     const lecturer = this.props.navigation.getParam('lecturer')
