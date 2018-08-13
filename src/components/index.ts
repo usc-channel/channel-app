@@ -2,6 +2,7 @@ import NavIcon from './NavIcon'
 import Touchable from './Touchable'
 import PostMeta from './PostMeta'
 import SearchEmpty from './SearchEmpty'
+import SearchError from './SearchError'
 import InputPicker from './InputPicker'
 import Search from './Search'
 import ImagePulse from './ImagePulse'
@@ -26,4 +27,5 @@ export {
   ImagePicker,
   Error,
   Picker,
+  SearchError,
 }

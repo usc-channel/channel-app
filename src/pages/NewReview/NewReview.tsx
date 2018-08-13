@@ -290,18 +290,26 @@ class NewReview extends React.Component<Props, State> {
   }
 
   getLecturers = (search: string) => {
-    return new Promise(async resolve => {
-      const request = await fetch(`${API}/lecturers?search=${search}`)
-      const lecturers = await request.json()
-      resolve(lecturers)
+    return new Promise(async (resolve, reject) => {
+      try {
+        const request = await fetch(`${API}/lecturers?search=${search}`)
+        const lecturers = await request.json()
+        resolve(lecturers)
+      } catch {
+        reject()
+      }
     })
   }
 
   getCourses = (search: string) => {
-    return new Promise(async resolve => {
-      const request = await fetch(`${API}/courses?search=${search}`)
-      const courses = await request.json()
-      resolve(courses)
+    return new Promise(async (resolve, reject) => {
+      try {
+        const request = await fetch(`${API}/courses?search=${search}`)
+        const courses = await request.json()
+        resolve(courses)
+      } catch {
+        reject()
+      }
     })
   }
 
@@ -316,6 +324,7 @@ class NewReview extends React.Component<Props, State> {
       },
       keyExtractor: (item: Course) => item.id.toString(),
       emptyMessage: `Couldn't find any Courses with the name or code`,
+      errorMessage: `Couldn't search for Courses at this time`,
       renderItem: (item: Course, onSelect: () => void) => (
         <ListItem
           title={`${item.code} - ${item.name}`}
@@ -343,6 +352,7 @@ class NewReview extends React.Component<Props, State> {
       },
       keyExtractor: (item: Lecturer) => item.id.toString(),
       emptyMessage: `Couldn't find any Lecturers with the name`,
+      errorMessage: `Couldn't search for Lecturers at this time`,
       renderItem: (item: Lecturer, onSelect: () => void) => (
         <ListItem
           title={item.name}
