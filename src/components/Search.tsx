@@ -11,12 +11,13 @@ import {
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import debounce from 'lodash.debounce'
 
-import { SearchBar, SearchEmpty } from '@components'
+import { SearchBar, SearchEmpty, SearchError } from '@components'
 import { Theme } from '@config'
 
 interface ScreenParams {
   placeholder: string
   emptyMessage?: string
+  errorMessage?: string
   newItem?: {
     message: string
     subtitle: string
@@ -32,6 +33,7 @@ interface State {
   text: string
   loading: boolean
   data: any[]
+  errored: boolean
 }
 
 type Props = NavigationScreenProps<ScreenParams>
@@ -44,6 +46,7 @@ class SearchPosts extends React.Component<Props, State> {
       text: '',
       loading: false,
       data: [],
+      errored: false,
     }
   }
 
@@ -55,15 +58,21 @@ class SearchPosts extends React.Component<Props, State> {
     const search = text.toLowerCase().trim()
 
     if (search.length === 0) {
-      this.setState({ text, data: [] })
+      this.setState({ text, data: [], errored: false })
     } else {
-      this.setState({ text, loading: true }, () => this.getResults(search))
+      this.setState({ text, loading: true, errored: false }, () =>
+        this.getResults(search)
+      )
     }
   }
 
   getResults = async (search: string) => {
-    const data = await this.props.navigation.getParam('getResults')(search)
-    this.setState({ loading: false, data })
+    try {
+      const data = await this.props.navigation.getParam('getResults')(search)
+      this.setState({ loading: false, data })
+    } catch {
+      this.setState({ errored: true })
+    }
   }
 
   renderSearch = () => {
@@ -135,6 +144,7 @@ class SearchPosts extends React.Component<Props, State> {
 
   render() {
     const emptyMessage = this.props.navigation.getParam('emptyMessage')
+    const errorMessage = this.props.navigation.getParam('errorMessage')
     const newItem = this.props.navigation.getParam('newItem')
 
     return (
@@ -146,9 +156,13 @@ class SearchPosts extends React.Component<Props, State> {
       >
         {this.renderSearch()}
 
-        {this.state.loading && (
-          <ActivityIndicator style={{ marginVertical: 15 }} />
-        )}
+        {this.state.loading &&
+          !this.state.errored && (
+            <ActivityIndicator style={{ marginVertical: 15 }} />
+          )}
+
+        {this.state.errored &&
+          errorMessage && <SearchError message={errorMessage} />}
 
         {this.isEmpty() ? (
           <SearchEmpty
