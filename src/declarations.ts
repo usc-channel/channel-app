@@ -35,10 +35,12 @@ declare module 'react-native-dropdownalert' {
     renderCancel?(): React.ReactNode
   }
 
+  type AlertType = 'info' | 'warn' | 'error' | 'success' | 'custom'
+
   export default class DropdownAlert extends React.Component<
     DropdownAlertProps
   > {
-    alertWithType(type: string, title: string, message: string): void
+    alertWithType(type: AlertType, title: string, message: string): void
   }
 }
 
