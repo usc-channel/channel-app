@@ -45,6 +45,7 @@ interface State {
   courses: Course[]
   coursesLoading: boolean
   coursesError: boolean
+  coursesRefreshing: boolean
   reviews: Review[]
   reviewsLoading: boolean
   reviewsError: boolean
@@ -69,6 +70,7 @@ class ViewLecturer extends React.Component<Props, State> {
       courses: [],
       coursesLoading: false,
       coursesError: false,
+      coursesRefreshing: false,
       reviews: [],
       reviewsLoading: false,
       reviewsError: false,
@@ -78,6 +80,7 @@ class ViewLecturer extends React.Component<Props, State> {
 
   componentDidMount() {
     this.getReviews()
+    this.getCourses()
   }
 
   fetchReviews = async () => {
@@ -103,9 +106,38 @@ class ViewLecturer extends React.Component<Props, State> {
     }
   }
 
+  fetchCourses = async () => {
+    const lecturerId = this.props.navigation.getParam('lecturer')!.id
+
+    try {
+      const { data: { rows: courses } } = await Axios.get(
+        `${API}/lecturers/${lecturerId}/courses`
+      )
+
+      this.setState({
+        courses,
+        coursesLoading: false,
+        coursesRefreshing: false,
+        coursesError: false,
+      })
+    } catch {
+      this.setState({
+        coursesError: true,
+        coursesLoading: false,
+        coursesRefreshing: false,
+      })
+    }
+  }
+
   getReviews = () => {
     this.setState({ reviewsLoading: true }, () => {
       this.fetchReviews()
+    })
+  }
+
+  getCourses = () => {
+    this.setState({ coursesLoading: true }, () => {
+      this.fetchCourses()
     })
   }
 
@@ -113,13 +145,20 @@ class ViewLecturer extends React.Component<Props, State> {
     this.setState({ reviewsRefreshing: true }, this.fetchReviews)
   }
 
+  refreshCourses = () => {
+    this.setState({ coursesRefreshing: true }, this.fetchCourses)
+  }
+
   renderScene = ({ route }: { route: Route }) => {
     const {
       reviews,
       reviewsError,
       reviewsLoading,
-      courses,
       reviewsRefreshing,
+      courses,
+      coursesLoading,
+      coursesError,
+      coursesRefreshing,
     } = this.state
 
     switch (route.key) {
@@ -134,7 +173,16 @@ class ViewLecturer extends React.Component<Props, State> {
           />
         )
       case 'second':
-        return <Courses courses={courses} viewCourse={this.viewCourse} />
+        return (
+          <Courses
+            courses={courses}
+            viewCourse={this.viewCourse}
+            loading={coursesLoading}
+            error={coursesError}
+            refreshing={coursesRefreshing}
+            getCourses={this.refreshCourses}
+          />
+        )
       default:
         return null
     }
