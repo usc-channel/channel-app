@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import StarRating from 'react-native-star-rating'
+import plur from 'plur'
 
 import { Touchable } from '@components'
 import { Lecturer as LecturerModel } from '@types'
@@ -16,9 +17,10 @@ const LecturerCard: React.SFC<Props> = ({ lecturer, onPress }) => (
     <View style={styles.container}>
       <View>
         <Text style={styles.name}>{lecturer.name}</Text>
-        <Text style={styles.reviews}>{`${lecturer.totalReviews} review${
-          lecturer.totalReviews !== 1 ? 's' : ''
-        }`}</Text>
+        <Text style={styles.reviews}>{`${lecturer.totalReviews} ${plur(
+          'review',
+          lecturer.totalReviews!
+        )}`}</Text>
       </View>
 
       <StarRating
