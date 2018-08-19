@@ -24,7 +24,9 @@ const ReviewItem: React.SFC<Props> = ({ review }) => (
     </View>
 
     <View style={styles.courseHeader}>
-      <Text style={styles.courseName}>{review.Course.name}</Text>
+      <Text style={styles.courseName}>
+        {review.Course.code} - {review.Course.name}
+      </Text>
 
       <View style={styles.ratingContainer}>
         <Text style={styles.reviewText}>RATED</Text>
@@ -32,7 +34,9 @@ const ReviewItem: React.SFC<Props> = ({ review }) => (
       </View>
     </View>
 
-    <Text style={styles.courseComment}>{review.comment}</Text>
+    {!!review.comment && (
+      <Text style={styles.courseComment}>{review.comment}</Text>
+    )}
   </View>
 )
 

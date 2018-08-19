@@ -92,7 +92,7 @@ export interface Review {
   semester: string
   year: number
   rating: number
-  comment: string
+  comment?: string
   User: Partial<User>
   Course: Partial<Course>
 }

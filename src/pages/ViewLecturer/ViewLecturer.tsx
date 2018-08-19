@@ -12,10 +12,11 @@ import { TabBar, TabView } from 'react-native-tab-view'
 import { connect, Dispatch } from 'react-redux'
 
 import { Course, Lecturer, Review, Store } from '@types'
-import { Theme } from '@config'
+import { API, Theme } from '@config'
 import Reviews from './components/Reviews'
 import Courses from './components/Courses'
 import { setLecturer } from '@actions'
+import Axios from 'axios'
 
 interface ScreenParams {
   lecturer: Lecturer
@@ -42,7 +43,12 @@ interface State {
   index: number
   routes: Route[]
   courses: Course[]
+  coursesLoading: boolean
+  coursesError: boolean
   reviews: Review[]
+  reviewsLoading: boolean
+  reviewsError: boolean
+  reviewsRefreshing: boolean
 }
 
 const initialLayout = {
@@ -61,18 +67,74 @@ class ViewLecturer extends React.Component<Props, State> {
         { key: 'second', title: 'Courses' },
       ],
       courses: [],
+      coursesLoading: false,
+      coursesError: false,
       reviews: [],
+      reviewsLoading: false,
+      reviewsError: false,
+      reviewsRefreshing: false,
     }
   }
 
+  componentDidMount() {
+    this.getReviews()
+  }
+
+  fetchReviews = async () => {
+    const lecturerId = this.props.navigation.getParam('lecturer')!.id
+
+    try {
+      const { data: { rows: reviews } } = await Axios.get(
+        `${API}/lecturers/${lecturerId}/reviews`
+      )
+
+      this.setState({
+        reviews,
+        reviewsLoading: false,
+        reviewsRefreshing: false,
+        reviewsError: false,
+      })
+    } catch {
+      this.setState({
+        reviewsError: true,
+        reviewsLoading: false,
+        reviewsRefreshing: false,
+      })
+    }
+  }
+
+  getReviews = () => {
+    this.setState({ reviewsLoading: true }, () => {
+      this.fetchReviews()
+    })
+  }
+
+  refreshReviews = () => {
+    this.setState({ reviewsRefreshing: true }, this.fetchReviews)
+  }
+
   renderScene = ({ route }: { route: Route }) => {
+    const {
+      reviews,
+      reviewsError,
+      reviewsLoading,
+      courses,
+      reviewsRefreshing,
+    } = this.state
+
     switch (route.key) {
       case 'first':
-        return <Reviews reviews={this.state.reviews} />
-      case 'second':
         return (
-          <Courses courses={this.state.courses} viewCourse={this.viewCourse} />
+          <Reviews
+            reviews={reviews}
+            loading={reviewsLoading}
+            refreshing={reviewsRefreshing}
+            error={reviewsError}
+            getReviews={this.refreshReviews}
+          />
         )
+      case 'second':
+        return <Courses courses={courses} viewCourse={this.viewCourse} />
       default:
         return null
     }
