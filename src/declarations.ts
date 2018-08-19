@@ -74,3 +74,11 @@ declare module 'react-native-flash-message' {
 
   export function showMessage(options: MessageOptions): void
 }
+
+declare module 'plur' {
+  export default function plur(
+    word: string,
+    plural: string | number,
+    count?: number
+  ): string
+}

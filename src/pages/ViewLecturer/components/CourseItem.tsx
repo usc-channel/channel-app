@@ -1,5 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
+import plur from 'plur'
 
 import { Course } from '@types'
 import { Touchable } from '@components'
@@ -13,9 +14,10 @@ const CourseItem: React.SFC<Props> = ({ course, viewCourse }) => (
   <Touchable onPress={() => viewCourse(course)}>
     <View style={styles.container}>
       <Text style={styles.title}>{`${course.code} - ${course.name}`}</Text>
-      <Text style={styles.reviews}>{`${course.reviews} review${
-        course.reviews !== 1 ? 's' : ''
-      }`}</Text>
+      <Text style={styles.reviews}>{`${course.reviews} ${plur(
+        'review',
+        course.reviews
+      )}`}</Text>
     </View>
   </Touchable>
 )
@@ -28,7 +30,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'NunitoSans-SemiBold',
     fontSize: 16,
-    color: 'rgba(0,0,0,.87)'
+    color: 'rgba(0,0,0,.87)',
   },
   reviews: {
     fontFamily: 'NunitoSans-Regular',
