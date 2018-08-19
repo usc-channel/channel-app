@@ -13,6 +13,7 @@
     "noUnusedLocals": true,
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedParameters": true,
+    "sourceMap": true,
     "paths": {
       "@components": ["components"],
       "@config": ["config"],
