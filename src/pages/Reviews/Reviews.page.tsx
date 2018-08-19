@@ -13,9 +13,8 @@ import { connect } from 'react-redux'
 
 import { API, Theme } from '@config'
 import { Lecturer, Store } from '@types'
-import { Error, NavIcon } from '@components'
+import { Empty, Error, NavIcon } from '@components'
 import LecturerCard from './components/LecturerCard'
-import NoReviews from './components/NoReviews'
 
 interface ScreenProps {
   onSearch(): VoidFunction
@@ -136,7 +135,11 @@ class Reviews extends React.Component<Props, State> {
         ) : (
           <View style={{ flex: 1 }}>
             {lecturers.length === 0 ? (
-              <NoReviews />
+              <Empty
+                image={require('../../assets/chat.png')}
+                title="No Reviews"
+                message="As reviews are added for courses they’ll appear here."
+              />
             ) : (
               <FlatList
                 data={lecturers}
