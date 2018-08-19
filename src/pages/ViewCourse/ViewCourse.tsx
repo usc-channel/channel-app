@@ -7,8 +7,10 @@ import {
   View,
 } from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
+import Axios from 'axios'
 
 import { API, Theme } from '@config'
+import { Error } from '@components'
 import { Course, Lecturer, Review } from '@types'
 import ReviewCourseItem from './components/ReviewCourseItem'
 
@@ -22,6 +24,8 @@ type Props = NavigationScreenProps<ScreenParams>
 interface State {
   loading: boolean
   reviews: Review[]
+  error: boolean
+  refreshing: boolean
 }
 
 class ViewCourse extends React.Component<Props, State> {
@@ -31,6 +35,8 @@ class ViewCourse extends React.Component<Props, State> {
     this.state = {
       loading: false,
       reviews: [],
+      refreshing: false,
+      error: false,
     }
   }
 
@@ -39,17 +45,37 @@ class ViewCourse extends React.Component<Props, State> {
   }
 
   getReviews = () => {
-    this.setState({ loading: true }, async () => {
+    this.setState({ loading: true, error: false }, () => {
+      this.fetchReviews()
+    })
+  }
+
+  fetchReviews = async () => {
+    try {
       const lecturer = this.props.navigation.getParam('lecturer')
       const course = this.props.navigation.getParam('course')
 
-      const request = await fetch(
+      const { data: reviews } = await Axios(
         `${API}/lecturers/${lecturer.id}/reviews/${course.id}`
       )
-      const reviews = await request.json()
 
-      this.setState({ reviews, loading: false })
-    })
+      this.setState({
+        reviews,
+        loading: false,
+        refreshing: false,
+        error: false,
+      })
+    } catch {
+      this.setState({
+        error: true,
+        refreshing: false,
+        loading: false,
+      })
+    }
+  }
+
+  refreshReviews = () => {
+    this.setState({ refreshing: true }, this.fetchReviews)
   }
 
   render() {
@@ -67,8 +93,14 @@ class ViewCourse extends React.Component<Props, State> {
           </View>
         </View>
 
-        {this.state.loading ? (
-          <ActivityIndicator style={{ margin: 16 }} />
+        {this.state.loading && <ActivityIndicator style={{ margin: 16 }} />}
+
+        {this.state.error ? (
+          <Error
+            message="There's been a problem getting the reviews for this Lecturer and Course."
+            loading={this.state.refreshing}
+            action={{ message: 'Try again', callback: this.refreshReviews }}
+          />
         ) : (
           <FlatList
             data={this.state.reviews}
