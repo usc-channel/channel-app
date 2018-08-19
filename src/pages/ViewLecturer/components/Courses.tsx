@@ -1,6 +1,6 @@
 import React from 'react'
 import { ActivityIndicator, FlatList } from 'react-native'
-import { Error } from '@components'
+import { Empty, Error } from '@components'
 
 import { Course } from '@types'
 import CourseItem from './CourseItem'
@@ -25,21 +25,36 @@ const Courses: React.SFC<Props> = ({
   <React.Fragment>
     {loading && <ActivityIndicator style={{ marginVertical: 15 }} />}
 
-    {error ? (
-      <Error
-        message="There's been a problem getting the courses rated for this Lecturer."
-        loading={refreshing}
-        action={{ message: 'Try again', callback: getCourses }}
-      />
-    ) : (
-      <FlatList
-        keyExtractor={(course: Course) => course.id.toString()}
-        data={courses}
-        renderItem={({ item }) => (
-          <CourseItem course={item} viewCourse={viewCourse} />
-        )}
-      />
-    )}
+    {!loading &&
+      error && (
+        <Error
+          message="There's been a problem getting the courses rated for this Lecturer."
+          loading={refreshing}
+          action={{ message: 'Try again', callback: getCourses }}
+        />
+      )}
+
+    {!loading &&
+      !error &&
+      courses.length === 0 && (
+        <Empty
+          title="No Courses"
+          image={require('../../../assets/course.png')}
+          message="As reviews are added for this lecturer the courses will appear here."
+        />
+      )}
+
+    {!loading &&
+      !error &&
+      courses.length > 0 && (
+        <FlatList
+          keyExtractor={(course: Course) => course.id.toString()}
+          data={courses}
+          renderItem={({ item }) => (
+            <CourseItem course={item} viewCourse={viewCourse} />
+          )}
+        />
+      )}
   </React.Fragment>
 )
 

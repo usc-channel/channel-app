@@ -1,18 +1,19 @@
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import { Theme } from '@config'
+import { ImageSource } from 'react-native-vector-icons/Icon'
 
-const NoReviews = () => (
+interface Props {
+  title: string
+  message: string
+  image: ImageSource
+}
+
+const Empty: React.SFC<Props> = ({ title, message, image }) => (
   <View style={styles.container}>
-    <Image
-      source={require('../../../assets/chat.png')}
-      style={styles.image}
-      resizeMode="contain"
-    />
-    <Text style={styles.title}>No Reviews</Text>
-    <Text style={styles.sub}>
-      As reviews are added for courses they’ll appear here.
-    </Text>
+    <Image source={image} style={styles.image} resizeMode="contain" />
+    <Text style={styles.title}>{title}</Text>
+    <Text style={styles.sub}>{message}</Text>
   </View>
 )
 
@@ -44,4 +45,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default NoReviews
+export default Empty
