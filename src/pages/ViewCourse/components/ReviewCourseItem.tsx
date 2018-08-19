@@ -30,7 +30,9 @@ const ReviewCourseItem: React.SFC<Props> = ({ review }) => (
       </View>
     </View>
 
-    <Text style={styles.courseComment}>{review.comment}</Text>
+    {!!review.comment && (
+      <Text style={styles.courseComment}>{review.comment}</Text>
+    )}
   </View>
 )
 
@@ -57,6 +59,7 @@ const styles = StyleSheet.create({
     fontFamily: 'NunitoSans-Regular',
     fontSize: 14,
     color: 'rgba(0,0,0,.87)',
+    marginTop: 18,
   },
   ratingContainer: {
     backgroundColor: Theme.accent,
@@ -78,7 +81,6 @@ const styles = StyleSheet.create({
   },
   userContainer: {
     flexDirection: 'row',
-    marginBottom: 18,
     alignItems: 'center',
   },
   semester: {
