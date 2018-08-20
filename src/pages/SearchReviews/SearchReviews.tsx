@@ -164,6 +164,7 @@ class SearchPosts extends React.Component<Props, State> {
           <Courses
             courses={this.state.courses}
             loading={this.state.loading}
+            search={this.state.text}
             viewCourse={this.viewCourse}
           />
         )
