@@ -74,7 +74,7 @@ class SearchPosts extends React.Component<Props, State> {
         returnKeyType={'search'}
         alwaysShowBackButton
         onBackPress={this.props.navigation.goBack}
-        inputProps={{ autoFocus: true }}
+        inputProps={{ autoFocus: true, autoCorrect: true }}
         inputStyle={{
           backgroundColor: '#fff',
           borderWidth: 0,
