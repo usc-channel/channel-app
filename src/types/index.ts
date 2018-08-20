@@ -78,7 +78,8 @@ export interface Course {
   id: number
   code: string
   name: string
-  reviews: number
+  reviews?: number
+  totalReviews?: number
 }
 
 export interface User {

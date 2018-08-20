@@ -74,7 +74,7 @@ class Reviews extends React.Component<Props, State> {
   }
 
   onSearch = () => {
-    // TODO: Navigate to search screen
+    this.props.navigation.push('searchReviews')
   }
 
   getLecturers = async () => {
