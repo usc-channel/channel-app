@@ -25,6 +25,7 @@ const Courses: React.SFC<Props> = ({ loading, courses, viewCourse }) => (
         contentContainerStyle={{ flex: 1 }}
         ListEmptyComponent={
           <Empty
+            keyboard
             title="No Courses Found"
             image={require('../../../assets/course.png')}
             message="Try searching for something else?"
