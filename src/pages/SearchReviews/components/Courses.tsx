@@ -3,15 +3,21 @@ import { ActivityIndicator, FlatList, View } from 'react-native'
 
 import { Course } from '@types'
 import CourseItem from './CourseItem'
-import { Empty } from '@components'
+import { SearchEmpty } from '@components'
 
 interface Props {
+  search: string
   loading: boolean
   courses: Course[]
   viewCourse(course: Course): void
 }
 
-const Courses: React.SFC<Props> = ({ loading, courses, viewCourse }) => (
+const Courses: React.SFC<Props> = ({
+  loading,
+  courses,
+  search,
+  viewCourse,
+}) => (
   <View style={{ flex: 1 }}>
     {loading && <ActivityIndicator style={{ marginVertical: 15 }} />}
 
@@ -24,11 +30,9 @@ const Courses: React.SFC<Props> = ({ loading, courses, viewCourse }) => (
         keyExtractor={course => course.id.toString()}
         contentContainerStyle={{ flex: 1 }}
         ListEmptyComponent={
-          <Empty
-            keyboard
-            title="No Courses Found"
-            image={require('../../../assets/course.png')}
-            message="Try searching for something else?"
+          <SearchEmpty
+            search={search}
+            message="No courses or lecturers found for"
           />
         }
       />
