@@ -16,6 +16,7 @@
     "sourceMap": true,
     "paths": {
       "@components": ["components"],
+      "@containers": ["containers"],
       "@config": ["config"],
       "@pages": ["pages"],
       "@types": ["types"],

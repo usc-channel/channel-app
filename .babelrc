@@ -8,6 +8,7 @@
         "cwd": "babelrc",
         "alias": {
           "@components": "./src/components",
+          "@containers": "./src/containers",
           "@config": "./src/config",
           "@pages": "./src/pages",
           "@types": "./src/types",

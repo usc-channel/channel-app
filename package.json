@@ -7,7 +7,8 @@
     "test": "jest",
     "lint": "tslint 'src/**/*.ts?(x)' --format stylish",
     "precommit": "lint-staged",
-    "check": "tsc --noEmit --pretty"
+    "check": "tsc --noEmit --pretty",
+    "storybook": "storybook start -p 9001 --skip-packager"
   },
   "dependencies": {
     "apollo-boost": "^0.1.12",
@@ -49,6 +50,7 @@
     "validator": "^10.3.0"
   },
   "devDependencies": {
+    "@storybook/react-native": "3.4.3",
     "@types/he": "^0.5.29",
     "@types/lodash.debounce": "^4.0.3",
     "@types/node": "^9.6.4",
@@ -62,6 +64,8 @@
     "@types/react-navigation": "^2.0.6",
     "@types/react-redux": "^6.0.2",
     "@types/redux-logger": "^3.0.6",
+    "@types/storybook__react": "^3.0.9",
+    "@types/storybook__react-native": "^3.0.1",
     "@types/validator": "^9.4.1",
     "babel-jest": "23.2.0",
     "babel-plugin-module-resolver": "^3.1.1",
@@ -70,6 +74,7 @@
     "jest": "23.3.0",
     "lint-staged": "^7.2.0",
     "prettier": "^1.10.2",
+    "react-dom": "16.2.0",
     "react-native-typescript-transformer": "^1.2.10",
     "react-test-renderer": "16.4.1",
     "tslint": "^5.9.1",
