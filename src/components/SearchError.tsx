@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   text: {
-    fontFamily: 'NunitoSans-Bold',
+    fontFamily: Theme.fonts.bold,
     color: Theme.primary,
     fontSize: 20,
   },
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   sub: {
-    fontFamily: 'NunitoSans-Regular',
+    fontFamily: Theme.fonts.regular,
     fontSize: 16,
     maxWidth: 300,
     marginTop: 5,

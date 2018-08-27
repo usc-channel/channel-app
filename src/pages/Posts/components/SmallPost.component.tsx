@@ -1,10 +1,11 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { PostMeta, Touchable } from '@components'
-import { Post } from '@types'
-import { featuredCategoryId } from '@config'
 import { decode } from 'he'
 import FastImage from 'react-native-fast-image'
+
+import { PostMeta, Touchable } from '@components'
+import { Post } from '@types'
+import { featuredCategoryId, Theme } from '@config'
 
 interface Props {
   post: Post
@@ -65,11 +66,11 @@ const styles = StyleSheet.create({
   title: {
     color: 'rgba(0,0,0, .87)',
     fontSize: 16,
-    fontFamily: 'NunitoSans-Bold',
+    fontFamily: Theme.fonts.bold,
   },
   excerpt: {
     color: 'rgba(0,0,0,.54)',
-    fontFamily: 'NunitoSans-Regular',
+    fontFamily: Theme.fonts.regular,
   },
   authorContainer: {
     marginTop: 14,

@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   title: {
-    fontFamily: 'NunitoSans-SemiBold',
+    fontFamily: Theme.fonts.semiBold,
     fontSize: 16,
     color: 'rgba(0,0,0,.87)',
   },
@@ -60,27 +60,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   reviews: {
-    fontFamily: 'NunitoSans-Regular',
+    fontFamily: Theme.fonts.regular,
     fontSize: 14,
     color: 'rgba(0,0,0,.54)',
   },
   reviewsText: {
     color: '#fff',
-    fontFamily: 'NunitoSans-Regular',
+    fontFamily: Theme.fonts.regular,
     fontSize: 15,
   },
   reviewsText__Amount: {
-    fontFamily: 'NunitoSans-Bold',
+    fontFamily: Theme.fonts.bold,
     fontSize: 24,
     marginBottom: -4,
   },
   name: {
-    fontFamily: 'NunitoSans-SemiBold',
+    fontFamily: Theme.fonts.semiBold,
     fontSize: 20,
     color: 'rgba(0,0,0,.87)',
   },
   school: {
-    fontFamily: 'NunitoSans-Regular',
+    fontFamily: Theme.fonts.regular,
     fontSize: 14,
     color: 'rgba(0,0,0,.54)',
   },

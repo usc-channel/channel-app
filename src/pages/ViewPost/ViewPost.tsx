@@ -94,7 +94,7 @@ class ViewPost extends React.Component<Props> {
           html={this.props.data!.content!}
           tagsStyles={css}
           baseFontStyle={{
-            fontFamily: 'NunitoSans-Regular',
+            fontFamily: Theme.fonts.regular,
             fontSize: 18,
             lineHeight: 34,
             color: 'rgba(0,0,0,0.87)',
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   title: {
-    fontFamily: 'NunitoSans-Bold',
+    fontFamily: Theme.fonts.bold,
     marginHorizontal: 16,
     textAlign: 'center',
     fontSize: 28,

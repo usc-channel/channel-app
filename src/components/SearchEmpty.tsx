@@ -83,12 +83,12 @@ class SearchEmpty extends React.Component<Props, State> {
               paddingVertical: 10,
             }}
             titleStyle={{
-              fontFamily: 'NunitoSans-SemiBold',
+              fontFamily: Theme.fonts.semiBold,
               color: '#fff',
               fontSize: 16,
             }}
             subtitleStyle={{
-              fontFamily: 'NunitoSans-Regular',
+              fontFamily: Theme.fonts.regular,
               fontSize: 13,
               marginTop: -2,
               color: 'rgba(255,255,255,0.9)',
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
   text: {
     color: 'rgba(0,0,0,0.87)',
     fontSize: 18,
-    fontFamily: 'NunitoSans-SemiBold',
+    fontFamily: Theme.fonts.semiBold,
     textAlign: 'center',
   },
   image: {

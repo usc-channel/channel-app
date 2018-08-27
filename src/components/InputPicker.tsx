@@ -57,12 +57,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   label: {
-    fontFamily: 'NunitoSans-SemiBold',
+    fontFamily: Theme.fonts.semiBold,
     fontSize: 12,
     color: 'rgba(0,0,0,.54)',
   },
   value: {
-    fontFamily: 'NunitoSans-Regular',
+    fontFamily: Theme.fonts.regular,
     fontSize: 16,
     color: 'rgba(0,0,0,.87)',
   },

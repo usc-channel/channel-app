@@ -333,7 +333,7 @@ class NewReview extends React.Component<Props, State> {
             onSelect()
           }}
           titleStyle={{
-            fontFamily: 'NunitoSans-Regular',
+            fontFamily: Theme.fonts.regular,
             color: 'rgba(0,0,0,0.87)',
           }}
         />
@@ -362,11 +362,11 @@ class NewReview extends React.Component<Props, State> {
             onSelect()
           }}
           titleStyle={{
-            fontFamily: 'NunitoSans-Regular',
+            fontFamily: Theme.fonts.regular,
             color: 'rgba(0,0,0,0.87)',
           }}
           subtitleStyle={{
-            fontFamily: 'NunitoSans-Regular',
+            fontFamily: Theme.fonts.regular,
             color: 'rgba(0,0,0,0.54)',
           }}
         />
@@ -431,7 +431,7 @@ class NewReview extends React.Component<Props, State> {
             }}
             buttonStyle={{ justifyContent: 'center' }}
             showDropdown={false}
-            valueStyle={{ fontFamily: 'NunitoSans-Regular' }}
+            valueStyle={{ fontFamily: Theme.fonts.regular }}
           />
 
           <ButtonGroup
@@ -458,7 +458,7 @@ class NewReview extends React.Component<Props, State> {
               }
             }}
             buttonStyle={{ borderRadius: 0 }}
-            textStyle={{ fontFamily: 'NunitoSans-Regular', fontSize: 16 }}
+            textStyle={{ fontFamily: Theme.fonts.regular, fontSize: 16 }}
           />
         </View>
 
@@ -560,17 +560,17 @@ const styles = StyleSheet.create({
   name: {
     color: '#fff',
     fontSize: 30,
-    fontFamily: 'NunitoSans-Light',
+    fontFamily: Theme.fonts.light,
   },
   subtitle: {
     color: 'rgba(255,255,255,.7)',
     fontSize: 12,
-    fontFamily: 'NunitoSans-ExtraBold',
+    fontFamily: Theme.fonts.extraBold,
   },
   subheader: {
     color: 'rgba(0,0,0,.54)',
     fontSize: 12,
-    fontFamily: 'NunitoSans-SemiBold',
+    fontFamily: Theme.fonts.semiBold,
   },
   error: {
     color: Theme.error,
@@ -590,7 +590,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     flex: 1,
     textAlignVertical: 'top',
-    fontFamily: 'NunitoSans-Regular',
+    fontFamily: Theme.fonts.regular,
     color: 'rgba(0,0,0,.87)',
   },
 })

@@ -132,12 +132,12 @@ const styles = StyleSheet.create({
   name: {
     color: '#fff',
     fontSize: 20,
-    fontFamily: 'NunitoSans-Bold',
+    fontFamily: Theme.fonts.bold,
   },
   course: {
     color: 'rgba(255,255,255,.7)',
     fontSize: 16,
-    fontFamily: 'NunitoSans-Regular',
+    fontFamily: Theme.fonts.regular,
   },
 })
 

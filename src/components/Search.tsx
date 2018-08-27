@@ -99,7 +99,7 @@ class SearchPosts extends React.Component<Props, State> {
         }}
         textStyle={{
           fontSize: 16,
-          fontFamily: 'NunitoSans-Regular',
+          fontFamily: Theme.fonts.regular,
         }}
         value={this.state.text}
       />

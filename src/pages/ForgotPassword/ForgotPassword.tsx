@@ -209,13 +209,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   infoTitle: {
-    fontFamily: 'NunitoSans-SemiBold',
+    fontFamily: Theme.fonts.semiBold,
     color: 'rgba(0,0,0,0.87)',
     fontSize: 24,
     marginBottom: 15,
   },
   infoText: {
-    fontFamily: 'NunitoSans-Regular',
+    fontFamily: Theme.fonts.regular,
     color: 'rgba(0,0,0,0.87)',
     fontSize: 16,
   },
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   titleStyle: {
-    fontFamily: 'NunitoSans-Bold',
+    fontFamily: Theme.fonts.bold,
   },
   main: {
     fontSize: 16,
@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
   message: {
     textAlign: 'center',
     fontSize: 16,
-    fontFamily: 'NunitoSans-SemiBold',
+    fontFamily: Theme.fonts.semiBold,
   },
   error: {
     color: Theme.error,

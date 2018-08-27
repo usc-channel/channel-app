@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import plur from 'plur'
 
 import { Course } from '@types'
+import { Theme } from '@config'
 import { Touchable } from '@components'
 
 interface Props {
@@ -28,12 +29,12 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   title: {
-    fontFamily: 'NunitoSans-SemiBold',
+    fontFamily: Theme.fonts.semiBold,
     fontSize: 16,
     color: 'rgba(0,0,0,.87)',
   },
   reviews: {
-    fontFamily: 'NunitoSans-Regular',
+    fontFamily: Theme.fonts.regular,
     fontSize: 14,
     color: 'rgba(0,0,0,.54)',
   },

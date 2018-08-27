@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     width: 30,
   },
   metaField: {
-    fontFamily: 'NunitoSans-SemiBold',
+    fontFamily: Theme.fonts.semiBold,
     fontSize: 12,
     color: 'rgba(0,0,0,.54)',
   },

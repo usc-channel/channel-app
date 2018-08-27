@@ -362,7 +362,7 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.accent,
     color: '#fff',
     paddingVertical: 8,
-    fontFamily: 'NunitoSans-SemiBold',
+    fontFamily: Theme.fonts.semiBold,
     textAlign: 'center',
   },
 })

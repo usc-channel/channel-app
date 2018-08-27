@@ -1,14 +1,16 @@
 import React from 'react'
 import { ListItem, ListItemProps } from 'react-native-elements'
 
+import { Theme } from '@config'
+
 const MoreListItem: React.SFC<ListItemProps> = props => (
   <ListItem
     titleStyle={{
-      fontFamily: 'NunitoSans-Regular',
+      fontFamily: Theme.fonts.regular,
       color: 'rgba(0,0,0,0.87)',
     }}
     subtitleStyle={{
-      fontFamily: 'NunitoSans-Regular',
+      fontFamily: Theme.fonts.regular,
       color: 'rgba(0,0,0,0.87)',
     }}
     containerStyle={{

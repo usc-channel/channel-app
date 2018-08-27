@@ -198,7 +198,7 @@ class SignIn extends React.Component<Props, State> {
                 titleStyle={{
                   color: 'rgba(0,0,0,.87)',
                   fontSize: 16,
-                  fontFamily: 'NunitoSans-SemiBold',
+                  fontFamily: Theme.fonts.semiBold,
                   padding: 0,
                 }}
                 buttonStyle={{ borderRadius: 0, padding: 8 }}
@@ -248,7 +248,7 @@ class SignIn extends React.Component<Props, State> {
               >
                 <Text style={styles.signup}>
                   Don't have an account?{' '}
-                  <Text style={{ fontFamily: 'NunitoSans-Bold' }}>Sign Up</Text>
+                  <Text style={{ fontFamily: Theme.fonts.bold }}>Sign Up</Text>
                 </Text>
               </View>
             </Touchable>
@@ -293,7 +293,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   titleStyle: {
-    fontFamily: 'NunitoSans-Bold',
+    fontFamily: Theme.fonts.bold,
   },
   signIn: {
     fontSize: 16,
@@ -307,12 +307,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
     color: 'rgba(0,0,0,.87)',
-    fontFamily: 'NunitoSans-Regular',
+    fontFamily: Theme.fonts.regular,
   },
   error: {
     color: Theme.error,
     textAlign: 'center',
     fontSize: 16,
-    fontFamily: 'NunitoSans-SemiBold',
+    fontFamily: Theme.fonts.semiBold,
   },
 })
