@@ -80,16 +80,17 @@ class SearchPosts extends React.Component<Props, State> {
 
   getResults = async (search: string) => {
     try {
-      const response = await Promise.all([
+      const [{ data: courses }, { data: lecturers }] = await Promise.all([
         Axios.get(`${API}/courses?search=${search}`),
-        Axios.get(`${API}/lecturers?search=${search}`),
+        Axios.get(`${API}/lecturers_reviews?search=${search}`),
       ])
 
       this.setState({
-        courses: response[0].data,
-        lecturers: response[1].data,
+        courses,
+        lecturers,
+        loading: false,
+        firstSearch: false,
       })
-      this.setState({ loading: false, firstSearch: false })
     } catch {
       this.setState({ loading: false, errored: true })
     }
@@ -105,7 +106,10 @@ class SearchPosts extends React.Component<Props, State> {
         autoCorrect={false}
         returnKeyType={'search'}
         alwaysShowBackButton
-        onBackPress={this.props.navigation.goBack}
+        onBackPress={() => {
+          Keyboard.dismiss()
+          this.props.navigation.goBack()
+        }}
         inputStyle={{
           backgroundColor: '#fff',
           borderWidth: 0,
@@ -150,21 +154,34 @@ class SearchPosts extends React.Component<Props, State> {
     //
   }
 
+  viewLecturer = (lecturer: Lecturer) => {
+    Keyboard.dismiss()
+    this.props.navigation.push('viewLecturer', { lecturer })
+  }
+
   onSelect = () => {
     Keyboard.dismiss()
     this.props.navigation.goBack()
   }
 
   renderScene = ({ route }: { route: Route }) => {
+    const { courses, loading, lecturers, text } = this.state
     switch (route.key) {
       case 'first':
-        return <Lecturers loading={this.state.loading} />
+        return (
+          <Lecturers
+            loading={loading}
+            lecturers={lecturers}
+            search={text}
+            viewLecturer={this.viewLecturer}
+          />
+        )
       case 'second':
         return (
           <Courses
-            courses={this.state.courses}
-            loading={this.state.loading}
-            search={this.state.text}
+            courses={courses}
+            loading={loading}
+            search={text}
             viewCourse={this.viewCourse}
           />
         )
