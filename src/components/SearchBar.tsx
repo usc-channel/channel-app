@@ -3,9 +3,11 @@
 import React from 'react'
 import {
   Keyboard,
+  NativeSyntheticEvent,
   StyleProp,
   StyleSheet,
   TextInput,
+  TextInputFocusEventData,
   TextInputProperties,
   TextStyle,
   TouchableOpacity,
@@ -72,17 +74,17 @@ export default class SearchBar extends React.Component<Props, State> {
     this.props.onClear!()
   }
 
-  onFocus = () => {
+  onFocus = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
     this.setState({ isOnFocus: true })
     if (this.props.onFocus) {
-      this.props.onFocus()
+      this.props.onFocus(e)
     }
   }
 
-  onBlur = () => {
+  onBlur = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
     this.setState({ isOnFocus: false })
     if (this.props.onBlur) {
-      this.props.onBlur()
+      this.props.onBlur(e)
     }
     Keyboard.dismiss()
   }
