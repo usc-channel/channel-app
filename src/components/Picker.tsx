@@ -170,11 +170,11 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingBottom: 8,
     fontSize: 15,
-    fontFamily: 'NunitoSans-SemiBold',
+    fontFamily: Theme.fonts.semiBold,
     color: Theme.primary,
   },
   titleStyle: {
-    fontFamily: 'NunitoSans-SemiBold',
+    fontFamily: Theme.fonts.semiBold,
     marginLeft: 15,
     color: 'rgba(0,0,0,.54)',
     position: 'absolute',
@@ -184,12 +184,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'rgba(0,0,0,.87)',
     marginTop: 24,
-    fontFamily: 'NunitoSans-SemiBold',
+    fontFamily: Theme.fonts.semiBold,
     marginLeft: 15,
   },
   itemStyle: {
     fontFamily:
-      Platform.OS === 'ios' ? 'NunitoSans-Regular' : 'NunitoSans-SemiBold',
+      Platform.OS === 'ios' ? Theme.fonts.regular : Theme.fonts.semiBold,
     color: 'rgba(0,0,0,.87)',
     fontSize: 16,
   },

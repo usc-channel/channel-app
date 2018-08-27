@@ -279,21 +279,21 @@ const styles = StyleSheet.create({
   name: {
     color: '#fff',
     fontSize: 20,
-    fontFamily: 'NunitoSans-Bold',
+    fontFamily: Theme.fonts.bold,
   },
   school: {
     color: 'rgba(255,255,255,.7)',
     fontSize: 16,
-    fontFamily: 'NunitoSans-Regular',
+    fontFamily: Theme.fonts.regular,
   },
   tabCount: {
     color: '#fff',
-    fontFamily: 'NunitoSans-Regular',
+    fontFamily: Theme.fonts.regular,
     fontSize: 20,
     textAlign: 'center',
   },
   tabTitle: {
-    fontFamily: 'NunitoSans-Regular',
+    fontFamily: Theme.fonts.regular,
     fontSize: 14,
     color: 'rgba(255,255,255,.7)',
     textAlign: 'center',

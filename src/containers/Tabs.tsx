@@ -161,7 +161,7 @@ export default createBottomTabNavigator(
             labelStyle: {
               marginBottom: 8,
               marginTop: -6,
-              fontFamily: 'NunitoSans-Bold',
+              fontFamily: Theme.fonts.bold,
               fontSize: 10,
             },
           }

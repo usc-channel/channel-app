@@ -9,6 +9,7 @@ import {
 import moment from 'moment'
 
 import { Video } from '@types'
+import { Theme } from '@config'
 import { Touchable } from '@components'
 
 interface Props {
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
   title: {
     paddingTop: 104,
     color: '#fff',
-    fontFamily: 'NunitoSans-SemiBold',
+    fontFamily: Theme.fonts.semiBold,
     fontSize: 18,
   },
   meta: {
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
   },
   date: {
     color: 'rgba(255,255,255,0.7)',
-    fontFamily: 'NunitoSans-Regular',
+    fontFamily: Theme.fonts.regular,
     fontSize: 12,
   },
 })

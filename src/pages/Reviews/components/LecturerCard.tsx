@@ -51,12 +51,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   name: {
-    fontFamily: 'NunitoSans-SemiBold',
+    fontFamily: Theme.fonts.semiBold,
     fontSize: 18,
     color: 'rgba(0,0,0,.87)',
   },
   reviews: {
-    fontFamily: 'NunitoSans-Regular',
+    fontFamily: Theme.fonts.regular,
     color: 'rgba(0,0,0,.54)',
     fontSize: 12,
   },

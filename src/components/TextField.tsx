@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   labelStyle: {
-    fontFamily: 'NunitoSans-SemiBold',
+    fontFamily: Theme.fonts.semiBold,
     marginLeft: 15,
     color: 'rgba(0,0,0,.54)',
     position: 'absolute',
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     height: 54,
     paddingHorizontal: 15,
     fontSize: 16,
-    fontFamily: 'NunitoSans-SemiBold',
+    fontFamily: Theme.fonts.semiBold,
     paddingTop: 24,
     paddingBottom: 8,
   },

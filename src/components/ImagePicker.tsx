@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   },
   titleStyle: {
     fontFamily:
-      Platform.OS === 'ios' ? 'NunitoSans-Regular' : 'NunitoSans-SemiBold',
+      Platform.OS === 'ios' ? Theme.fonts.regular : Theme.fonts.semiBold,
     color: 'rgba(0,0,0,.87)',
   },
 })

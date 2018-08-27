@@ -121,7 +121,7 @@ class SearchPosts extends React.Component<Props, State> {
         inputProps={{ autoCorrect: true, autoFocus: true }}
         textStyle={{
           fontSize: 16,
-          fontFamily: 'NunitoSans-Regular',
+          fontFamily: Theme.fonts.regular,
         }}
         value={this.state.text}
       />
@@ -202,7 +202,7 @@ class SearchPosts extends React.Component<Props, State> {
       renderLabel={({ route }: { route: Route }) => (
         <Text
           style={{
-            fontFamily: 'NunitoSans-Regular',
+            fontFamily: Theme.fonts.regular,
             paddingVertical: 5,
             fontSize: 15,
           }}

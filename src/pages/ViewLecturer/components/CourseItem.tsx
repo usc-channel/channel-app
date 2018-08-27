@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import plur from 'plur'
 
 import { Course } from '@types'
+import { Theme } from '@config'
 import { Touchable } from '@components'
 
 interface Props {
@@ -16,7 +17,7 @@ const CourseItem: React.SFC<Props> = ({ course, viewCourse }) => (
       <Text style={styles.title}>{`${course.code} - ${course.name}`}</Text>
       <Text style={styles.reviews}>{`${course.reviews} ${plur(
         'review',
-        course.reviews
+        course.reviews!
       )}`}</Text>
     </View>
   </Touchable>
@@ -28,12 +29,12 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   title: {
-    fontFamily: 'NunitoSans-SemiBold',
+    fontFamily: Theme.fonts.semiBold,
     fontSize: 16,
     color: 'rgba(0,0,0,.87)',
   },
   reviews: {
-    fontFamily: 'NunitoSans-Regular',
+    fontFamily: Theme.fonts.regular,
     fontSize: 14,
     color: 'rgba(0,0,0,.54)',
   },

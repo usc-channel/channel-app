@@ -30,12 +30,12 @@ const styles = StyleSheet.create({
     marginTop: -60,
   },
   title: {
-    fontFamily: 'NunitoSans-Bold',
+    fontFamily: Theme.fonts.bold,
     color: Theme.primary,
     fontSize: 20,
   },
   sub: {
-    fontFamily: 'NunitoSans-Regular',
+    fontFamily: Theme.fonts.regular,
     fontSize: 16,
     maxWidth: 300,
     marginTop: 5,

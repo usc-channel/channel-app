@@ -51,12 +51,12 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   courseName: {
-    fontFamily: 'NunitoSans-SemiBold',
+    fontFamily: Theme.fonts.semiBold,
     fontSize: 16,
     color: 'rgba(0,0,0,.87)',
   },
   courseComment: {
-    fontFamily: 'NunitoSans-Regular',
+    fontFamily: Theme.fonts.regular,
     fontSize: 14,
     color: 'rgba(0,0,0,.87)',
     marginTop: 18,
@@ -69,14 +69,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   reviewText: {
-    fontFamily: 'NunitoSans-Regular',
+    fontFamily: Theme.fonts.regular,
     fontSize: 10,
     color: '#fff',
   },
   reviewCount: {
     marginLeft: 5,
     color: '#fff',
-    fontFamily: 'NunitoSans-Bold',
+    fontFamily: Theme.fonts.bold,
     fontSize: 14,
   },
   userContainer: {
@@ -84,12 +84,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   semester: {
-    fontFamily: 'NunitoSans-Regular',
+    fontFamily: Theme.fonts.regular,
     fontSize: 12,
     color: 'rgba(0,0,0,.54)',
   },
   user: {
-    fontFamily: 'NunitoSans-SemiBold',
+    fontFamily: Theme.fonts.semiBold,
     fontSize: 14,
     color: 'rgba(0,0,0,.87)',
   },

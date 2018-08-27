@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   header: {
-    fontFamily: 'NunitoSans-SemiBold',
+    fontFamily: Theme.fonts.semiBold,
     color: 'rgba(255,255,255, 0.87)',
   },
   category: {
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     borderRadius: 16,
-    fontFamily: 'NunitoSans-SemiBold',
+    fontFamily: Theme.fonts.semiBold,
     overflow: 'hidden',
   },
   categorySelected: {
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   buttonTextStyle: {
     color: '#fff',
     width: '100%',
-    fontFamily: 'NunitoSans-SemiBold',
+    fontFamily: Theme.fonts.semiBold,
     fontWeight: '400',
     fontSize: 16,
   },

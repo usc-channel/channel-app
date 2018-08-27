@@ -1,5 +1,13 @@
 import { Platform } from 'react-native'
 
+const fonts = {
+  regular: 'NunitoSans-Regular',
+  light: 'NunitoSans-Light',
+  semiBold: 'NunitoSans-SemiBold',
+  bold: 'NunitoSans-Bold',
+  extraBold: 'NunitoSans-ExtraBold',
+}
+
 const navigationOptions = {
   headerStyle: {
     backgroundColor: '#2266AA',
@@ -8,7 +16,7 @@ const navigationOptions = {
   ...(Platform.OS === 'ios'
     ? {
         headerTitleStyle: {
-          fontFamily: 'NunitoSans-Bold',
+          fontFamily: fonts.bold,
           fontSize: 20,
           flex: 1,
           textAlign: 'left',
@@ -16,7 +24,7 @@ const navigationOptions = {
       }
     : {
         headerTitleStyle: {
-          fontFamily: 'NunitoSans-Bold',
+          fontFamily: fonts.bold,
           fontWeight: '400',
         },
       }),
@@ -40,6 +48,7 @@ const Theme = {
   error: '#D23D27',
   success: '#4EC85C',
   loadingTimeout: 400,
+  fonts,
 }
 
 export default Theme
