@@ -20,20 +20,16 @@ import { NavIcon, PostMeta } from '@components'
 import { Theme } from '@config'
 import { postQuery } from '../../graphql'
 
-interface GraphProps {
-  content: string
-  url: string
-}
+const EmptyLinesRegex = /<p>&nbsp;<\/p>/gi
 
 interface ScreenProps {
   post: Post
   onShare(): void
 }
 
-type OwnProps = NavigationScreenProps<ScreenProps>
-type Props = ChildProps<OwnProps, GraphProps>
+type InputProps = NavigationScreenProps<ScreenProps>
 
-class ViewPost extends React.Component<Props> {
+class ViewPost extends React.Component<ChildProps<InputProps, Response>, {}> {
   static navigationOptions = ({
     navigation,
   }: NavigationScreenProps<ScreenProps>) => ({
@@ -52,10 +48,12 @@ class ViewPost extends React.Component<Props> {
   }
 
   onShare = () => {
-    Share.share({
-      title: this.props.navigation.getParam('post').title,
-      url: this.props.data!.url!,
-    })
+    if (this.props.data && this.props.data.post) {
+      Share.share({
+        title: this.props.navigation.getParam('post').title,
+        url: this.props.data.post.guid,
+      })
+    }
   }
 
   render() {
@@ -91,7 +89,7 @@ class ViewPost extends React.Component<Props> {
         </View>
 
         <HTML
-          html={this.props.data!.content!}
+          html={this.props.data!.post!.content.replace(EmptyLinesRegex, '')}
           tagsStyles={css}
           baseFontStyle={{
             fontFamily: Theme.fonts.regular,
@@ -194,23 +192,12 @@ interface Response {
   }
 }
 
-const withPost = graphql<Response, any, OwnProps>(postQuery, {
-  props: ({ data }) => {
-    let returnData = {}
+interface Variables {
+  id: string
+}
 
-    if (data!.post) {
-      returnData = {
-        ...returnData,
-        content: data!.post.content.replace(/<p>&nbsp;<\/p>/gi, ''),
-        url: data!.post.guid,
-      }
-    }
-
-    return {
-      data: { ...returnData, error: data!.error, loading: data!.loading },
-    }
-  },
-  options: ({ navigation }: OwnProps) => ({
+const withPost = graphql<InputProps, Response, Variables, {}>(postQuery, {
+  options: ({ navigation }) => ({
     variables: { id: navigation.getParam('post').id },
   }),
 })
