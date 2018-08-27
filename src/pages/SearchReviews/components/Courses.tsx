@@ -30,10 +30,7 @@ const Courses: React.SFC<Props> = ({
         keyExtractor={course => course.id.toString()}
         contentContainerStyle={{ flex: 1 }}
         ListEmptyComponent={
-          <SearchEmpty
-            search={search}
-            message="No courses or lecturers found for"
-          />
+          <SearchEmpty search={search} message="No courses found for" />
         }
       />
     )}
