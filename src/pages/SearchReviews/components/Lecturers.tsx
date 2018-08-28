@@ -32,7 +32,7 @@ const Lecturers: React.SFC<Props> = ({
           />
         )}
         keyExtractor={a => a.id.toString()}
-        contentContainerStyle={{ flex: 1 }}
+        contentContainerStyle={lecturers.length === 0 && { flex: 1 }}
         ListEmptyComponent={
           <SearchEmpty search={search} message="No lecturers found for" />
         }
