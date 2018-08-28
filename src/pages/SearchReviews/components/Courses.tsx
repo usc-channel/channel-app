@@ -28,7 +28,7 @@ const Courses: React.SFC<Props> = ({
           <CourseItem course={item} viewCourse={() => viewCourse(item)} />
         )}
         keyExtractor={course => course.id.toString()}
-        contentContainerStyle={{ flex: 1 }}
+        contentContainerStyle={courses.length === 0 && { flex: 1 }}
         ListEmptyComponent={
           <SearchEmpty search={search} message="No courses found for" />
         }
