@@ -41,8 +41,6 @@ interface State {
   disabled: boolean
 }
 
-const SchoolPicker = Picker as new () => Picker<School>
-
 class NewLecturer extends React.Component<Props, State> {
   static navigationOptions = ({ navigation }: NavigationScreenProps<{}>) => ({
     headerStyle: {
@@ -223,7 +221,7 @@ class NewLecturer extends React.Component<Props, State> {
               onSubmitEditing={this.submit}
             />
 
-            <SchoolPicker
+            <Picker<School>
               label="School"
               message="Select the lecturer's school"
               value={this.state.school}
@@ -327,4 +325,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   setLecturer: (lecturer: Lecturer) => dispatch(setLecturer(lecturer)),
 })
 
-export default connect(null, mapDispatchToProps)(NewLecturer)
+export default connect(
+  null,
+  mapDispatchToProps
+)(NewLecturer)
