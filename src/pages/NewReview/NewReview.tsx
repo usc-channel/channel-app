@@ -72,7 +72,6 @@ interface Year {
   label: string
 }
 
-const YearPicker = Picker as new () => Picker<Year>
 const Year = new Date().getFullYear()
 
 const Years = Array.from(Array(5)).map((_, i) => ({
@@ -414,7 +413,7 @@ class NewReview extends React.Component<Props, State> {
         )}
 
         <View style={{ flexDirection: 'row' }}>
-          <YearPicker
+          <Picker<Year>
             label="Year"
             message="What year did you do this course?"
             values={Years}
@@ -606,4 +605,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   setLecturer: (lecturer: Lecturer) => dispatch(setLecturer(lecturer)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewReview)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NewReview)
