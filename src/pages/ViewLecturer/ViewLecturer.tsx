@@ -87,9 +87,9 @@ class ViewLecturer extends React.Component<Props, State> {
     const lecturerId = this.props.navigation.getParam('lecturer')!.id
 
     try {
-      const {
-        data: { rows: reviews },
-      } = await Axios.get(`${API}/lecturers/${lecturerId}/reviews`)
+      const { data: reviews } = await Axios.get(
+        `${API}/reviews?lecturerId=${lecturerId}`
+      )
 
       this.setState({
         reviews,
