@@ -79,7 +79,7 @@ class Reviews extends React.Component<Props, State> {
 
   getLecturers = async () => {
     try {
-      const request = await fetch(`${API}/lecturers_reviews`)
+      const request = await fetch(`${API}/lecturers`)
       const lecturers = await request.json()
 
       this.setState({
