@@ -82,7 +82,7 @@ class SearchPosts extends React.Component<Props, State> {
     try {
       const [{ data: courses }, { data: lecturers }] = await Promise.all([
         Axios.get(`${API}/courses?search=${search}`),
-        Axios.get(`${API}/lecturers_reviews?search=${search}`),
+        Axios.get(`${API}/lecturers?search=${search}`),
       ])
 
       this.setState({
