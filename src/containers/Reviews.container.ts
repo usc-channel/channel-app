@@ -1,7 +1,12 @@
 import { Platform } from 'react-native'
 import { createStackNavigator } from 'react-navigation'
 
-import { Reviews, SearchReviews, ViewCourse, ViewLecturer } from '@pages'
+import {
+  Reviews,
+  SearchReviews,
+  ViewLecturer,
+  ViewLecturerCourse,
+} from '@pages'
 import { Theme } from '@config'
 
 export default createStackNavigator(
@@ -24,8 +29,8 @@ export default createStackNavigator(
       screen: ViewLecturer,
       navigationOptions: Theme.flatNavigationOptions,
     },
-    viewCourse: {
-      screen: ViewCourse,
+    viewLecturerCourse: {
+      screen: ViewLecturerCourse,
       navigationOptions: Theme.flatNavigationOptions,
     },
     searchReviews: {

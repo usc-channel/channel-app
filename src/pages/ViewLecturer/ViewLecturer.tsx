@@ -87,9 +87,9 @@ class ViewLecturer extends React.Component<Props, State> {
     const lecturerId = this.props.navigation.getParam('lecturer')!.id
 
     try {
-      const { data: { rows: reviews } } = await Axios.get(
-        `${API}/lecturers/${lecturerId}/reviews`
-      )
+      const {
+        data: { rows: reviews },
+      } = await Axios.get(`${API}/lecturers/${lecturerId}/reviews`)
 
       this.setState({
         reviews,
@@ -110,9 +110,9 @@ class ViewLecturer extends React.Component<Props, State> {
     const lecturerId = this.props.navigation.getParam('lecturer')!.id
 
     try {
-      const { data: { rows: courses } } = await Axios.get(
-        `${API}/lecturers/${lecturerId}/courses`
-      )
+      const {
+        data: { rows: courses },
+      } = await Axios.get(`${API}/lecturers/${lecturerId}/courses`)
 
       this.setState({
         courses,
@@ -195,7 +195,7 @@ class ViewLecturer extends React.Component<Props, State> {
   viewCourse = (course: Course) => {
     const lecturer = this.props.navigation.getParam('lecturer')
 
-    this.props.navigation.navigate('viewCourse', {
+    this.props.navigation.navigate('viewLecturerCourse', {
       lecturer,
       course,
     })
@@ -308,4 +308,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   setLecturer: (lecturer: Lecturer) => dispatch(setLecturer(lecturer)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(ViewLecturer)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ViewLecturer)
