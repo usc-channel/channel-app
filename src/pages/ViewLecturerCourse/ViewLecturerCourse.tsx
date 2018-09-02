@@ -56,7 +56,7 @@ class ViewLecturerCourse extends React.Component<Props, State> {
       const course = this.props.navigation.getParam('course')
 
       const { data: reviews } = await Axios(
-        `${API}/lecturers/${lecturer.id}/reviews/${course.id}`
+        `${API}/reviews?lecturerId=${lecturer.id}&courseId=${course.id}`
       )
 
       this.setState({
