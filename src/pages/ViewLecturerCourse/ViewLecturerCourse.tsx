@@ -28,7 +28,7 @@ interface State {
   refreshing: boolean
 }
 
-class ViewCourse extends React.Component<Props, State> {
+class ViewLecturerCourse extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
 
@@ -141,4 +141,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default ViewCourse
+export default ViewLecturerCourse

@@ -4,7 +4,7 @@ import SearchPosts from './SearchPosts'
 
 import Reviews from './Reviews'
 import ViewLecturer from './ViewLecturer'
-import ViewCourse from './ViewCourse'
+import ViewLecturerCourse from './ViewLecturerCourse'
 import NewReview from './NewReview'
 import NewCourse from './NewCourse'
 import NewLecturer from './NewLecturer'
@@ -29,7 +29,7 @@ export {
   Videos,
   ViewRelease,
   ViewLecturer,
-  ViewCourse,
+  ViewLecturerCourse,
   NewReview,
   More,
   SignIn,
