@@ -1,6 +1,7 @@
 import React from 'react'
 import { ActivityIndicator, FlatList } from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
+import Axios from 'axios'
 
 import ReleaseThumbnail from './components/ReleaseThumbnail'
 import { Release } from '@types'
@@ -30,8 +31,7 @@ class Releases extends React.Component<Props, State> {
 
   getReleases = async () => {
     try {
-      const request = await fetch(`${API}/releases`)
-      const releases = await request.json()
+      const { data: releases } = await Axios.get(`${API}/releases`)
 
       this.setState({
         releases,
@@ -39,7 +39,7 @@ class Releases extends React.Component<Props, State> {
         refreshing: false,
         error: false,
       })
-    } catch (e) {
+    } catch {
       this.setState({ loading: false, error: true, refreshing: false })
     }
   }
