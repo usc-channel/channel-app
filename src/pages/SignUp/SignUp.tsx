@@ -16,7 +16,6 @@ import LinearGradient from 'react-native-linear-gradient'
 import validator from 'validator'
 import firebase from 'react-native-firebase'
 import { connect } from 'react-redux'
-import axios from 'axios'
 
 import { API, Theme } from '@config'
 import { ImagePicker, Loading, TextField, Touchable } from '@components'
@@ -191,7 +190,7 @@ class SignUp extends React.Component<Props, State> {
   }
 
   createUser = (user: Partial<User>) => {
-    return axios.post(`${API}/users`, user)
+    return API.post(`/users`, user)
   }
 
   uploadImage = (id: string): Promise<string> => {

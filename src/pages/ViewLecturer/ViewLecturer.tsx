@@ -16,7 +16,6 @@ import { API, Theme } from '@config'
 import Reviews from './components/Reviews'
 import Courses from './components/Courses'
 import { setLecturer } from '@actions'
-import Axios from 'axios'
 
 interface ScreenParams {
   lecturer: Lecturer
@@ -87,8 +86,8 @@ class ViewLecturer extends React.Component<Props, State> {
     const lecturerId = this.props.navigation.getParam('lecturer')!.id
 
     try {
-      const { data: reviews } = await Axios.get(
-        `${API}/reviews?lecturerId=${lecturerId}`
+      const { data: reviews } = await API.get(
+        `/reviews?lecturerId=${lecturerId}`
       )
 
       this.setState({
@@ -110,8 +109,8 @@ class ViewLecturer extends React.Component<Props, State> {
     const lecturerId = this.props.navigation.getParam('lecturer')!.id
 
     try {
-      const { data: courses } = await Axios.get(
-        `${API}/lecturers/${lecturerId}/courses`
+      const { data: courses } = await API.get(
+        `/lecturers/${lecturerId}/courses`
       )
 
       this.setState({

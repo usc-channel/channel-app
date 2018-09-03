@@ -1,5 +1,6 @@
 import { Platform } from 'react-native'
-const env = require('../../env.js')
+import Axios from 'axios'
+import env from '../../env'
 
 export const featuredCategoryId = 11
 
@@ -13,4 +14,12 @@ const getAPI = () => {
     : 'http://10.0.2.2:8000/api'
 }
 
-export const API = getAPI()
+const instance = Axios.create({
+  baseURL: getAPI(),
+  auth: {
+    username: 'admin',
+    password: env.AUTH,
+  },
+})
+
+export const API = instance

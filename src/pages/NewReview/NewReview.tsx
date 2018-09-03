@@ -18,7 +18,6 @@ import StarRating from 'react-native-star-rating'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { connect } from 'react-redux'
 import validator from 'validator'
-import Axios from 'axios'
 
 import { InputPicker, Loading, NavIcon, Picker } from '@components'
 import { API, Theme } from '@config'
@@ -240,7 +239,7 @@ class NewReview extends React.Component<Props, State> {
     }
 
     try {
-      await Axios.post(`${API}/reviews`, review)
+      await API.post(`/reviews`, review)
 
       this.setState({ loading: false }, () =>
         setTimeout(async () => {
@@ -279,7 +278,7 @@ class NewReview extends React.Component<Props, State> {
   getLecturers = (search: string) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const { data } = await Axios.get(`${API}/lecturers?search=${search}`)
+        const { data } = await API.get(`/lecturers?search=${search}`)
         resolve(data)
       } catch {
         reject()
@@ -290,7 +289,7 @@ class NewReview extends React.Component<Props, State> {
   getCourses = (search: string) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const { data } = await Axios.get(`${API}/courses?search=${search}`)
+        const { data } = await API.get(`/courses?search=${search}`)
         resolve(data)
       } catch {
         reject()
