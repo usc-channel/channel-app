@@ -18,6 +18,7 @@ import StarRating from 'react-native-star-rating'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { connect } from 'react-redux'
 import validator from 'validator'
+import Axios from 'axios'
 
 import { InputPicker, Loading, NavIcon, Picker } from '@components'
 import { API, Theme } from '@config'
@@ -224,7 +225,7 @@ class NewReview extends React.Component<Props, State> {
     })
   }
 
-  addReview = () => {
+  addReview = async () => {
     const review = {
       semester: semesters[this.state.semester],
       year: this.state.year.value,
@@ -238,46 +239,33 @@ class NewReview extends React.Component<Props, State> {
       review.comment = this.state.review
     }
 
-    fetch(`${API}/reviews`, {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(review),
-    })
-      .then(response => response.json())
-      .then(data => {
-        this.setState({ loading: false }, () =>
-          setTimeout(async () => {
-            if (data.statusCode) {
-              showBanner({
-                message: `Couldn't Add Review`,
-                description: data.message,
-                type: 'danger',
-              })
+    try {
+      await Axios.post(`${API}/reviews`, review)
 
-              this.setState({ disabled: false })
-            } else {
-              await showBanner({
-                message: 'Success',
-                description: 'Review added.',
-                type: 'success',
-              })
+      this.setState({ loading: false }, () =>
+        setTimeout(async () => {
+          await showBanner({
+            message: 'Success',
+            description: 'Review added.',
+            type: 'success',
+          })
 
-              this.props.navigation.goBack()
-            }
-          }, Theme.loadingTimeout)
-        )
-      })
-      .catch(() => {
-        this.setState({ loading: false, disabled: false }, () =>
-          setTimeout(() => {
-            showBanner({
-              message: `Ugh!`,
-              description: 'Could not add review at this time.',
-              type: 'danger',
-            })
-          }, Theme.loadingTimeout)
-        )
-      })
+          this.props.navigation.goBack()
+        }, Theme.loadingTimeout)
+      )
+    } catch (error) {
+      const description = error.response.data.message
+
+      this.setState({ loading: false, disabled: false }, () =>
+        setTimeout(() => {
+          showBanner({
+            message: `Couldn't Add Review`,
+            description,
+            type: 'danger',
+          })
+        }, Theme.loadingTimeout)
+      )
+    }
   }
 
   selectCourse = (course: Course) => {
@@ -291,9 +279,8 @@ class NewReview extends React.Component<Props, State> {
   getLecturers = (search: string) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const request = await fetch(`${API}/lecturers?search=${search}`)
-        const lecturers = await request.json()
-        resolve(lecturers)
+        const { data } = await Axios.get(`${API}/lecturers?search=${search}`)
+        resolve(data)
       } catch {
         reject()
       }
@@ -303,9 +290,8 @@ class NewReview extends React.Component<Props, State> {
   getCourses = (search: string) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const request = await fetch(`${API}/courses?search=${search}`)
-        const courses = await request.json()
-        resolve(courses)
+        const { data } = await Axios.get(`${API}/courses?search=${search}`)
+        resolve(data)
       } catch {
         reject()
       }

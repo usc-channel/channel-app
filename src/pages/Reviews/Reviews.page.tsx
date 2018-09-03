@@ -10,6 +10,7 @@ import {
 import { NavigationScreenProps } from 'react-navigation'
 import { Icon } from 'react-native-elements'
 import { connect } from 'react-redux'
+import Axios from 'axios'
 
 import { API, Theme } from '@config'
 import { Lecturer, Store } from '@types'
@@ -79,8 +80,7 @@ class Reviews extends React.Component<Props, State> {
 
   getLecturers = async () => {
     try {
-      const request = await fetch(`${API}/lecturers`)
-      const lecturers = await request.json()
+      const { data: lecturers } = await Axios.get(`${API}/lecturers`)
 
       this.setState({
         lecturers,

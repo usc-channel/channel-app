@@ -1,6 +1,7 @@
 import React from 'react'
 import { ActivityIndicator, FlatList, Linking, View } from 'react-native'
 import { stringify } from 'query-string'
+import Axios from 'axios'
 
 import { Video } from '@types'
 import VideoPreview from './components/VideoPreview'
@@ -44,10 +45,9 @@ export default class Videos extends React.Component<{}, State> {
       pageToken,
     })
 
-    const response = await fetch(
+    const { data } = await Axios.get(
       `https://www.googleapis.com/youtube/v3/search?${params}`
     )
-    const data = await response.json()
 
     this.setState({
       initialLoad: false,
