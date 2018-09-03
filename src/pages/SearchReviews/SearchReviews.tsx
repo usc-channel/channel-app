@@ -11,7 +11,6 @@ import {
 import { TabBar, TabView } from 'react-native-tab-view'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import debounce from 'lodash.debounce'
-import Axios from 'axios'
 
 import { SearchBar, SearchError } from '@components'
 import { API, Theme } from '@config'
@@ -81,8 +80,8 @@ class SearchPosts extends React.Component<Props, State> {
   getResults = async (search: string) => {
     try {
       const [{ data: courses }, { data: lecturers }] = await Promise.all([
-        Axios.get(`${API}/courses?search=${search}`),
-        Axios.get(`${API}/lecturers?search=${search}`),
+        API.get(`/courses?search=${search}`),
+        API.get(`/lecturers?search=${search}`),
       ])
 
       this.setState({

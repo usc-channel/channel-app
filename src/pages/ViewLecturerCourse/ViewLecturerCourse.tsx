@@ -7,7 +7,6 @@ import {
   View,
 } from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
-import Axios from 'axios'
 
 import { API, Theme } from '@config'
 import { Error } from '@components'
@@ -55,8 +54,8 @@ class ViewLecturerCourse extends React.Component<Props, State> {
       const lecturer = this.props.navigation.getParam('lecturer')
       const course = this.props.navigation.getParam('course')
 
-      const { data: reviews } = await Axios(
-        `${API}/reviews?lecturerId=${lecturer.id}&courseId=${course.id}`
+      const { data: reviews } = await API(
+        `/reviews?lecturerId=${lecturer.id}&courseId=${course.id}`
       )
 
       this.setState({

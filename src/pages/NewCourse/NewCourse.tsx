@@ -13,7 +13,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { Button } from 'react-native-elements'
 import LinearGradient from 'react-native-linear-gradient'
 import validator from 'validator'
-import axios from 'axios'
 import { connect } from 'react-redux'
 
 import { API, Theme } from '@config'
@@ -131,7 +130,7 @@ class NewCourse extends React.Component<Props, State> {
     try {
       const { code, name } = this.state
 
-      const { data } = await axios.post(`${API}/courses`, { code, name })
+      const { data } = await API.post(`/courses`, { code, name })
 
       this.props.setCourse(data)
 
@@ -308,4 +307,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   setCourse: (course: CourseState) => dispatch(setCourse(course)),
 })
 
-export default connect(null, mapDispatchToProps)(NewCourse)
+export default connect(
+  null,
+  mapDispatchToProps
+)(NewCourse)
