@@ -47,6 +47,7 @@ const Theme = {
   background: '#F3F5FA',
   error: '#D23D27',
   success: '#4EC85C',
+  star: 'hsl(46, 97%, 46%)',
   loadingTimeout: 400,
   fonts,
 }
