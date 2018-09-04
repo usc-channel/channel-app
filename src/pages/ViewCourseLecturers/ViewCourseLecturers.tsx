@@ -89,6 +89,8 @@ class ViewCourseLecturers extends React.Component<Props, State> {
           </View>
         </View>
 
+        <Text style={styles.listHeader}>Reviewed Lecturers</Text>
+
         {this.state.loading && <ActivityIndicator style={{ margin: 16 }} />}
 
         {this.state.error ? (
@@ -98,23 +100,19 @@ class ViewCourseLecturers extends React.Component<Props, State> {
             action={{ message: 'Try again', callback: this.refreshReviews }}
           />
         ) : (
-          <React.Fragment>
-            <Text style={styles.listHeader}>Reviewed Lecturers</Text>
-
-            <FlatList
-              data={this.state.lecturers}
-              keyExtractor={(lecturer: Lecturer) => lecturer.id.toString()}
-              contentContainerStyle={{
-                backgroundColor: Theme.background,
-              }}
-              renderItem={({ item }) => (
-                <LecturerItem
-                  lecturer={item}
-                  viewLecturer={() => this.viewLecturer(item)}
-                />
-              )}
-            />
-          </React.Fragment>
+          <FlatList
+            data={this.state.lecturers}
+            keyExtractor={(lecturer: Lecturer) => lecturer.id.toString()}
+            contentContainerStyle={{
+              backgroundColor: Theme.background,
+            }}
+            renderItem={({ item }) => (
+              <LecturerItem
+                lecturer={item}
+                viewLecturer={() => this.viewLecturer(item)}
+              />
+            )}
+          />
         )}
       </View>
     )
