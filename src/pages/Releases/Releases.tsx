@@ -30,7 +30,7 @@ class Releases extends React.Component<Props, State> {
 
   getReleases = async () => {
     try {
-      const { data: releases } = await API.get(`/releases`)
+      const { data: releases } = await API().get(`/releases`)
 
       this.setState({
         releases,

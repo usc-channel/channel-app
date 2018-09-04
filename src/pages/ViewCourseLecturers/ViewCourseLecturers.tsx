@@ -52,7 +52,7 @@ class ViewCourseLecturers extends React.Component<Props, State> {
     try {
       const course = this.props.navigation.getParam('course')
 
-      const { data: lecturers } = await API(`/courses/${course.id}/lecturers`)
+      const { data: lecturers } = await API()(`/courses/${course.id}/lecturers`)
 
       this.setState({
         lecturers,

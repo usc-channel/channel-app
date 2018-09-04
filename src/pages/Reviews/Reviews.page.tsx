@@ -79,7 +79,7 @@ class Reviews extends React.Component<Props, State> {
 
   getLecturers = async () => {
     try {
-      const { data: lecturers } = await API.get(`/lecturers`)
+      const { data: lecturers } = await API().get(`/lecturers`)
 
       this.setState({
         lecturers,

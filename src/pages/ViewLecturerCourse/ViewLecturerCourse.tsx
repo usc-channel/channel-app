@@ -54,7 +54,7 @@ class ViewLecturerCourse extends React.Component<Props, State> {
       const lecturer = this.props.navigation.getParam('lecturer')
       const course = this.props.navigation.getParam('course')
 
-      const { data: reviews } = await API(
+      const { data: reviews } = await API()(
         `/reviews?lecturerId=${lecturer.id}&courseId=${course.id}`
       )
 

@@ -190,7 +190,7 @@ class SignUp extends React.Component<Props, State> {
   }
 
   createUser = (user: Partial<User>) => {
-    return API.post(`/users`, user)
+    return API().post(`/users`, user)
   }
 
   uploadImage = (id: string): Promise<string> => {

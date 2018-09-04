@@ -80,8 +80,8 @@ class SearchPosts extends React.Component<Props, State> {
   getResults = async (search: string) => {
     try {
       const [{ data: courses }, { data: lecturers }] = await Promise.all([
-        API.get(`/courses?search=${search}`),
-        API.get(`/lecturers?search=${search}`),
+        API().get(`/courses?search=${search}`),
+        API().get(`/lecturers?search=${search}`),
       ])
 
       this.setState({

@@ -86,7 +86,7 @@ class ViewLecturer extends React.Component<Props, State> {
     const lecturerId = this.props.navigation.getParam('lecturer')!.id
 
     try {
-      const { data: reviews } = await API.get(
+      const { data: reviews } = await API().get(
         `/reviews?lecturerId=${lecturerId}`
       )
 
@@ -109,7 +109,7 @@ class ViewLecturer extends React.Component<Props, State> {
     const lecturerId = this.props.navigation.getParam('lecturer')!.id
 
     try {
-      const { data: courses } = await API.get(
+      const { data: courses } = await API().get(
         `/lecturers/${lecturerId}/courses`
       )
 

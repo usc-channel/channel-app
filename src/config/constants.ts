@@ -14,12 +14,11 @@ const getAPI = () => {
     : 'http://10.0.2.2:8000'
 }
 
-const instance = Axios.create({
-  baseURL: getAPI(),
-  auth: {
-    username: 'admin',
-    password: env.AUTH,
-  },
-})
-
-export const API = instance
+export const API = (apiVersion: string = 'v1') =>
+  Axios.create({
+    baseURL: `${getAPI()}/${apiVersion}`,
+    auth: {
+      username: 'admin',
+      password: env.AUTH,
+    },
+  })
