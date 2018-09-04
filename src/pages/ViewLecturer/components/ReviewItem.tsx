@@ -52,11 +52,14 @@ const styles = StyleSheet.create({
   courseHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'flex-start',
   },
   courseName: {
     fontFamily: Theme.fonts.semiBold,
     fontSize: 16,
     color: 'rgba(0,0,0,.87)',
+    marginRight: 15,
+    flex: 1,
   },
   courseComment: {
     marginTop: 16,
