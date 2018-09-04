@@ -130,7 +130,7 @@ class NewCourse extends React.Component<Props, State> {
     try {
       const { code, name } = this.state
 
-      const { data } = await API.post(`/courses`, { code, name })
+      const { data } = await API().post(`/courses`, { code, name })
 
       this.props.setCourse(data)
 

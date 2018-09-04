@@ -84,7 +84,7 @@ class NewLecturer extends React.Component<Props, State> {
 
   getSchools = async () => {
     try {
-      const schools = (await API.get(`/schools`)).data
+      const schools = (await API().get(`/schools`)).data
       this.setState({ schools })
     } catch {
       this.setState({
@@ -143,7 +143,7 @@ class NewLecturer extends React.Component<Props, State> {
     try {
       const { name, school } = this.state
 
-      const { data } = await API.post(`/lecturers`, {
+      const { data } = await API().post(`/lecturers`, {
         name,
         school_id: school!.id,
       })
