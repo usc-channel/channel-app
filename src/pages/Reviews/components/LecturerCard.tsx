@@ -26,7 +26,7 @@ const LecturerCard: React.SFC<Props> = ({ lecturer, onPress }) => (
       <StarRating
         disabled
         rating={lecturer.averageRating!}
-        fullStarColor={Theme.accent}
+        fullStarColor={Theme.star}
         containerStyle={{
           marginTop: 8,
           marginBottom: 0,

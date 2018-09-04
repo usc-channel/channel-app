@@ -478,7 +478,7 @@ class NewReview extends React.Component<Props, State> {
 
           <StarRating
             rating={this.state.rating}
-            fullStarColor={Theme.accent}
+            fullStarColor={Theme.star}
             containerStyle={{
               marginVertical: 8,
               justifyContent: 'center',
