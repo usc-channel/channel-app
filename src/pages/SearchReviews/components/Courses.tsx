@@ -24,6 +24,7 @@ const Courses: React.SFC<Props> = ({
     {!loading && (
       <FlatList
         data={courses}
+        keyboardShouldPersistTaps="handled"
         renderItem={({ item }) => (
           <CourseItem course={item} viewCourse={() => viewCourse(item)} />
         )}

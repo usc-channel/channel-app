@@ -4,6 +4,7 @@ import { createStackNavigator } from 'react-navigation'
 import {
   Reviews,
   SearchReviews,
+  ViewCourseLecturers,
   ViewLecturer,
   ViewLecturerCourse,
 } from '@pages'
@@ -31,6 +32,10 @@ export default createStackNavigator(
     },
     viewLecturerCourse: {
       screen: ViewLecturerCourse,
+      navigationOptions: Theme.flatNavigationOptions,
+    },
+    viewCourseLecturers: {
+      screen: ViewCourseLecturers,
       navigationOptions: Theme.flatNavigationOptions,
     },
     searchReviews: {
