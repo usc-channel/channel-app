@@ -8,7 +8,7 @@ import {
   Text,
   View,
 } from 'react-native'
-import { TabBar, TabView } from 'react-native-tab-view'
+import { Scene, TabBar, TabView } from 'react-native-tab-view'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import debounce from 'lodash.debounce'
 
@@ -115,7 +115,6 @@ class SearchPosts extends React.Component<Props, State> {
           borderBottomColor: 'rgba(0,0,0,.12)',
           borderBottomWidth:
             Platform.Version < 21 && Platform.OS === 'android' ? 1 : 0,
-          elevation: 2,
         }}
         inputProps={{ autoCorrect: true, autoFocus: true }}
         textStyle={{
@@ -199,17 +198,28 @@ class SearchPosts extends React.Component<Props, State> {
       }}
       tabStyle={{ flex: 0 }}
       indicatorStyle={{ backgroundColor: '#fff' }}
-      renderLabel={({ route }: { route: Route }) => (
-        <Text
-          style={{
-            fontFamily: Theme.fonts.regular,
-            paddingVertical: 5,
-            fontSize: 15,
-          }}
-        >
-          {route.title}
-        </Text>
-      )}
+      renderLabel={({ route }: Scene<Route>) => {
+        const focused = this.state.routes.indexOf(route) === this.state.index
+
+        return (
+          <View
+            style={{
+              backgroundColor: focused ? Theme.accent : 'transparent',
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: Theme.fonts.semiBold,
+                fontSize: 13,
+                padding: 5,
+                color: focused ? 'hsl(0, 0%, 100%)' : 'hsl(0, 0%, 0%)',
+              }}
+            >
+              {route.title.toUpperCase()}
+            </Text>
+          </View>
+        )
+      }}
     />
   )
 
