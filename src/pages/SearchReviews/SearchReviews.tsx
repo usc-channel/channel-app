@@ -150,7 +150,8 @@ class SearchPosts extends React.Component<Props, State> {
   }
 
   viewCourse = (course: Course) => {
-    //
+    Keyboard.dismiss()
+    this.props.navigation.push('viewCourseLecturers', { course })
   }
 
   viewLecturer = (lecturer: Lecturer) => {

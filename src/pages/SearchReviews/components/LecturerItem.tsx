@@ -1,10 +1,10 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
+import plur from 'plur'
 
 import { Lecturer } from '@types'
 import { Touchable } from '@components'
 import { Theme } from '@config'
-import plur from 'plur'
 
 interface Props {
   lecturer: Lecturer
@@ -55,7 +55,8 @@ const styles = StyleSheet.create({
   reviewsContainer: {
     backgroundColor: Theme.accent,
     textAlign: 'center',
-    padding: 4,
+    paddingVertical: 4,
+    paddingHorizontal: 6,
     flexDirection: 'column',
     alignItems: 'center',
   },
