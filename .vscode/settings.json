@@ -12,5 +12,6 @@
     "src/assets/fonts": true,
     "android": true
   },
-  "eslint.enable": false
+  "eslint.enable": false,
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
