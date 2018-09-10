@@ -11,7 +11,8 @@ import { NavigationScreenProps } from 'react-navigation'
 import { API, Theme } from '@config'
 import { Error } from '@components'
 import { Course, Lecturer } from '@types'
-import LecturerItem from '../SearchReviews/components/LecturerItem'
+import CourseLecturerItem from './CourseLecturerItem'
+import plur from 'plur'
 
 interface ScreenParams {
   course: Course
@@ -87,6 +88,13 @@ class ViewCourseLecturers extends React.Component<Props, State> {
             <Text style={styles.name}>{course.code}</Text>
             <Text style={styles.course}>{course.name}</Text>
           </View>
+
+          <View style={styles.totalBox}>
+            <Text style={styles.totalAmount}>{course.totalReviews}</Text>
+            <Text style={styles.totalMeta}>
+              {plur('Review', course.totalReviews!)}
+            </Text>
+          </View>
         </View>
 
         <Text style={styles.listHeader}>Reviewed Lecturers</Text>
@@ -107,7 +115,7 @@ class ViewCourseLecturers extends React.Component<Props, State> {
               backgroundColor: Theme.background,
             }}
             renderItem={({ item }) => (
-              <LecturerItem
+              <CourseLecturerItem
                 lecturer={item}
                 viewLecturer={() => this.viewLecturer(item)}
               />
@@ -150,6 +158,24 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.accent,
     color: 'hsl(0, 0%, 100%)',
     fontFamily: Theme.fonts.regular,
+  },
+  totalBox: {
+    padding: 5,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,.7)',
+    backgroundColor: '#fff',
+  },
+  totalAmount: {
+    textAlign: 'center',
+    fontFamily: Theme.fonts.bold,
+    color: Theme.primary,
+    fontSize: 18,
+  },
+  totalMeta: {
+    textAlign: 'center',
+    fontFamily: Theme.fonts.semiBold,
+    color: 'rgba(0,0,0,.5)',
+    fontSize: 14,
   },
 })
 
