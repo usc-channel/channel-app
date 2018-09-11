@@ -5286,9 +5286,9 @@ react-native-offline@^3.7.3:
     lodash "^4.17.4"
     redux-saga "^0.16.0"
 
-react-native-pdf@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-pdf/-/react-native-pdf-5.0.0.tgz#6a8a0888ea0f55069078265df892f173e4d3b1b7"
+react-native-pdf@^5.0.4:
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-pdf/-/react-native-pdf-5.0.4.tgz#5a37dccac3a511408bb14a5c3a6176ef8af3f3c1"
   dependencies:
     crypto-js "^3.1.9-1"
     prop-types "^15.5.10"
@@ -5848,9 +5848,9 @@ rimraf@~2.2.6:
   version "2.2.8"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
 
-rn-fetch-blob@^0.10.12:
-  version "0.10.12"
-  resolved "https://registry.yarnpkg.com/rn-fetch-blob/-/rn-fetch-blob-0.10.12.tgz#7b9a309149eb136a1b063b282a1847a205297924"
+rn-fetch-blob@^0.10.13:
+  version "0.10.13"
+  resolved "https://registry.yarnpkg.com/rn-fetch-blob/-/rn-fetch-blob-0.10.13.tgz#e0fd5eac1a3a872563b35061353d96c4e51ae1cc"
   dependencies:
     base-64 "0.1.0"
     glob "7.0.6"
