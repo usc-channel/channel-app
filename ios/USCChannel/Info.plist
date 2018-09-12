@@ -50,7 +50,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>This allows you to take a photo from your camera as your profile avatar.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This allows you to upload a photo from your library as your profile avatar.</string>
 	<key>UIAppFonts</key>
@@ -89,6 +89,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIStatusBarHidden</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
