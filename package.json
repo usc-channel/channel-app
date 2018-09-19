@@ -68,7 +68,7 @@
     "babel-preset-react-native": "^5",
     "husky": "^0.14.3",
     "jest": "23.3.0",
-    "lint-staged": "^7.2.0",
+    "lint-staged": "^7.2.2",
     "prettier": "^1.14.2",
     "react-native-typescript-transformer": "^1.2.10",
     "react-test-renderer": "16.4.1",
@@ -89,9 +89,7 @@
   },
   "lint-staged": {
     "linters": {
-      "*.{ts,tsx}": [
-        "tslint 'src/**/*.ts?(x)' --format stylish"
-      ]
+      "*.{ts,tsx}": "tslint 'src/**/*.ts?(x)' --format stylish"
     }
   }
 }
