@@ -35,7 +35,7 @@
     "react-native-offline": "^3.7.3",
     "react-native-pdf": "^5.0.4",
     "react-native-render-html": "^3.8.1",
-    "react-native-star-rating": "https://github.com/iRoachie/react-native-star-rating.git#touchEvents",
+    "react-native-star-rating": "^1.1.0",
     "react-native-status-bar-height": "^2.0.0",
     "react-native-tab-view": "^1.0.0",
     "react-native-vector-icons": "^4.5.0",
