@@ -5315,11 +5315,12 @@ react-native-safe-area-view@^0.8.0:
   dependencies:
     hoist-non-react-statics "^2.3.1"
 
-"react-native-star-rating@https://github.com/iRoachie/react-native-star-rating.git#touchEvents":
-  version "1.0.9"
-  resolved "https://github.com/iRoachie/react-native-star-rating.git#8d1a27a31c1fc2585a72a6217af57e3922445570"
+react-native-star-rating@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-star-rating/-/react-native-star-rating-1.1.0.tgz#57fcd023c63e947427c4dbbd1c8f4cc49e5c48ce"
   dependencies:
     prop-types "^15.5.10"
+    react-native-animatable "^1.2.4"
     react-native-button "^2.3.0"
     react-native-vector-icons "^4.5.0"
 
