@@ -28,7 +28,13 @@ let ModalStack = createStackNavigator(
     },
     newReview: {
       screen: NewReview,
-      navigationOptions: Theme.flatNavigationOptions,
+      navigationOptions: {
+        ...Theme.flatNavigationOptions,
+        headerTitleStyle: {
+          ...Theme.navigationOptions.headerTitleStyle,
+          textAlign: 'center',
+        },
+      },
     },
     search: {
       screen: Search,
