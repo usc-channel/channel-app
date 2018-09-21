@@ -1,10 +1,10 @@
 import React from 'react'
 import { Platform, ScrollView, StyleSheet, View } from 'react-native'
-import { getStatusBarHeight } from 'react-native-status-bar-height'
 import { connect } from 'react-redux'
 import { NavigationScreenProps } from 'react-navigation'
 
 import { Theme } from '@config'
+import { getStatusBarHeight } from '@util'
 import { Dispatch, Store, User } from '@types'
 import { signOut } from '@actions'
 
@@ -112,4 +112,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   logout: () => dispatch(signOut()),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(More)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(More)

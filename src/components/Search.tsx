@@ -8,11 +8,11 @@ import {
   Platform,
   View,
 } from 'react-native'
-import { getStatusBarHeight } from 'react-native-status-bar-height'
 import debounce from 'lodash.debounce'
 
 import { SearchBar, SearchEmpty, SearchError } from '@components'
 import { Theme } from '@config'
+import { getStatusBarHeight } from '@util'
 
 interface ScreenParams {
   placeholder: string

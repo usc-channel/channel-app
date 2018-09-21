@@ -1,12 +1,12 @@
 import React from 'react'
 import { NavigationScreenProps } from 'react-navigation'
 import { Platform, View } from 'react-native'
-import { getStatusBarHeight } from 'react-native-status-bar-height'
 import debounce from 'lodash.debounce'
 
 import { PageInfo, Post } from '@types'
 import { SearchBar, SearchEmpty } from '@components'
 import { graphqlClient, Theme } from '@config'
+import { getStatusBarHeight } from '@util'
 import { postsTransform, searchQuery } from '../../graphql'
 import PostList from '../Posts/components/PostList'
 
