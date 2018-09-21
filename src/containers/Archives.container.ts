@@ -13,6 +13,13 @@ export default createStackNavigator(
     },
     ViewRelease: {
       screen: ViewRelease,
+      navigationOptions: {
+        ...Theme.navigationOptions,
+        headerTitleStyle: {
+          ...Theme.navigationOptions.headerTitleStyle,
+          textAlign: 'center',
+        },
+      },
     },
   },
   {
