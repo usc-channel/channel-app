@@ -13,7 +13,7 @@ import {
   NavigationEventSubscription,
   NavigationScreenProps,
 } from 'react-navigation'
-import { ButtonGroup, Icon, ListItem } from 'react-native-elements'
+import { ButtonGroup, Icon, ListItem, normalize } from 'react-native-elements'
 import StarRating from 'react-native-star-rating'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { connect } from 'react-redux'
@@ -442,7 +442,10 @@ class NewReview extends React.Component<Props, State> {
               }
             }}
             buttonStyle={{ borderRadius: 0 }}
-            textStyle={{ fontFamily: Theme.fonts.regular, fontSize: 16 }}
+            textStyle={{
+              fontFamily: Theme.fonts.regular,
+              fontSize: normalize(14),
+            }}
           />
         </View>
 
