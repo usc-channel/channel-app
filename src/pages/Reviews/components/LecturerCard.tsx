@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Dimensions, PixelRatio, StyleSheet, Text, View } from 'react-native'
 import StarRating from 'react-native-star-rating'
 import plur from 'plur'
 
@@ -11,6 +11,10 @@ interface Props {
   lecturer: Partial<LecturerModel>
   onPress(lecturer: Partial<LecturerModel>): void
 }
+
+const ScreenWidth = PixelRatio.getPixelSizeForLayoutSize(
+  Dimensions.get('window').width
+)
 
 const LecturerCard: React.SFC<Props> = ({ lecturer, onPress }) => (
   <Touchable onPress={() => onPress(lecturer)}>
@@ -33,7 +37,7 @@ const LecturerCard: React.SFC<Props> = ({ lecturer, onPress }) => (
           justifyContent: 'flex-start',
         }}
         starStyle={{ marginRight: 8 }}
-        starSize={22}
+        starSize={ScreenWidth < 750 ? 18 : 22}
       />
     </View>
   </Touchable>
