@@ -9,11 +9,11 @@ import {
   View,
 } from 'react-native'
 import { Scene, TabBar, TabView } from 'react-native-tab-view'
-import { getStatusBarHeight } from 'react-native-status-bar-height'
 import debounce from 'lodash.debounce'
 
 import { SearchBar, SearchError } from '@components'
 import { API, Theme } from '@config'
+import { getStatusBarHeight } from '@util'
 import { Course, Lecturer } from '@types'
 
 import Courses from './components/Courses'
