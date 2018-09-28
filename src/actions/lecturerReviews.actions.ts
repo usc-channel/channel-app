@@ -1,9 +1,9 @@
 import * as actions from './actionTypes'
-import { Dispatch, LecturerReviewsOperation, Review } from '@types'
+import { DataOperation, Dispatch, Review } from '@types'
 import { API } from '@config'
 
 const getLecturerReviewsStart = (
-  operation: LecturerReviewsOperation
+  operation: DataOperation
 ): GetLecturerReviewsStartAction => ({
   type: actions.GET_LECTURER_REVIEWS_START,
   payload: {
@@ -46,7 +46,7 @@ export const getLecturerReviews = (
 interface GetLecturerReviewsStartAction {
   type: typeof actions.GET_LECTURER_REVIEWS_START
   payload: {
-    operation: LecturerReviewsOperation
+    operation: DataOperation
   }
 }
 
