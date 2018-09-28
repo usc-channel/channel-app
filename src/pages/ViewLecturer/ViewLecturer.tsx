@@ -11,11 +11,11 @@ import { Icon } from 'react-native-elements'
 import { TabBar, TabView } from 'react-native-tab-view'
 import { connect, Dispatch } from 'react-redux'
 
-import { Course, Lecturer, Review, Store } from '@types'
+import { Course, Lecturer, LecturerReviewsState, Review, Store } from '@types'
 import { API, Theme } from '@config'
 import Reviews from './components/Reviews'
 import Courses from './components/Courses'
-import { setLecturer } from '@actions'
+import { getLecturerReviews, setLecturer } from '@actions'
 
 interface ScreenParams {
   lecturer: Lecturer
@@ -25,9 +25,11 @@ type OwnProps = NavigationScreenProps<ScreenParams>
 
 interface StateProps {
   isLoggedIn: boolean
+  lecturerReviews: LecturerReviewsState
 }
 
 interface ConnectedDispatch {
+  getLecturerReviews(lecturerId: number, refresh?: boolean): void
   setLecturer(lecturer: Lecturer): void
 }
 
@@ -45,10 +47,6 @@ interface State {
   coursesLoading: boolean
   coursesError: boolean
   coursesRefreshing: boolean
-  reviews: Review[]
-  reviewsLoading: boolean
-  reviewsError: boolean
-  reviewsRefreshing: boolean
 }
 
 const initialLayout = {
@@ -57,6 +55,8 @@ const initialLayout = {
 }
 
 class ViewLecturer extends React.Component<Props, State> {
+  lecturerId: number
+
   constructor(props: Props) {
     super(props)
 
@@ -70,47 +70,20 @@ class ViewLecturer extends React.Component<Props, State> {
       coursesLoading: false,
       coursesError: false,
       coursesRefreshing: false,
-      reviews: [],
-      reviewsLoading: false,
-      reviewsError: false,
-      reviewsRefreshing: false,
     }
+
+    this.lecturerId = this.props.navigation.getParam('lecturer')!.id
   }
 
   componentDidMount() {
-    this.getReviews()
+    this.props.getLecturerReviews(this.lecturerId)
     this.getCourses()
   }
 
-  fetchReviews = async () => {
-    const lecturerId = this.props.navigation.getParam('lecturer')!.id
-
-    try {
-      const { data: reviews } = await API().get(
-        `/reviews?lecturerId=${lecturerId}`
-      )
-
-      this.setState({
-        reviews,
-        reviewsLoading: false,
-        reviewsRefreshing: false,
-        reviewsError: false,
-      })
-    } catch {
-      this.setState({
-        reviewsError: true,
-        reviewsLoading: false,
-        reviewsRefreshing: false,
-      })
-    }
-  }
-
   fetchCourses = async () => {
-    const lecturerId = this.props.navigation.getParam('lecturer')!.id
-
     try {
       const { data: courses } = await API().get(
-        `/lecturers/${lecturerId}/courses`
+        `/lecturers/${this.lecturerId}/courses`
       )
 
       this.setState({
@@ -128,12 +101,6 @@ class ViewLecturer extends React.Component<Props, State> {
     }
   }
 
-  getReviews = () => {
-    this.setState({ reviewsLoading: true }, () => {
-      this.fetchReviews()
-    })
-  }
-
   getCourses = () => {
     this.setState({ coursesLoading: true }, () => {
       this.fetchCourses()
@@ -141,7 +108,7 @@ class ViewLecturer extends React.Component<Props, State> {
   }
 
   refreshReviews = () => {
-    this.setState({ reviewsRefreshing: true }, this.fetchReviews)
+    this.props.getLecturerReviews(this.lecturerId, true)
   }
 
   refreshCourses = () => {
@@ -150,24 +117,22 @@ class ViewLecturer extends React.Component<Props, State> {
 
   renderScene = ({ route }: { route: Route }) => {
     const {
-      reviews,
-      reviewsError,
-      reviewsLoading,
-      reviewsRefreshing,
       courses,
       coursesLoading,
       coursesError,
       coursesRefreshing,
     } = this.state
 
+    const { data: reviews, loading, error } = this.props.lecturerReviews
+
     switch (route.key) {
       case 'first':
         return (
           <Reviews
             reviews={reviews}
-            loading={reviewsLoading}
-            refreshing={reviewsRefreshing}
-            error={reviewsError}
+            loading={loading === 'fetch'}
+            refreshing={loading === 'refresh'}
+            error={error}
             getReviews={this.refreshReviews}
           />
         )
@@ -299,11 +264,14 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = ({ userState }: Store) => ({
+const mapStateToProps = ({ userState, lecturerReviews }: Store) => ({
   isLoggedIn: !!userState.user,
+  lecturerReviews,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  getLecturerReviews: (lecturerId: number, refresh?: boolean) =>
+    dispatch(getLecturerReviews(lecturerId, refresh)),
   setLecturer: (lecturer: Lecturer) => dispatch(setLecturer(lecturer)),
 })
 
