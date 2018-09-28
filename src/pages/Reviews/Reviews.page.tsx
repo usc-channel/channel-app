@@ -11,10 +11,11 @@ import { NavigationScreenProps } from 'react-navigation'
 import { Icon } from 'react-native-elements'
 import { connect } from 'react-redux'
 
-import { API, Theme } from '@config'
-import { Lecturer, Store } from '@types'
+import { Theme } from '@config'
+import { Dispatch, Lecturer, LecturersState, Store } from '@types'
 import { Empty, Error, NavIcon } from '@components'
 import LecturerCard from './components/LecturerCard'
+import { getLecturers } from '@actions'
 
 interface ScreenProps {
   onSearch(): VoidFunction
@@ -23,17 +24,18 @@ interface ScreenProps {
 type OwnProps = NavigationScreenProps<{}>
 
 interface ConnectedProps {
+  lecturers: LecturersState
   loggedIn: boolean
 }
 
-type Props = ConnectedProps & OwnProps
+interface ConnectedDispatch {
+  getLecturers(refresh?: boolean): void
+}
+
+type Props = ConnectedProps & ConnectedDispatch & OwnProps
 
 interface State {
-  loading: boolean
-  refreshing: boolean
   search: string
-  error: boolean
-  lecturers: Lecturer[]
 }
 
 class Reviews extends React.Component<Props, State> {
@@ -57,11 +59,7 @@ class Reviews extends React.Component<Props, State> {
     super(props)
 
     this.state = {
-      loading: true,
-      refreshing: false,
       search: '',
-      lecturers: [],
-      error: false,
     }
   }
 
@@ -70,34 +68,15 @@ class Reviews extends React.Component<Props, State> {
       onSearch: this.onSearch,
     })
 
-    this.getLecturers()
+    this.props.getLecturers()
   }
 
   onSearch = () => {
     this.props.navigation.push('searchReviews')
   }
 
-  getLecturers = async () => {
-    try {
-      const { data: lecturers } = await API().get(`/lecturers`)
-
-      this.setState({
-        lecturers,
-        loading: false,
-        refreshing: false,
-        error: false,
-      })
-    } catch (e) {
-      this.setState({ loading: false, error: true, refreshing: false })
-    }
-  }
-
   refresh = () => {
-    this.setState({ refreshing: true }, () => {
-      setTimeout(() => {
-        this.getLecturers()
-      }, 1000)
-    })
+    this.props.getLecturers(true)
   }
 
   addReview = () => {
@@ -112,24 +91,18 @@ class Reviews extends React.Component<Props, State> {
     this.props.navigation.navigate('viewLecturer', { lecturer })
   }
 
-  onRefresh = () => {
-    this.setState({ refreshing: true }, () => {
-      this.getLecturers()
-    })
-  }
-
   render() {
-    const { error, loading, refreshing, lecturers } = this.state
+    const { error, loading, data: lecturers } = this.props.lecturers
 
     return (
       <View style={styles.container}>
-        {loading ? (
+        {loading === 'fetch' ? (
           <ActivityIndicator style={{ margin: 16 }} />
         ) : error ? (
           <Error
             message="There's been a problem getting the latest reviews."
             action={{ message: 'Try again?', callback: this.refresh }}
-            loading={refreshing}
+            loading={loading === 'refresh'}
           />
         ) : (
           <View style={{ flex: 1 }}>
@@ -145,8 +118,8 @@ class Reviews extends React.Component<Props, State> {
                 keyExtractor={(a: Lecturer) => a.id.toString()}
                 contentContainerStyle={styles.content}
                 numColumns={2}
-                refreshing={refreshing}
-                onRefresh={this.getLecturers}
+                refreshing={loading === 'refresh'}
+                onRefresh={this.refresh}
                 renderItem={({ item }) => (
                   <View style={{ flex: 1, maxWidth: '50%' }}>
                     <LecturerCard onPress={this.viewLecturer} lecturer={item} />
@@ -188,8 +161,16 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = ({ userState }: Store) => ({
+const mapStateToProps = ({ userState, lecturers }: Store) => ({
   loggedIn: !!userState.user,
+  lecturers,
 })
 
-export default connect(mapStateToProps)(Reviews)
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  getLecturers: (refresh?: boolean) => dispatch(getLecturers(refresh)),
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Reviews)
