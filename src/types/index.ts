@@ -66,7 +66,7 @@ export interface Release {
 }
 
 export interface Lecturer {
-  id: string
+  id: number
   name: string
   totalReviews: number
   totalCourses: number
@@ -106,6 +106,7 @@ export interface Store {
   userState: UserState
   course: CourseState
   lecturer: LecturerState
+  lecturerReviews: LecturerReviewsState
 }
 
 export interface UserState {
@@ -114,5 +115,12 @@ export interface UserState {
 
 export type CourseState = Omit<Course, 'reviews'> | null
 export type LecturerState = Lecturer | null
+export interface LecturerReviewsState {
+  data: Review[]
+  error: boolean
+  loading: boolean | LecturerReviewsOperation
+}
+
+export type LecturerReviewsOperation = 'fetch' | 'refresh'
 
 export type Dispatch = ReduxDispatch<AuthAction>

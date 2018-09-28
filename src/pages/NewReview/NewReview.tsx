@@ -31,7 +31,7 @@ import {
   User,
 } from '@types'
 import { semesters } from '@data'
-import { setCourse, setLecturer } from '@actions'
+import { getLecturerReviews, setCourse, setLecturer } from '@actions'
 import { showBanner } from '@util'
 
 interface ScreenParams {
@@ -46,6 +46,7 @@ interface ConnectedProps {
 }
 
 interface ConnectedDispatch {
+  getLecturerReviews(lecturerId: number): void
   setCourse(course: CourseState): void
   setLecturer(lecturer: LecturerState): void
 }
@@ -240,6 +241,7 @@ class NewReview extends React.Component<Props, State> {
 
     try {
       await API().post(`/reviews`, review)
+      this.props.getLecturerReviews(this.props.lecturer!.id)
 
       this.setState({ loading: false }, () =>
         setTimeout(async () => {
@@ -591,6 +593,8 @@ const mapStateToProps = (state: Store) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   setCourse: (course: Course) => dispatch(setCourse(course)),
   setLecturer: (lecturer: Lecturer) => dispatch(setLecturer(lecturer)),
+  getLecturerReviews: (lecturerId: number) =>
+    dispatch(getLecturerReviews(lecturerId)),
 })
 
 export default connect(
