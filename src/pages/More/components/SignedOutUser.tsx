@@ -2,11 +2,7 @@ import React from 'react'
 import { ListItem } from 'react-native-elements'
 import { Theme } from '@config'
 
-interface Props {
-  onPress(): void
-}
-
-const SignedOutUser: React.SFC<Props> = ({ onPress }) => (
+const SignedOutUser = () => (
   <ListItem
     title="Not Signed In"
     titleStyle={{
@@ -23,7 +19,6 @@ const SignedOutUser: React.SFC<Props> = ({ onPress }) => (
       paddingHorizontal: 0,
       marginBottom: 10,
     }}
-    onPress={onPress}
   />
 )
 
