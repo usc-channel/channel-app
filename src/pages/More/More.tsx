@@ -64,11 +64,7 @@ class More extends React.Component<Props, State> {
         )}
 
         <ScrollView contentContainerStyle={styles.content}>
-          {loggedIn && user ? (
-            <SignedInUser user={user} />
-          ) : (
-            <SignedOutUser onPress={this.signIn} />
-          )}
+          {loggedIn && user ? <SignedInUser user={user} /> : <SignedOutUser />}
 
           {loggedIn ? (
             <MoreListItem
