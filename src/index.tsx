@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import { createStackNavigator } from 'react-navigation'
 import { withNetworkConnectivity } from 'react-native-offline'
 import FlashMessage from 'react-native-flash-message'
+import SplashScreen from 'react-native-splash-screen'
 
 import Tabs from './containers/Tabs'
 import Auth from './containers/Auth.container'
@@ -59,19 +60,27 @@ ModalStack = withNetworkConnectivity({
   withRedux: true,
 })(ModalStack)
 
-const AppRoot = () => (
-  <Provider store={store}>
-    <ApolloProvider client={graphqlClient}>
-      <View style={{ flex: 1 }}>
-        <StatusBar
-          backgroundColor={Theme.darkPrimary}
-          barStyle="light-content"
-        />
-        <ModalStack />
-        <FlashMessage position="bottom" />
-      </View>
-    </ApolloProvider>
-  </Provider>
-)
+class AppRoot extends React.Component {
+  componentDidMount() {
+    SplashScreen.hide()
+  }
+
+  render() {
+    return (
+      <Provider store={store}>
+        <ApolloProvider client={graphqlClient}>
+          <View style={{ flex: 1 }}>
+            <StatusBar
+              backgroundColor={Theme.darkPrimary}
+              barStyle="light-content"
+            />
+            <ModalStack />
+            <FlashMessage position="bottom" />
+          </View>
+        </ApolloProvider>
+      </Provider>
+    )
+  }
+}
 
 AppRegistry.registerComponent('USCChannel', () => AppRoot)
