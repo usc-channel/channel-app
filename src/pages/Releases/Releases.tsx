@@ -4,7 +4,7 @@ import { NavigationScreenProps } from 'react-navigation'
 
 import ReleaseThumbnail from './components/ReleaseThumbnail'
 import { Release } from '@types'
-import { API } from '@config'
+import { API, Theme } from '@config'
 import { Error } from '@components'
 
 type Props = NavigationScreenProps<{}>
@@ -51,7 +51,7 @@ class Releases extends React.Component<Props, State> {
     this.setState({ refreshing: true }, () => {
       setTimeout(() => {
         this.getReleases()
-      }, 1000)
+      }, Theme.loadingTimeout)
     })
   }
 

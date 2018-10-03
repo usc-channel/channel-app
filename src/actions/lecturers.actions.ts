@@ -1,6 +1,6 @@
 import * as actions from './actionTypes'
 import { DataOperation, Dispatch, Lecturer } from '@types'
-import { API } from '@config'
+import { API, Theme } from '@config'
 
 const getLecturersStart = (
   operation: DataOperation
@@ -29,9 +29,13 @@ export const getLecturers = (refresh: boolean = false) => {
     try {
       const { data } = await API().get(`/lecturers`)
 
-      dispatch(getLecturersDone(data))
+      setTimeout(() => {
+        dispatch(getLecturersDone(data))
+      }, Theme.loadingTimeout)
     } catch {
-      dispatch(getLecturersError())
+      setTimeout(() => {
+        dispatch(getLecturersError())
+      }, Theme.loadingTimeout)
     }
   }
 }
