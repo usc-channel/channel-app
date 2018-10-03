@@ -48,7 +48,8 @@ const Theme = {
   error: '#D23D27',
   success: '#4EC85C',
   star: 'hsl(46, 97%, 46%)',
-  loadingTimeout: 1000,
+  loadingTimeout: 400,
+  refreshTimeout: 1000,
   fonts,
 }
 
