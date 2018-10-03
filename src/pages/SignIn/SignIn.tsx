@@ -4,6 +4,7 @@ import {
   Dimensions,
   LayoutAnimation,
   Platform,
+  SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
@@ -148,7 +149,7 @@ class SignIn extends React.Component<Props, State> {
 
   render() {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         {Platform.OS === 'ios' && (
           <StatusBar barStyle="dark-content" animated />
         )}
@@ -254,7 +255,7 @@ class SignIn extends React.Component<Props, State> {
             </Touchable>
           </View>
         </KeyboardAwareScrollView>
-      </View>
+      </SafeAreaView>
     )
   }
 }
