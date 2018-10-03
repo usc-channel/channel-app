@@ -31,11 +31,11 @@ export const getLecturers = (refresh: boolean = false) => {
 
       setTimeout(() => {
         dispatch(getLecturersDone(data))
-      }, Theme.loadingTimeout)
+      }, Theme.refreshTimeout)
     } catch {
       setTimeout(() => {
         dispatch(getLecturersError())
-      }, Theme.loadingTimeout)
+      }, Theme.refreshTimeout)
     }
   }
 }

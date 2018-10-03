@@ -51,7 +51,7 @@ class Releases extends React.Component<Props, State> {
     this.setState({ refreshing: true }, () => {
       setTimeout(() => {
         this.getReleases()
-      }, Theme.loadingTimeout)
+      }, Theme.refreshTimeout)
     })
   }
 

@@ -77,7 +77,7 @@ class ViewLecturerCourse extends React.Component<Props, State> {
     this.setState({ refreshing: true }, () => {
       setTimeout(() => {
         this.fetchReviews()
-      }, Theme.loadingTimeout)
+      }, Theme.refreshTimeout)
     })
   }
 
