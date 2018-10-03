@@ -16,7 +16,6 @@ export default (
       return {
         ...state,
         loading: action.payload.operation,
-        error: false,
       }
     case actions.GET_LECTURERS_ERROR:
       return {

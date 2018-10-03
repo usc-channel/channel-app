@@ -96,56 +96,61 @@ class Reviews extends React.Component<Props, State> {
 
     return (
       <View style={styles.container}>
-        {loading === 'fetch' ? (
-          <ActivityIndicator style={{ margin: 16 }} />
-        ) : error ? (
+        {loading === 'fetch' && <ActivityIndicator style={{ margin: 16 }} />}
+        {error && (
           <Error
             message="There's been a problem getting the latest reviews."
             action={{ message: 'Try again?', callback: this.refresh }}
             loading={loading === 'refresh'}
           />
-        ) : (
-          <View style={{ flex: 1 }}>
-            {lecturers.length === 0 ? (
-              <Empty
-                image={require('../../assets/chat.png')}
-                title="No Reviews"
-                message="As reviews are added for courses they’ll appear here."
-              />
-            ) : (
-              <FlatList
-                data={lecturers}
-                keyExtractor={(a: Lecturer) => a.id.toString()}
-                contentContainerStyle={styles.content}
-                numColumns={2}
-                refreshing={loading === 'refresh'}
-                onRefresh={this.refresh}
-                renderItem={({ item }) => (
-                  <View style={{ flex: 1, maxWidth: '50%' }}>
-                    <LecturerCard onPress={this.viewLecturer} lecturer={item} />
-                  </View>
-                )}
-              />
-            )}
-
-            <Icon
-              component={TouchableOpacity}
-              name="star"
-              color={Theme.accent}
-              size={24}
-              raised
-              iconStyle={{ fontSize: 20 }}
-              containerStyle={{
-                marginRight: 0,
-                position: 'absolute',
-                bottom: 20,
-                right: 16,
-              }}
-              reverse
-              onPress={this.addReview}
-            />
-          </View>
         )}
+
+        {!loading &&
+          !error && (
+            <View style={{ flex: 1 }}>
+              {lecturers.length === 0 ? (
+                <Empty
+                  image={require('../../assets/chat.png')}
+                  title="No Reviews"
+                  message="As reviews are added for courses they’ll appear here."
+                />
+              ) : (
+                <FlatList
+                  data={lecturers}
+                  keyExtractor={(a: Lecturer) => a.id.toString()}
+                  contentContainerStyle={styles.content}
+                  numColumns={2}
+                  refreshing={loading === 'refresh'}
+                  onRefresh={this.refresh}
+                  renderItem={({ item }) => (
+                    <View style={{ flex: 1, maxWidth: '50%' }}>
+                      <LecturerCard
+                        onPress={this.viewLecturer}
+                        lecturer={item}
+                      />
+                    </View>
+                  )}
+                />
+              )}
+
+              <Icon
+                component={TouchableOpacity}
+                name="star"
+                color={Theme.accent}
+                size={24}
+                raised
+                iconStyle={{ fontSize: 20 }}
+                containerStyle={{
+                  marginRight: 0,
+                  position: 'absolute',
+                  bottom: 20,
+                  right: 16,
+                }}
+                reverse
+                onPress={this.addReview}
+              />
+            </View>
+          )}
       </View>
     )
   }
