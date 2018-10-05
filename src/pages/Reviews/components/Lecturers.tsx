@@ -2,13 +2,18 @@ import React from 'react'
 import { ActivityIndicator, FlatList, Keyboard, View } from 'react-native'
 
 import LecturerItem from './LecturerItem'
-import { Lecturer } from '@types'
-import { SearchEmpty } from '@components'
+import { Lecturer, PaginationInfo } from '@types'
+import { SearchEmpty, Spinner } from '@components'
 
 interface Props {
   search: string
   loading: boolean
-  lecturers: Lecturer[]
+  lecturers: {
+    results: Lecturer[]
+    pageInfo: PaginationInfo
+  }
+  fetchingMore: boolean
+  fetchMore(): void
   viewLecturer(lecturer: Lecturer): void
 }
 
@@ -17,13 +22,15 @@ const Lecturers: React.SFC<Props> = ({
   lecturers,
   search,
   viewLecturer,
+  fetchingMore,
+  fetchMore,
 }) => (
   <View style={{ flex: 1 }}>
     {loading && <ActivityIndicator style={{ marginVertical: 15 }} />}
 
     {!loading && (
       <FlatList
-        data={lecturers}
+        data={lecturers.results}
         keyboardShouldPersistTaps="handled"
         renderItem={({ item }) => (
           <LecturerItem
@@ -32,8 +39,10 @@ const Lecturers: React.SFC<Props> = ({
           />
         )}
         onScroll={() => Keyboard.dismiss()}
+        onEndReached={fetchMore}
         keyExtractor={a => a.id.toString()}
-        contentContainerStyle={lecturers.length === 0 && { flex: 1 }}
+        contentContainerStyle={lecturers.results.length === 0 && { flex: 1 }}
+        ListFooterComponent={fetchingMore ? <Spinner /> : null}
         ListEmptyComponent={
           <SearchEmpty search={search} message="No lecturers found for" />
         }
