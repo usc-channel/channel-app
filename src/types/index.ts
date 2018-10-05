@@ -130,3 +130,10 @@ export interface LecturersState {
 export type DataOperation = 'fetch' | 'refresh'
 
 export type Dispatch = ReduxDispatch<AuthAction>
+
+export interface PaginationInfo {
+  resultsPerPage: number
+  skip: number
+  totalResults: number
+  nextSkip?: number
+}
