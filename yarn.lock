@@ -4048,10 +4048,6 @@ lodash.isarray@^3.0.0:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/lodash.isarray/-/lodash.isarray-3.0.4.tgz#79e4eb88c36a8122af86f844aa9bcd851b5fbb55"
 
-lodash.isempty@^4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/lodash.isempty/-/lodash.isempty-4.4.0.tgz#6f86cbedd8be4ec987be9aaf33c9684db1b31e7e"
-
 lodash.keys@^3.0.0:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/lodash.keys/-/lodash.keys-3.1.2.tgz#4dbc0472b156be50a0b286855d1bd0b0c656098a"
@@ -4732,6 +4728,10 @@ onetime@^2.0.0:
   dependencies:
     mimic-fn "^1.0.0"
 
+opencollective-postinstall@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/opencollective-postinstall/-/opencollective-postinstall-2.0.0.tgz#5fe062f2706bb84150f7fb1af9f1277e46ec1388"
+
 opencollective@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/opencollective/-/opencollective-1.0.3.tgz#aee6372bc28144583690c3ca8daecfc120dd0ef1"
@@ -5221,11 +5221,10 @@ react-native-dropdownalert@^3.3.1:
 
 "react-native-elements@https://github.com/react-native-training/react-native-elements.git#next":
   version "1.0.0-beta5"
-  resolved "https://github.com/react-native-training/react-native-elements.git#cd736150004feddecb5c56805349c2ada661d06d"
+  resolved "https://github.com/react-native-training/react-native-elements.git#086ab6783ec95144b5ef088024b72a8e7378ac66"
   dependencies:
-    lodash.isempty "^4.4.0"
     lodash.times "^4.3.2"
-    opencollective "^1.0.3"
+    opencollective-postinstall "^2.0.0"
     prop-types "^15.5.8"
 
 react-native-fast-image@^4.0.14:
