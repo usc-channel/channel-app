@@ -1,27 +1,37 @@
 import React from 'react'
-import { ActivityIndicator, FlatList } from 'react-native'
+import { FlatList } from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
 
 import ReleaseThumbnail from './components/ReleaseThumbnail'
-import { Release } from '@types'
+import { PaginationInfo, Release } from '@types'
 import { API, Theme } from '@config'
-import { Error } from '@components'
+import { Error, Spinner } from '@components'
 
 type Props = NavigationScreenProps<{}>
 
 interface State {
   error: boolean
-  loading: boolean
-  refreshing: boolean
+  loading: boolean // Fetching for the first time
+  retrying: boolean // Retrying after encountered error
+  fetchingMore: boolean // Reached bottom of list and getting more results
+  refreshing: boolean // User pulled to refresh
   releases: Release[]
+  pageInfo: PaginationInfo | null
 }
 
 class Releases extends React.Component<Props, State> {
-  state = {
-    error: false,
-    loading: true,
-    refreshing: false,
-    releases: [],
+  constructor(props: Props) {
+    super(props)
+
+    this.state = {
+      error: false,
+      loading: true,
+      retrying: false,
+      refreshing: false,
+      releases: [],
+      pageInfo: null,
+      fetchingMore: false,
+    }
   }
 
   componentDidMount() {
@@ -30,41 +40,85 @@ class Releases extends React.Component<Props, State> {
 
   getReleases = async () => {
     try {
-      const { data: releases } = await API().get(`/releases`)
+      const {
+        data: { pageInfo, results: releases },
+      } = await this.fetchReleases()
 
       this.setState({
         releases,
+        pageInfo,
         loading: false,
+        retrying: false,
         refreshing: false,
         error: false,
       })
     } catch {
-      this.setState({ loading: false, error: true, refreshing: false })
+      this.setState({
+        loading: false,
+        error: true,
+        retrying: false,
+        refreshing: false,
+      })
     }
+  }
+
+  fetchReleases = (skip: number = 0) => {
+    return API().get(`/releases/?skip=${skip}`)
   }
 
   viewRelease = (release: Release) => {
     this.props.navigation.navigate('ViewRelease', { release })
   }
 
-  refresh = () => {
-    this.setState({ refreshing: true }, () => {
-      setTimeout(() => {
-        this.getReleases()
-      }, Theme.refreshTimeout)
+  retry = () => {
+    this.setState({ retrying: true }, () => {
+      setTimeout(this.getReleases, Theme.refreshTimeout)
     })
   }
 
+  refresh = () => {
+    this.setState({ refreshing: true }, () => {
+      setTimeout(this.getReleases, Theme.refreshTimeout)
+    })
+  }
+
+  fetchMore = () => {
+    const { loading, retrying, pageInfo } = this.state
+
+    if (!loading && !retrying && !!pageInfo!.nextSkip) {
+      const nextSkip = pageInfo!.nextSkip!
+
+      this.setState({ fetchingMore: true }, async () => {
+        const {
+          data: { pageInfo, results },
+        } = await this.fetchReleases(nextSkip)
+
+        this.setState(({ releases }) => ({
+          fetchingMore: false,
+          pageInfo,
+          releases: [...releases, ...results],
+        }))
+      })
+    }
+  }
+
   render() {
-    const { loading, releases, error, refreshing } = this.state
+    const {
+      loading,
+      releases,
+      error,
+      retrying,
+      fetchingMore,
+      refreshing,
+    } = this.state
 
     return loading ? (
-      <ActivityIndicator style={{ paddingVertical: 15 }} />
+      <Spinner />
     ) : error ? (
       <Error
         message="There's been a problem getting the magazine releases."
-        action={{ message: 'Try again?', callback: this.refresh }}
-        loading={refreshing}
+        action={{ message: 'Try again?', callback: this.retry }}
+        loading={retrying}
       />
     ) : (
       <FlatList
@@ -74,6 +128,10 @@ class Releases extends React.Component<Props, State> {
         renderItem={({ item }) => (
           <ReleaseThumbnail release={item} viewRelease={this.viewRelease} />
         )}
+        onEndReached={this.fetchMore}
+        refreshing={refreshing}
+        onRefresh={this.refresh}
+        ListFooterComponent={fetchingMore ? <Spinner /> : null}
       />
     )
   }
