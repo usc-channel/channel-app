@@ -2,6 +2,7 @@ import React from 'react'
 import { NavigationScreenProps } from 'react-navigation'
 import {
   ActivityIndicator,
+  Animated,
   Dimensions,
   Keyboard,
   Platform,
@@ -16,7 +17,7 @@ import debounce from 'lodash.debounce'
 import { Empty, SearchError } from '@components'
 import { API, Theme } from '@config'
 import { getStatusBarHeight } from '@util'
-import { Course, Lecturer, Store } from '@types'
+import { Course, Lecturer, PaginationInfo, Store } from '@types'
 
 import Courses from './components/Courses'
 import Lecturers from './components/Lecturers'
@@ -30,12 +31,17 @@ interface Route {
 interface State {
   text: string
   loading: boolean
-  lecturers: Lecturer[]
+  lecturers: {
+    results: Lecturer[]
+    pageInfo: PaginationInfo
+  } | null
+  lecturersFetching: boolean
   courses: Course[]
   errored: boolean
   index: number
   routes: Route[]
   firstSearch: boolean
+  fabScale: Animated.Value
 }
 
 interface ConntectedProps {
@@ -66,9 +72,11 @@ class Reviews extends React.Component<Props, State> {
       text: '',
       loading: false,
       courses: [],
-      lecturers: [],
+      lecturers: null,
       errored: false,
       firstSearch: true,
+      lecturersFetching: false,
+      fabScale: new Animated.Value(1),
     }
   }
 
@@ -76,11 +84,25 @@ class Reviews extends React.Component<Props, State> {
     this.getResults = debounce(this.getResults, 500)
   }
 
+  componentDidUpdate() {
+    if (this.state.lecturersFetching) {
+      Animated.spring(this.state.fabScale, {
+        toValue: 0,
+        tension: 40,
+      }).start()
+    } else {
+      Animated.spring(this.state.fabScale, {
+        toValue: 1,
+        tension: 40,
+      }).start()
+    }
+  }
+
   updateSearch = (text: string) => {
     const search = text.toLowerCase().trim()
 
     if (search.length === 0) {
-      this.setState({ text, courses: [], lecturers: [], errored: false })
+      this.setState({ text, courses: [], lecturers: null, errored: false })
     } else {
       this.setState({ text, loading: true, errored: false }, () =>
         this.getResults(search)
@@ -90,26 +112,57 @@ class Reviews extends React.Component<Props, State> {
 
   getResults = async (search: string) => {
     try {
-      const [
-        {
-          data: { results: courses },
-        },
-        {
-          data: { results: lecturers },
-        },
-      ] = await Promise.all([
+      const [{ data: courses }, { data: lecturers }] = await Promise.all([
         API().get(`/courses?search=${search}`),
-        API().get(`/lecturers?search=${search}`),
+        this.fetchLecturers(),
       ])
 
       this.setState({
-        courses,
-        lecturers,
+        courses: courses.results,
+        lecturers: {
+          pageInfo: lecturers.pageInfo,
+          results: lecturers.results,
+        },
         loading: false,
         firstSearch: false,
       })
     } catch {
       this.setState({ loading: false, errored: true })
+    }
+  }
+
+  fetchLecturers = (skip: number = 0) => {
+    const { text } = this.state
+    return API().get(`/lecturers?search=${text}&skip=${skip}`)
+  }
+
+  fetchMoreLecturers = () => {
+    const { loading, lecturersFetching, lecturers } = this.state
+
+    if (
+      !loading &&
+      !lecturersFetching &&
+      lecturers!.pageInfo &&
+      !!lecturers!.pageInfo!.nextSkip!
+    ) {
+      this.setState(
+        {
+          lecturersFetching: true,
+        },
+        async () => {
+          const {
+            data: { results, pageInfo },
+          } = await this.fetchLecturers(lecturers!.pageInfo.nextSkip!)
+
+          this.setState({
+            lecturers: {
+              pageInfo,
+              results: [...this.state.lecturers!.results, ...results],
+            },
+            lecturersFetching: false,
+          })
+        }
+      )
     }
   }
 
@@ -177,15 +230,17 @@ class Reviews extends React.Component<Props, State> {
   }
 
   renderScene = ({ route }: { route: Route }) => {
-    const { courses, loading, lecturers, text } = this.state
+    const { courses, loading, lecturers, text, lecturersFetching } = this.state
     switch (route.key) {
       case 'first':
         return (
           <Lecturers
             loading={loading}
-            lecturers={lecturers}
+            lecturers={lecturers!}
             search={text}
+            fetchingMore={lecturersFetching}
             viewLecturer={this.viewLecturer}
+            fetchMore={this.fetchMoreLecturers}
           />
         )
       case 'second':
@@ -285,7 +340,7 @@ class Reviews extends React.Component<Props, State> {
             />
           )}
 
-        <View
+        <Animated.View
           style={{
             position: 'absolute',
             bottom: Platform.OS === 'ios' ? 20 : 16,
@@ -293,6 +348,7 @@ class Reviews extends React.Component<Props, State> {
             flexDirection: 'row',
             justifyContent: 'center',
             width: '100%',
+            transform: [{ scale: this.state.fabScale }],
           }}
           pointerEvents="box-none"
         >
@@ -309,7 +365,7 @@ class Reviews extends React.Component<Props, State> {
             reverse
             onPress={this.addReview}
           />
-        </View>
+        </Animated.View>
       </View>
     )
   }
