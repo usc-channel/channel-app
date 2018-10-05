@@ -25,7 +25,7 @@ const Courses: React.SFC<Props> = ({
       <FlatList
         data={courses}
         keyboardShouldPersistTaps="handled"
-        onScroll={() => Keyboard.dismiss()}
+        onMomentumScrollBegin={() => Keyboard.dismiss()}
         renderItem={({ item }) => (
           <CourseItem course={item} viewCourse={() => viewCourse(item)} />
         )}
