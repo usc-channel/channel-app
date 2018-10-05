@@ -1,5 +1,5 @@
 import React from 'react'
-import { ActivityIndicator, FlatList, View } from 'react-native'
+import { ActivityIndicator, FlatList, Keyboard, View } from 'react-native'
 
 import LecturerItem from './LecturerItem'
 import { Lecturer } from '@types'
@@ -31,6 +31,7 @@ const Lecturers: React.SFC<Props> = ({
             viewLecturer={() => viewLecturer(item)}
           />
         )}
+        onScroll={() => Keyboard.dismiss()}
         keyExtractor={a => a.id.toString()}
         contentContainerStyle={lecturers.length === 0 && { flex: 1 }}
         ListEmptyComponent={
