@@ -38,7 +38,7 @@ const Lecturers: React.SFC<Props> = ({
             viewLecturer={() => viewLecturer(item)}
           />
         )}
-        onScroll={() => Keyboard.dismiss()}
+        onMomentumScrollBegin={() => Keyboard.dismiss()}
         onEndReached={fetchMore}
         keyExtractor={a => a.id.toString()}
         contentContainerStyle={lecturers.results.length === 0 && { flex: 1 }}
