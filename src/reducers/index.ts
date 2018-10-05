@@ -4,7 +4,6 @@ import userState from './user.reducer'
 import course from './course.reducer'
 import lecturer from './lecturer.reducer'
 import lecturerReviews from './lecturerReviews.reducer'
-import lecturers from './lecturers.reducer'
 import { Store } from '@types'
 
 export default combineReducers<Store>({
@@ -13,5 +12,4 @@ export default combineReducers<Store>({
   course,
   lecturer,
   lecturerReviews,
-  lecturers,
 })

@@ -107,7 +107,6 @@ export interface Store {
   course: CourseState
   lecturer: LecturerState
   lecturerReviews: LecturerReviewsState
-  lecturers: LecturersState
 }
 
 export interface UserState {
@@ -121,13 +120,8 @@ export interface LecturerReviewsState {
   error: boolean
   loading: boolean | DataOperation
 }
-export interface LecturersState {
-  data: Lecturer[]
-  error: boolean
-  loading: boolean | DataOperation
-}
 
-export type DataOperation = 'fetch' | 'refresh'
+export type DataOperation = 'fetch' | 'retry' | 'refresh' | 'more'
 
 export type Dispatch = ReduxDispatch<AuthAction>
 
