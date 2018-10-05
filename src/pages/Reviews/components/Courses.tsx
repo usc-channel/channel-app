@@ -1,5 +1,5 @@
 import React from 'react'
-import { ActivityIndicator, FlatList, View } from 'react-native'
+import { ActivityIndicator, FlatList, Keyboard, View } from 'react-native'
 
 import { Course } from '@types'
 import CourseItem from './CourseItem'
@@ -25,6 +25,7 @@ const Courses: React.SFC<Props> = ({
       <FlatList
         data={courses}
         keyboardShouldPersistTaps="handled"
+        onScroll={() => Keyboard.dismiss()}
         renderItem={({ item }) => (
           <CourseItem course={item} viewCourse={() => viewCourse(item)} />
         )}
