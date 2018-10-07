@@ -5221,7 +5221,7 @@ react-native-dropdownalert@^3.3.1:
 
 "react-native-elements@https://github.com/react-native-training/react-native-elements.git#next":
   version "1.0.0-beta5"
-  resolved "https://github.com/react-native-training/react-native-elements.git#086ab6783ec95144b5ef088024b72a8e7378ac66"
+  resolved "https://github.com/react-native-training/react-native-elements.git#99f2755ed3f5f278bfe71f91ca9207dcc751900b"
   dependencies:
     lodash.times "^4.3.2"
     opencollective-postinstall "^2.0.0"
