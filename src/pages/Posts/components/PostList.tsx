@@ -1,14 +1,9 @@
 import React from 'react'
-import {
-  ActivityIndicator,
-  FlatList,
-  Keyboard,
-  ListRenderItemInfo,
-  View,
-} from 'react-native'
+import { FlatList, Keyboard, ListRenderItemInfo, View } from 'react-native'
 import SmallPost from './SmallPost.component'
 import { Post } from '@types'
 import LargePost from './LargePost.component'
+import { Spinner } from '@components'
 
 interface Props {
   displayFeatured?: boolean
@@ -65,13 +60,7 @@ class PostList extends React.Component<Props> {
             <View />
           )
         }
-        ListFooterComponent={() =>
-          this.props.fetching ? (
-            <ActivityIndicator style={{ paddingVertical: 16 }} />
-          ) : (
-            <View />
-          )
-        }
+        ListFooterComponent={this.props.fetching ? <Spinner /> : null}
       />
     )
   }

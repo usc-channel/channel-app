@@ -1,7 +1,6 @@
 import React from 'react'
 import { NavigationScreenProps } from 'react-navigation'
 import {
-  ActivityIndicator,
   FlatList,
   Keyboard,
   ListRenderItemInfo,
@@ -13,6 +12,7 @@ import debounce from 'lodash.debounce'
 import { SearchBar, SearchEmpty, SearchError } from '@components'
 import { Theme } from '@config'
 import { getStatusBarHeight } from '@util'
+import Spinner from './Spinner'
 
 interface ScreenParams {
   placeholder: string
@@ -156,10 +156,7 @@ class SearchPosts extends React.Component<Props, State> {
       >
         {this.renderSearch()}
 
-        {this.state.loading &&
-          !this.state.errored && (
-            <ActivityIndicator style={{ marginVertical: 15 }} />
-          )}
+        {this.state.loading && !this.state.errored && <Spinner />}
 
         {this.state.errored &&
           errorMessage && <SearchError message={errorMessage} />}

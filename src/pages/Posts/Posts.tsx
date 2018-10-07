@@ -1,13 +1,5 @@
 import React from 'react'
-import {
-  ActivityIndicator,
-  Button,
-  Image,
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native'
+import { Button, Image, Platform, StyleSheet, Text, View } from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
 import Collapsible from 'react-native-collapsible'
 import {
@@ -22,7 +14,7 @@ import { connect } from 'react-redux'
 import { OperationVariables } from 'apollo-boost'
 
 import { graphqlClient, Theme } from '@config'
-import { Error, NavIcon } from '@components'
+import { Error, NavIcon, Spinner } from '@components'
 import {
   filteredPostsQuery,
   postsCategoriesQuery,
@@ -266,8 +258,8 @@ class Posts extends React.Component<Props, State> {
 
   retryOffline = () => {
     this.setState({ retrying: true }, () => {
-      this.props.data!
-        .refetch()
+      this.props
+        .data!.refetch()
         .then(({ data }) => {
           const response = postCategoriesResolver(data).data
 
@@ -327,8 +319,8 @@ class Posts extends React.Component<Props, State> {
 
     if (this.state.loading) {
       return (
-        <View style={{ paddingTop: 15, flex: 1, backgroundColor: '#fff' }}>
-          <ActivityIndicator />
+        <View style={{ flex: 1, backgroundColor: '#fff' }}>
+          <Spinner />
         </View>
       )
     }
@@ -425,4 +417,7 @@ const mapStateToProps = ({ network }: Store) => ({
   isConnected: network.isConnected,
 })
 
-export default compose(withPosts, connect(mapStateToProps))(Posts)
+export default compose(
+  withPosts,
+  connect(mapStateToProps)
+)(Posts)
