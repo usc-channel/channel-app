@@ -50,6 +50,8 @@ interface State {
 type Props = NavigationScreenProps<ScreenParams>
 
 class SearchPosts extends React.Component<Props, State> {
+  mounted: boolean
+
   constructor(props: Props) {
     super(props)
 
@@ -64,7 +66,12 @@ class SearchPosts extends React.Component<Props, State> {
   }
 
   componentDidMount() {
+    this.mounted = true
     this.getResults = debounce(this.getResults, 500)
+  }
+
+  componentWillUnmount() {
+    this.mounted = false
   }
 
   updateSearch = (text: string) => {
@@ -89,15 +96,19 @@ class SearchPosts extends React.Component<Props, State> {
         data: { results: data, pageInfo },
       } = await this.props.navigation.getParam('getResults')(search, skip)
 
-      this.setState({
-        loading: false,
-        fetchingMore: false,
-        errored: false,
-        data: [...this.state.data, ...data],
-        pageInfo,
-      })
+      if (this.mounted) {
+        this.setState({
+          loading: false,
+          fetchingMore: false,
+          errored: false,
+          data: [...this.state.data, ...data],
+          pageInfo,
+        })
+      }
     } catch {
-      this.setState({ loading: false, errored: true, fetchingMore: false })
+      if (this.mounted) {
+        this.setState({ loading: false, errored: true, fetchingMore: false })
+      }
     }
   }
 
