@@ -12,7 +12,7 @@ import { TabBar, TabView } from 'react-native-tab-view'
 import { connect, Dispatch } from 'react-redux'
 
 import { Course, Lecturer, LecturerReviewsState, Review, Store } from '@types'
-import { API, Theme } from '@config'
+import { Theme } from '@config'
 import Reviews from './components/Reviews'
 import Courses from './components/Courses'
 import { getLecturerReviews, setLecturer } from '@actions'
@@ -43,10 +43,6 @@ interface Route {
 interface State {
   index: number
   routes: Route[]
-  courses: Course[]
-  coursesLoading: boolean
-  coursesError: boolean
-  coursesRefreshing: boolean
 }
 
 const initialLayout = {
@@ -66,10 +62,6 @@ class ViewLecturer extends React.Component<Props, State> {
         { key: 'first', title: 'Reviews' },
         { key: 'second', title: 'Courses' },
       ],
-      courses: [],
-      coursesLoading: false,
-      coursesError: false,
-      coursesRefreshing: false,
     }
 
     this.lecturerId = this.props.navigation.getParam('lecturer')!.id
@@ -77,52 +69,13 @@ class ViewLecturer extends React.Component<Props, State> {
 
   componentDidMount() {
     this.props.getLecturerReviews(this.lecturerId)
-    this.getCourses()
-  }
-
-  fetchCourses = async () => {
-    try {
-      const { data: courses } = await API().get(
-        `/lecturers/${this.lecturerId}/courses`
-      )
-
-      this.setState({
-        courses,
-        coursesLoading: false,
-        coursesRefreshing: false,
-        coursesError: false,
-      })
-    } catch {
-      this.setState({
-        coursesError: true,
-        coursesLoading: false,
-        coursesRefreshing: false,
-      })
-    }
-  }
-
-  getCourses = () => {
-    this.setState({ coursesLoading: true }, () => {
-      this.fetchCourses()
-    })
   }
 
   refreshReviews = () => {
     this.props.getLecturerReviews(this.lecturerId, true)
   }
 
-  refreshCourses = () => {
-    this.setState({ coursesRefreshing: true }, this.fetchCourses)
-  }
-
   renderScene = ({ route }: { route: Route }) => {
-    const {
-      courses,
-      coursesLoading,
-      coursesError,
-      coursesRefreshing,
-    } = this.state
-
     const { data: reviews, loading, error } = this.props.lecturerReviews
 
     switch (route.key) {
@@ -138,17 +91,8 @@ class ViewLecturer extends React.Component<Props, State> {
         )
       case 'second':
         return (
-          <Courses
-            courses={courses}
-            viewCourse={this.viewCourse}
-            loading={coursesLoading}
-            error={coursesError}
-            refreshing={coursesRefreshing}
-            getCourses={this.refreshCourses}
-          />
+          <Courses lecturerId={this.lecturerId} viewCourse={this.viewCourse} />
         )
-      default:
-        return null
     }
   }
 
