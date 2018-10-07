@@ -1,7 +1,6 @@
 import React from 'react'
 import { NavigationScreenProps } from 'react-navigation'
 import {
-  ActivityIndicator,
   Animated,
   Dimensions,
   Keyboard,
@@ -14,7 +13,7 @@ import { Scene, TabBar, TabView } from 'react-native-tab-view'
 import { Icon, SearchBar } from 'react-native-elements'
 import debounce from 'lodash.debounce'
 
-import { Empty, SearchError } from '@components'
+import { Empty, SearchError, Spinner } from '@components'
 import { API, Theme } from '@config'
 import { getStatusBarHeight } from '@util'
 import { Course, Lecturer, PaginationInfo, Store } from '@types'
@@ -36,7 +35,11 @@ interface State {
     pageInfo: PaginationInfo
   } | null
   lecturersFetching: boolean
-  courses: Course[]
+  courses: {
+    results: Course[]
+    pageInfo: PaginationInfo
+  } | null
+  coursesFetching: boolean
   errored: boolean
   index: number
   routes: Route[]
@@ -71,11 +74,12 @@ class Reviews extends React.Component<Props, State> {
       ],
       text: '',
       loading: false,
-      courses: [],
+      courses: null,
       lecturers: null,
       errored: false,
       firstSearch: true,
       lecturersFetching: false,
+      coursesFetching: false,
       fabScale: new Animated.Value(1),
     }
   }
@@ -102,7 +106,7 @@ class Reviews extends React.Component<Props, State> {
     const search = text.toLowerCase().trim()
 
     if (search.length === 0) {
-      this.setState({ text, courses: [], lecturers: null, errored: false })
+      this.setState({ text, courses: null, lecturers: null, errored: false })
     } else {
       this.setState({ text, loading: true, errored: false }, () =>
         this.getResults(search)
@@ -118,11 +122,8 @@ class Reviews extends React.Component<Props, State> {
       ])
 
       this.setState({
-        courses: courses.results,
-        lecturers: {
-          pageInfo: lecturers.pageInfo,
-          results: lecturers.results,
-        },
+        courses,
+        lecturers,
         loading: false,
         firstSearch: false,
       })
@@ -134,6 +135,11 @@ class Reviews extends React.Component<Props, State> {
   fetchLecturers = (skip: number = 0) => {
     const { text } = this.state
     return API().get(`/lecturers?search=${text}&skip=${skip}`)
+  }
+
+  fetchCourses = (skip: number = 0) => {
+    const { text } = this.state
+    return API().get(`/courses?search=${text}&skip=${skip}`)
   }
 
   fetchMoreLecturers = () => {
@@ -160,6 +166,36 @@ class Reviews extends React.Component<Props, State> {
               results: [...this.state.lecturers!.results, ...results],
             },
             lecturersFetching: false,
+          })
+        }
+      )
+    }
+  }
+
+  fetchMoreCourses = () => {
+    const { loading, coursesFetching, courses } = this.state
+
+    if (
+      !loading &&
+      !coursesFetching &&
+      courses!.pageInfo &&
+      !!courses!.pageInfo!.nextSkip!
+    ) {
+      this.setState(
+        {
+          coursesFetching: true,
+        },
+        async () => {
+          const {
+            data: { results, pageInfo },
+          } = await this.fetchCourses(courses!.pageInfo.nextSkip!)
+
+          this.setState({
+            courses: {
+              pageInfo,
+              results: [...this.state.courses!.results, ...results],
+            },
+            coursesFetching: false,
           })
         }
       )
@@ -230,7 +266,15 @@ class Reviews extends React.Component<Props, State> {
   }
 
   renderScene = ({ route }: { route: Route }) => {
-    const { courses, loading, lecturers, text, lecturersFetching } = this.state
+    const {
+      courses,
+      loading,
+      lecturers,
+      text,
+      lecturersFetching,
+      coursesFetching,
+    } = this.state
+
     switch (route.key) {
       case 'first':
         return (
@@ -246,10 +290,12 @@ class Reviews extends React.Component<Props, State> {
       case 'second':
         return (
           <Courses
-            courses={courses}
             loading={loading}
+            courses={courses!}
             search={text}
+            fetchingMore={coursesFetching}
             viewCourse={this.viewCourse}
+            fetchMore={this.fetchMoreCourses}
           />
         )
     }
@@ -322,9 +368,7 @@ class Reviews extends React.Component<Props, State> {
 
         {this.state.firstSearch &&
           this.state.loading &&
-          !this.state.errored && (
-            <ActivityIndicator style={{ marginVertical: 15 }} />
-          )}
+          !this.state.errored && <Spinner />}
 
         {this.state.errored && (
           <SearchError message="Couldn't make your search right now. " />
