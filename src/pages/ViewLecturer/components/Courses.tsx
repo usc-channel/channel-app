@@ -18,6 +18,7 @@ interface State {
   loading: boolean
   error: boolean
   retrying: boolean
+  refreshing: boolean
 }
 
 class Courses extends React.Component<Props, State> {
@@ -27,20 +28,15 @@ class Courses extends React.Component<Props, State> {
     this.state = {
       courses: [],
       pageInfo: null,
-      loading: false,
+      loading: true,
       error: false,
       retrying: false,
+      refreshing: false,
     }
   }
 
   componentDidMount() {
-    this.getCourses()
-  }
-
-  getCourses = () => {
-    this.setState({ loading: true }, () => {
-      this.fetchCourses()
-    })
+    this.fetchCourses()
   }
 
   fetchCourses = async () => {
@@ -55,12 +51,13 @@ class Courses extends React.Component<Props, State> {
         loading: false,
         error: false,
         retrying: false,
+        refreshing: false,
       })
     } catch {
       this.setState({
         error: true,
         loading: false,
-
+        refreshing: false,
         retrying: false,
       })
     }
@@ -72,8 +69,14 @@ class Courses extends React.Component<Props, State> {
     })
   }
 
+  refresh = () => {
+    this.setState({ refreshing: true }, () => {
+      setTimeout(this.fetchCourses, Theme.refreshTimeout)
+    })
+  }
+
   render() {
-    const { retrying, error, loading, courses } = this.state
+    const { retrying, refreshing, error, loading, courses } = this.state
     const { viewCourse } = this.props
 
     if (loading) {
@@ -107,6 +110,8 @@ class Courses extends React.Component<Props, State> {
         renderItem={({ item }) => (
           <CourseItem course={item} viewCourse={viewCourse} />
         )}
+        onRefresh={this.refresh}
+        refreshing={refreshing}
       />
     )
   }
