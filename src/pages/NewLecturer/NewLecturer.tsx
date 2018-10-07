@@ -84,7 +84,9 @@ class NewLecturer extends React.Component<Props, State> {
 
   getSchools = async () => {
     try {
-      const schools = (await API().get(`/schools`)).data
+      const {
+        data: { results: schools },
+      } = await API().get(`/schools/?limit=0`)
       this.setState({ schools })
     } catch {
       this.setState({
