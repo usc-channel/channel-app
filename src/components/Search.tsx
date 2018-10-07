@@ -98,16 +98,38 @@ class SearchPosts extends React.Component<Props, State> {
 
       if (this.mounted) {
         this.setState({
+          data,
           loading: false,
-          fetchingMore: false,
           errored: false,
-          data: [...this.state.data, ...data],
           pageInfo,
         })
       }
     } catch {
       if (this.mounted) {
-        this.setState({ loading: false, errored: true, fetchingMore: false })
+        this.setState({ loading: false, errored: true })
+      }
+    }
+  }
+
+  getMoreResults = async (skip: number = 0) => {
+    try {
+      const {
+        data: { results: data, pageInfo },
+      } = await this.props.navigation.getParam('getResults')(
+        this.state.text,
+        skip
+      )
+
+      if (this.mounted) {
+        this.setState({
+          data: [...this.state.data, ...data],
+          fetchingMore: false,
+          pageInfo,
+        })
+      }
+    } catch {
+      if (this.mounted) {
+        this.setState({ errored: true, fetchingMore: false })
       }
     }
   }
@@ -185,7 +207,7 @@ class SearchPosts extends React.Component<Props, State> {
     if (!fetchingMore && pageInfo && pageInfo.nextSkip) {
       this.setState({ fetchingMore: true }, () => {
         setTimeout(() => {
-          this.getResults(this.state.text, this.state.pageInfo!.nextSkip)
+          this.getMoreResults(this.state.pageInfo!.nextSkip)
         }, Theme.refreshTimeout)
       })
     }
