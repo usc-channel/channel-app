@@ -66,8 +66,8 @@ class Reviews extends React.Component<Props, State> {
     this.state = {
       index: 0,
       routes: [
-        { key: 'first', title: 'Lecturers' },
         { key: 'second', title: 'Courses' },
+        { key: 'first', title: 'Lecturers' },
       ],
       text: '',
       loading: false,
