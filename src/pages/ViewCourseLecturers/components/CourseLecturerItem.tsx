@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   },
   name: {
     fontFamily: Theme.fonts.semiBold,
-    fontSize: 20,
+    fontSize: 18,
     color: 'rgba(0,0,0,.87)',
   },
   school: {
