@@ -277,26 +277,12 @@ class NewReview extends React.Component<Props, State> {
     this.props.setLecturer(lecturer)
   }
 
-  getLecturers = (search: string) => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const { data } = await API().get(`/lecturers?search=${search}`)
-        resolve(data)
-      } catch {
-        reject()
-      }
-    })
+  getLecturers = (search: string, skip: number = 0) => {
+    return API().get(`/lecturers?search=${search}&skip=${skip}`)
   }
 
-  getCourses = (search: string) => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const { data } = await API().get(`/courses?search=${search}`)
-        resolve(data)
-      } catch {
-        reject()
-      }
-    })
+  getCourses = (search: string, skip: number = 0) => {
+    return API().get(`/courses?search=${search}&skip=${skip}`)
   }
 
   lookupCourse = () => {
