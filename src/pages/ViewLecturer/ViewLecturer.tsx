@@ -13,9 +13,10 @@ import { connect, Dispatch } from 'react-redux'
 
 import { Course, Lecturer, LecturerReviewsState, Review, Store } from '@types'
 import { Theme } from '@config'
+import { setLecturer } from '@actions'
+
 import Reviews from './components/Reviews'
 import Courses from './components/Courses'
-import { getLecturerReviews, setLecturer } from '@actions'
 
 interface ScreenParams {
   lecturer: Lecturer
@@ -29,7 +30,6 @@ interface StateProps {
 }
 
 interface ConnectedDispatch {
-  getLecturerReviews(lecturerId: number, refresh?: boolean): void
   setLecturer(lecturer: Lecturer): void
 }
 
@@ -67,28 +67,10 @@ class ViewLecturer extends React.Component<Props, State> {
     this.lecturerId = this.props.navigation.getParam('lecturer')!.id
   }
 
-  componentDidMount() {
-    this.props.getLecturerReviews(this.lecturerId)
-  }
-
-  refreshReviews = () => {
-    this.props.getLecturerReviews(this.lecturerId, true)
-  }
-
   renderScene = ({ route }: { route: Route }) => {
-    const { data: reviews, loading, error } = this.props.lecturerReviews
-
     switch (route.key) {
       case 'first':
-        return (
-          <Reviews
-            reviews={reviews}
-            loading={loading === 'fetch'}
-            refreshing={loading === 'refresh'}
-            error={error}
-            getReviews={this.refreshReviews}
-          />
-        )
+        return <Reviews lecturerId={this.lecturerId} />
       case 'second':
         return (
           <Courses lecturerId={this.lecturerId} viewCourse={this.viewCourse} />
@@ -214,8 +196,6 @@ const mapStateToProps = ({ userState, lecturerReviews }: Store) => ({
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getLecturerReviews: (lecturerId: number, refresh?: boolean) =>
-    dispatch(getLecturerReviews(lecturerId, refresh)),
   setLecturer: (lecturer: Lecturer) => dispatch(setLecturer(lecturer)),
 })
 

@@ -116,7 +116,8 @@ export interface UserState {
 export type CourseState = Omit<Course, 'reviews'> | null
 export type LecturerState = Lecturer | null
 export interface LecturerReviewsState {
-  data: Review[]
+  results: Review[]
+  pageInfo: PaginationInfo | null
   error: boolean
   loading: boolean | DataOperation
 }

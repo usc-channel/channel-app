@@ -2,7 +2,8 @@ import * as actions from '@actions'
 import { LecturerReviewsState } from '@types'
 
 const defaultState: LecturerReviewsState = {
-  data: [],
+  results: [],
+  pageInfo: null,
   loading: false,
   error: false,
 }
@@ -16,7 +17,7 @@ export default (
       return {
         ...state,
         loading: action.payload.operation,
-        error: false,
+        error: action.payload.operation === 'retry' ? true : false,
       }
     case actions.GET_LECTURER_REVIEWS_ERROR:
       return {
@@ -26,7 +27,8 @@ export default (
       }
     case actions.GET_LECTURER_REVIEWS_DONE:
       return {
-        data: action.payload.reviews,
+        results: action.payload.results,
+        pageInfo: action.payload.pageInfo,
         error: false,
         loading: false,
       }

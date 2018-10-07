@@ -1,6 +1,6 @@
 import * as actions from './actionTypes'
-import { DataOperation, Dispatch, Review } from '@types'
-import { API } from '@config'
+import { DataOperation, Dispatch, PaginationInfo, Review } from '@types'
+import { API, Theme } from '@config'
 
 const getLecturerReviewsStart = (
   operation: DataOperation
@@ -12,11 +12,13 @@ const getLecturerReviewsStart = (
 })
 
 const getLecturerReviewsDone = (
-  reviews: Review[]
+  results: Review[],
+  pageInfo: PaginationInfo
 ): GetLecturerReviewsDoneAction => ({
   type: actions.GET_LECTURER_REVIEWS_DONE,
   payload: {
-    reviews,
+    results,
+    pageInfo,
   },
 })
 
@@ -26,19 +28,27 @@ const getLecturerReviewsError = (): GetLecturerReviewsErrorAction => ({
 
 export const getLecturerReviews = (
   lecturerId: number,
-  refresh: boolean = false
+  operation: DataOperation = 'fetch'
 ) => {
   return async (dispatch: Dispatch) => {
-    dispatch(getLecturerReviewsStart(refresh ? 'refresh' : 'fetch'))
+    dispatch(getLecturerReviewsStart(operation))
 
     try {
-      const { data: reviews } = await API().get(
-        `/reviews?lecturerId=${lecturerId}`
-      )
+      const {
+        data: { results, pageInfo },
+      } = await API().get(`/reviews?lecturerId=${lecturerId}`)
 
-      dispatch(getLecturerReviewsDone(reviews))
+      if (operation === 'fetch') {
+        dispatch(getLecturerReviewsDone(results, pageInfo))
+      } else {
+        setTimeout(() => {
+          dispatch(getLecturerReviewsDone(results, pageInfo))
+        }, Theme.refreshTimeout)
+      }
     } catch {
-      dispatch(getLecturerReviewsError())
+      setTimeout(() => {
+        dispatch(getLecturerReviewsError())
+      }, Theme.refreshTimeout)
     }
   }
 }
@@ -53,7 +63,8 @@ interface GetLecturerReviewsStartAction {
 interface GetLecturerReviewsDoneAction {
   type: typeof actions.GET_LECTURER_REVIEWS_DONE
   payload: {
-    reviews: Review[]
+    results: Review[]
+    pageInfo: PaginationInfo
   }
 }
 
