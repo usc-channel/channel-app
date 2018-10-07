@@ -292,6 +292,8 @@ class Reviews extends React.Component<Props, State> {
   handleIndexChange = (index: number) => this.setState({ index })
 
   render() {
+    const text = this.state.text.trim()
+
     return (
       <View
         style={{
@@ -303,7 +305,7 @@ class Reviews extends React.Component<Props, State> {
 
         {!this.state.errored &&
           !this.state.loading &&
-          this.state.text.length === 0 && (
+          text.length === 0 && (
             <View
               style={{
                 marginTop: -100,
@@ -330,7 +332,8 @@ class Reviews extends React.Component<Props, State> {
 
         {!this.state.firstSearch &&
           !this.state.errored &&
-          this.state.text.length > 0 && (
+          text.length > 0 &&
+          this.state.lecturers && (
             <TabView
               navigationState={this.state}
               renderScene={this.renderScene}
