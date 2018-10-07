@@ -1,18 +1,12 @@
 import React from 'react'
-import {
-  ActivityIndicator,
-  FlatList,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native'
+import { FlatList, StyleSheet, Text, View } from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
+import plur from 'plur'
 
 import { API, Theme } from '@config'
-import { Error } from '@components'
-import { Course, Lecturer } from '@types'
-import CourseLecturerItem from './CourseLecturerItem'
-import plur from 'plur'
+import { Error, Spinner } from '@components'
+import { Course, Lecturer, PaginationInfo } from '@types'
+import CourseLecturerItem from './components/CourseLecturerItem'
 
 interface ScreenParams {
   course: Course
@@ -23,7 +17,10 @@ type Props = NavigationScreenProps<ScreenParams>
 interface State {
   loading: boolean
   lecturers: Lecturer[]
+  pageInfo: PaginationInfo | null
   error: boolean
+  retrying: boolean
+  fetchingMore: boolean
   refreshing: boolean
 }
 
@@ -32,10 +29,13 @@ class ViewCourseLecturers extends React.Component<Props, State> {
     super(props)
 
     this.state = {
-      loading: false,
+      loading: true,
       lecturers: [],
-      refreshing: false,
+      pageInfo: null,
+      retrying: false,
       error: false,
+      fetchingMore: false,
+      refreshing: false,
     }
   }
 
@@ -43,43 +43,81 @@ class ViewCourseLecturers extends React.Component<Props, State> {
     this.getLecturers()
   }
 
-  getLecturers = () => {
-    this.setState({ loading: true, error: false }, () => {
-      this.fetchLecturers()
-    })
-  }
-
-  fetchLecturers = async () => {
+  getLecturers = async () => {
     try {
-      const course = this.props.navigation.getParam('course')
-
-      const { data: lecturers } = await API()(`/courses/${course.id}/lecturers`)
+      const {
+        data: { pageInfo, results: lecturers },
+      } = await this.fetchLecturers()
 
       this.setState({
         lecturers,
+        pageInfo,
         loading: false,
-        refreshing: false,
         error: false,
-      })
-    } catch {
-      this.setState({
-        error: true,
         refreshing: false,
+      })
+    } catch (error) {
+      this.setState({
+        refreshing: false,
+        retrying: false,
+        error: true,
         loading: false,
       })
     }
   }
 
-  refreshReviews = () => {
-    this.setState({ refreshing: true }, this.fetchLecturers)
+  fetchLecturers = (skip: number = 0) => {
+    const course = this.props.navigation.getParam('course')
+    return API().get(`/courses/${course.id}/lecturers/?skip=${skip}`)
   }
 
   viewLecturer = (lecturer: Lecturer) => {
     this.props.navigation.push('viewLecturer', { lecturer })
   }
 
+  retry = () => {
+    this.setState({ retrying: true }, () => {
+      setTimeout(this.getLecturers, Theme.refreshTimeout)
+    })
+  }
+
+  refresh = () => {
+    this.setState({ refreshing: true }, () => {
+      setTimeout(this.getLecturers, Theme.refreshTimeout)
+    })
+  }
+
+  fetchMore = () => {
+    const { pageInfo, fetchingMore } = this.state
+
+    if (!!pageInfo!.nextSkip && !fetchingMore) {
+      const nextSkip = pageInfo!.nextSkip!
+
+      this.setState({ fetchingMore: true }, async () => {
+        const {
+          data: { pageInfo, results },
+        } = await this.fetchLecturers(nextSkip)
+
+        this.setState({
+          pageInfo,
+          fetchingMore: false,
+          lecturers: [...this.state.lecturers, ...results],
+        })
+      })
+    }
+  }
+
   render() {
     const course = this.props.navigation.getParam('course')
+
+    const {
+      loading,
+      lecturers,
+      error,
+      retrying,
+      fetchingMore,
+      refreshing,
+    } = this.state
 
     return (
       <View style={styles.container}>
@@ -99,17 +137,17 @@ class ViewCourseLecturers extends React.Component<Props, State> {
 
         <Text style={styles.listHeader}>Reviewed Lecturers</Text>
 
-        {this.state.loading && <ActivityIndicator style={{ margin: 16 }} />}
-
-        {this.state.error ? (
+        {loading ? (
+          <Spinner />
+        ) : error ? (
           <Error
-            message="There's been a problem getting the reviews for this Lecturer and Course."
-            loading={this.state.refreshing}
-            action={{ message: 'Try again', callback: this.refreshReviews }}
+            message="There's been a problem getting the lecturers for this course."
+            loading={retrying}
+            action={{ message: 'Try again', callback: this.retry }}
           />
         ) : (
           <FlatList
-            data={this.state.lecturers}
+            data={lecturers}
             keyExtractor={(lecturer: Lecturer) => lecturer.id.toString()}
             contentContainerStyle={{
               backgroundColor: Theme.background,
@@ -120,6 +158,10 @@ class ViewCourseLecturers extends React.Component<Props, State> {
                 viewLecturer={() => this.viewLecturer(item)}
               />
             )}
+            onEndReached={this.fetchMore}
+            refreshing={refreshing}
+            onRefresh={this.refresh}
+            ListFooterComponent={fetchingMore ? <Spinner /> : null}
           />
         )}
       </View>
