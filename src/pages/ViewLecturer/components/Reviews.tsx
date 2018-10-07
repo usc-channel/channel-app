@@ -1,9 +1,9 @@
 import React from 'react'
-import { ActivityIndicator, FlatList } from 'react-native'
+import { FlatList } from 'react-native'
 
 import { Theme } from '@config'
 import { Review } from '@types'
-import { Empty, Error } from '@components'
+import { Empty, Error, Spinner } from '@components'
 import ReviewItem from './ReviewItem'
 
 interface Props {
@@ -22,7 +22,7 @@ const Reviews: React.SFC<Props> = ({
   refreshing,
 }) => (
   <React.Fragment>
-    {loading && <ActivityIndicator style={{ marginVertical: 15 }} />}
+    {loading && <Spinner />}
 
     {!loading &&
       error && (

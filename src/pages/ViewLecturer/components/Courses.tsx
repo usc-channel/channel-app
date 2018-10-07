@@ -1,6 +1,6 @@
 import React from 'react'
-import { ActivityIndicator, FlatList } from 'react-native'
-import { Empty, Error } from '@components'
+import { FlatList } from 'react-native'
+import { Empty, Error, Spinner } from '@components'
 
 import { Course } from '@types'
 import CourseItem from './CourseItem'
@@ -23,7 +23,7 @@ const Courses: React.SFC<Props> = ({
   getCourses,
 }) => (
   <React.Fragment>
-    {loading && <ActivityIndicator style={{ marginVertical: 15 }} />}
+    {loading && <Spinner />}
 
     {!loading &&
       error && (

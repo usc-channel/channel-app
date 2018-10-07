@@ -1,10 +1,11 @@
 import React from 'react'
-import { ActivityIndicator, FlatList, Linking, View } from 'react-native'
+import { FlatList, Linking, View } from 'react-native'
 import { stringify } from 'query-string'
 import Axios from 'axios'
 
 import { Video } from '@types'
 import VideoPreview from './components/VideoPreview'
+import { Spinner } from '@components'
 
 interface State {
   loading: boolean
@@ -91,7 +92,7 @@ export default class Videos extends React.Component<{}, State> {
     return (
       <View style={{ flexGrow: 1 }}>
         {this.state.loading ? (
-          <ActivityIndicator style={{ paddingVertical: 15 }} />
+          <Spinner />
         ) : (
           <FlatList
             data={this.state.videos}
@@ -104,7 +105,7 @@ export default class Videos extends React.Component<{}, State> {
             onEndReached={this.fetchMoreVideos}
             ListFooterComponent={() =>
               this.state.fetchingMore ? (
-                <ActivityIndicator style={{ paddingVertical: 16 }} />
+                <Spinner />
               ) : (
                 <View style={{ paddingVertical: 30 }} />
               )

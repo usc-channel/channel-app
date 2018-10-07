@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  ActivityIndicator,
   Dimensions,
   Platform,
   ScrollView,
@@ -16,7 +15,7 @@ import { ChildProps, graphql } from 'react-apollo'
 import HTML from 'react-native-render-html'
 
 import { Post } from '@types'
-import { NavIcon, PostMeta } from '@components'
+import { NavIcon, PostMeta, Spinner } from '@components'
 import { Theme } from '@config'
 import { postQuery } from '../../graphql'
 
@@ -61,8 +60,8 @@ class ViewPost extends React.Component<ChildProps<InputProps, Response>, {}> {
 
     if (this.props.data!.loading) {
       return (
-        <View style={{ flex: 1, backgroundColor: '#fff', paddingTop: 16 }}>
-          <ActivityIndicator />
+        <View style={{ flex: 1, backgroundColor: '#fff' }}>
+          <Spinner />
         </View>
       )
     }

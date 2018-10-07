@@ -1,15 +1,9 @@
 import React from 'react'
-import {
-  ActivityIndicator,
-  FlatList,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native'
+import { FlatList, StyleSheet, Text, View } from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
 
 import { API, Theme } from '@config'
-import { Error } from '@components'
+import { Error, Spinner } from '@components'
 import { Course, Lecturer, Review } from '@types'
 import ReviewCourseItem from './components/ReviewCourseItem'
 
@@ -96,7 +90,7 @@ class ViewLecturerCourse extends React.Component<Props, State> {
           </View>
         </View>
 
-        {this.state.loading && <ActivityIndicator style={{ margin: 16 }} />}
+        {this.state.loading && <Spinner />}
 
         {this.state.error ? (
           <Error

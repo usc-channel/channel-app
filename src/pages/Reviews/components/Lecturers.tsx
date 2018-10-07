@@ -1,5 +1,5 @@
 import React from 'react'
-import { ActivityIndicator, FlatList, Keyboard, View } from 'react-native'
+import { FlatList, Keyboard, View } from 'react-native'
 
 import LecturerItem from './LecturerItem'
 import { Lecturer, PaginationInfo } from '@types'
@@ -26,9 +26,9 @@ const Lecturers: React.SFC<Props> = ({
   fetchMore,
 }) => (
   <View style={{ flex: 1 }}>
-    {loading && <ActivityIndicator style={{ marginVertical: 15 }} />}
-
-    {!loading && (
+    {loading ? (
+      <Spinner />
+    ) : (
       <FlatList
         data={lecturers.results}
         keyboardShouldPersistTaps="handled"
