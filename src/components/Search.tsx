@@ -13,6 +13,7 @@ import { SearchBar, SearchEmpty, SearchError } from '@components'
 import { Theme } from '@config'
 import { getStatusBarHeight } from '@util'
 import Spinner from './Spinner'
+import { PaginationInfo } from '@types'
 
 interface ScreenParams {
   placeholder: string
@@ -25,7 +26,15 @@ interface ScreenParams {
   }
   keyExtractor(item: any): string
   renderItem(item: any, onSelect: () => void): React.ReactElement<any> | null
-  getResults(search: string): Promise<any[]>
+  getResults(
+    search: string,
+    skip?: number
+  ): Promise<{
+    data: {
+      results: any[]
+      pageInfo: PaginationInfo
+    }
+  }>
   onSelect(item: any): void
 }
 
@@ -33,7 +42,9 @@ interface State {
   text: string
   loading: boolean
   data: any[]
+  pageInfo: PaginationInfo | null
   errored: boolean
+  fetchingMore: boolean
 }
 
 type Props = NavigationScreenProps<ScreenParams>
@@ -46,7 +57,9 @@ class SearchPosts extends React.Component<Props, State> {
       text: '',
       loading: false,
       data: [],
+      pageInfo: null,
       errored: false,
+      fetchingMore: false,
     }
   }
 
@@ -58,20 +71,33 @@ class SearchPosts extends React.Component<Props, State> {
     const search = text.toLowerCase().trim()
 
     if (search.length === 0) {
-      this.setState({ text, data: [], errored: false })
+      this.setState({
+        text,
+        data: [],
+        errored: false,
+        loading: false,
+        fetchingMore: false,
+      })
     } else {
-      this.setState({ text, loading: true, errored: false }, () =>
-        this.getResults(search)
-      )
+      this.setState({ text, loading: true }, () => this.getResults(search))
     }
   }
 
-  getResults = async (search: string) => {
+  getResults = async (search: string, skip: number = 0) => {
     try {
-      const data = await this.props.navigation.getParam('getResults')(search)
-      this.setState({ loading: false, data })
+      const {
+        data: { results: data, pageInfo },
+      } = await this.props.navigation.getParam('getResults')(search, skip)
+
+      this.setState({
+        loading: false,
+        fetchingMore: false,
+        errored: false,
+        data: [...this.state.data, ...data],
+        pageInfo,
+      })
     } catch {
-      this.setState({ errored: true })
+      this.setState({ loading: false, errored: true, fetchingMore: false })
     }
   }
 
@@ -125,10 +151,10 @@ class SearchPosts extends React.Component<Props, State> {
   }
 
   isEmpty = () => {
+    const text = this.state.text.trim()
+
     return (
-      this.state.text.length > 0 &&
-      this.state.data.length === 0 &&
-      !this.state.loading
+      text.length > 0 && this.state.data.length === 0 && !this.state.loading
     )
   }
 
@@ -142,11 +168,57 @@ class SearchPosts extends React.Component<Props, State> {
     return renderItem(item, this.onSelect)
   }
 
-  render() {
-    const emptyMessage = this.props.navigation.getParam('emptyMessage')
+  fetchMore = () => {
+    const { fetchingMore, pageInfo } = this.state
+
+    if (!fetchingMore && pageInfo && pageInfo.nextSkip) {
+      this.setState({ fetchingMore: true }, () => {
+        setTimeout(() => {
+          this.getResults(this.state.text, this.state.pageInfo!.nextSkip)
+        }, Theme.refreshTimeout)
+      })
+    }
+  }
+
+  renderContent = () => {
     const errorMessage = this.props.navigation.getParam('errorMessage')
     const newItem = this.props.navigation.getParam('newItem')
+    const emptyMessage = this.props.navigation.getParam('emptyMessage')
 
+    const { fetchingMore, loading, errored } = this.state
+
+    if (loading) {
+      return <Spinner />
+    }
+
+    if (errored && errorMessage) {
+      return <SearchError message={errorMessage} />
+    }
+
+    if (this.isEmpty()) {
+      return (
+        <SearchEmpty
+          search={this.state.text}
+          message={emptyMessage}
+          newItem={newItem}
+        />
+      )
+    }
+
+    return (
+      <FlatList
+        keyboardShouldPersistTaps="always"
+        data={this.state.data}
+        keyExtractor={this.props.navigation.getParam('keyExtractor')}
+        renderItem={this.renderItem}
+        onMomentumScrollBegin={() => Keyboard.dismiss()}
+        ListFooterComponent={fetchingMore ? <Spinner /> : null}
+        onEndReached={this.fetchMore}
+      />
+    )
+  }
+
+  render() {
     return (
       <View
         style={{
@@ -156,27 +228,7 @@ class SearchPosts extends React.Component<Props, State> {
       >
         {this.renderSearch()}
 
-        {this.state.loading && !this.state.errored && <Spinner />}
-
-        {this.state.errored &&
-          errorMessage && <SearchError message={errorMessage} />}
-
-        {this.isEmpty() ? (
-          <SearchEmpty
-            search={this.state.text}
-            message={emptyMessage}
-            newItem={newItem}
-          />
-        ) : (
-          !this.state.loading && (
-            <FlatList
-              keyboardShouldPersistTaps="always"
-              data={this.state.data}
-              keyExtractor={this.props.navigation.getParam('keyExtractor')}
-              renderItem={this.renderItem}
-            />
-          )
-        )}
+        {this.renderContent()}
       </View>
     )
   }
