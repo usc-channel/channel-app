@@ -4,7 +4,7 @@ import { NavigationScreenProps } from 'react-navigation'
 
 import { API, Theme } from '@config'
 import { Error, Spinner } from '@components'
-import { Course, Lecturer, Review } from '@types'
+import { Course, Lecturer, PaginationInfo, Review } from '@types'
 import ReviewCourseItem from './components/ReviewCourseItem'
 
 interface ScreenParams {
@@ -17,8 +17,10 @@ type Props = NavigationScreenProps<ScreenParams>
 interface State {
   loading: boolean
   reviews: Review[]
+  pageInfo: PaginationInfo | null
   error: boolean
   refreshing: boolean
+  retrying: boolean
 }
 
 class ViewLecturerCourse extends React.Component<Props, State> {
@@ -26,21 +28,17 @@ class ViewLecturerCourse extends React.Component<Props, State> {
     super(props)
 
     this.state = {
-      loading: false,
+      loading: true,
       reviews: [],
+      pageInfo: null,
       refreshing: false,
+      retrying: false,
       error: false,
     }
   }
 
   componentDidMount() {
-    this.getReviews()
-  }
-
-  getReviews = () => {
-    this.setState({ loading: true, error: false }, () => {
-      this.fetchReviews()
-    })
+    this.fetchReviews()
   }
 
   fetchReviews = async () => {
@@ -48,14 +46,16 @@ class ViewLecturerCourse extends React.Component<Props, State> {
       const lecturer = this.props.navigation.getParam('lecturer')
       const course = this.props.navigation.getParam('course')
 
-      const { data: reviews } = await API()(
+      const { data } = await API()(
         `/reviews?lecturerId=${lecturer.id}&courseId=${course.id}`
       )
 
       this.setState({
-        reviews,
+        reviews: data.results,
+        pageInfo: data.pageInfo,
         loading: false,
         refreshing: false,
+        retrying: false,
         error: false,
       })
     } catch {
@@ -63,12 +63,21 @@ class ViewLecturerCourse extends React.Component<Props, State> {
         error: true,
         refreshing: false,
         loading: false,
+        retrying: false,
       })
     }
   }
 
-  refreshReviews = () => {
+  refresh = () => {
     this.setState({ refreshing: true }, () => {
+      setTimeout(() => {
+        this.fetchReviews()
+      }, Theme.refreshTimeout)
+    })
+  }
+
+  retry = () => {
+    this.setState({ retrying: true }, () => {
       setTimeout(() => {
         this.fetchReviews()
       }, Theme.refreshTimeout)
@@ -78,6 +87,8 @@ class ViewLecturerCourse extends React.Component<Props, State> {
   render() {
     const lecturer = this.props.navigation.getParam('lecturer')
     const course = this.props.navigation.getParam('course')
+
+    const { loading, error, retrying, reviews, refreshing } = this.state
 
     return (
       <View style={styles.container}>
@@ -90,22 +101,24 @@ class ViewLecturerCourse extends React.Component<Props, State> {
           </View>
         </View>
 
-        {this.state.loading && <Spinner />}
+        {loading && <Spinner />}
 
-        {this.state.error ? (
+        {error ? (
           <Error
             message="There's been a problem getting the reviews for this Lecturer and Course."
-            loading={this.state.refreshing}
-            action={{ message: 'Try again', callback: this.refreshReviews }}
+            loading={retrying}
+            action={{ message: 'Try again', callback: this.retry }}
           />
         ) : (
-          <FlatList
-            data={this.state.reviews}
-            keyExtractor={(review: Review) => review.id.toString()}
+          <FlatList<Review>
+            data={reviews}
+            keyExtractor={review => review.id.toString()}
             contentContainerStyle={{
               backgroundColor: Theme.background,
             }}
             renderItem={({ item }) => <ReviewCourseItem review={item} />}
+            refreshing={refreshing}
+            onRefresh={this.refresh}
           />
         )}
       </View>
