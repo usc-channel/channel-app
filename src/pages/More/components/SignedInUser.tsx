@@ -32,7 +32,9 @@ const SignedInUser: React.SFC<Props> = ({ user }) => (
     containerStyle={{
       paddingHorizontal: 0,
       marginBottom: 10,
+      marginHorizontal: 15,
     }}
+    disabled
   />
 )
 
