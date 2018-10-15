@@ -6025,10 +6025,9 @@ react-native-dropdownalert@^3.3.1:
   dependencies:
     prop-types "15.5.10"
 
-react-native-elements@^1.0.0-beta7:
+"react-native-elements@https://github.com/react-native-training/react-native-elements.git#next":
   version "1.0.0-beta7"
-  resolved "https://registry.yarnpkg.com/react-native-elements/-/react-native-elements-1.0.0-beta7.tgz#d732affc905079033a8b53343587f7c1dbc59834"
-  integrity sha512-w89YVfF7own1V3RgHDj6EAofk3mYdL9Z28OolxphFce2mv2k/peFEII7x0S6LyQ7rcT3QaxWDlyP7AS4d8duGg==
+  resolved "https://github.com/react-native-training/react-native-elements.git#1243f4f58943879c23454d7962ea36e8151cab6a"
   dependencies:
     lodash.merge "^4.6.1"
     lodash.times "^4.3.2"

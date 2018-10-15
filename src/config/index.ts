@@ -1,6 +1,6 @@
-import Theme from './Theme'
+import Theme, { ElementsTheme } from './Theme'
 import graphqlClient from './graphqlClient'
 import store from './configureStore'
 
-export { Theme, graphqlClient, store }
+export { Theme, graphqlClient, store, ElementsTheme }
 export * from './constants'
