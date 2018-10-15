@@ -6,10 +6,11 @@ import { createStackNavigator } from 'react-navigation'
 import { withNetworkConnectivity } from 'react-native-offline'
 import FlashMessage from 'react-native-flash-message'
 import SplashScreen from 'react-native-splash-screen'
+import { ThemeProvider } from 'react-native-elements'
 
 import Tabs from './containers/Tabs'
 import Auth from './containers/Auth.container'
-import { graphqlClient, store, Theme } from '@config'
+import { ElementsTheme, graphqlClient, store, Theme } from '@config'
 import { NewCourse, NewLecturer, NewReview } from '@pages'
 import { Search } from '@components'
 
@@ -68,16 +69,18 @@ class AppRoot extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <ApolloProvider client={graphqlClient}>
-          <View style={{ flex: 1 }}>
-            <StatusBar
-              backgroundColor={Theme.darkPrimary}
-              barStyle="light-content"
-            />
-            <ModalStack />
-            <FlashMessage position="bottom" />
-          </View>
-        </ApolloProvider>
+        <ThemeProvider theme={ElementsTheme}>
+          <ApolloProvider client={graphqlClient}>
+            <View style={{ flex: 1 }}>
+              <StatusBar
+                backgroundColor={Theme.darkPrimary}
+                barStyle="light-content"
+              />
+              <ModalStack />
+              <FlashMessage position="bottom" />
+            </View>
+          </ApolloProvider>
+        </ThemeProvider>
       </Provider>
     )
   }

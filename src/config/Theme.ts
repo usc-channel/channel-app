@@ -1,4 +1,9 @@
-import { Platform } from 'react-native'
+import {
+  Platform,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+} from 'react-native'
+import { Theme } from 'react-native-elements'
 
 const fonts = {
   regular: 'NunitoSans-Regular',
@@ -53,4 +58,12 @@ const Theme = {
   fonts,
 }
 
+const ElementsTheme: Theme = {
+  ListItem: {
+    component:
+      Platform.OS === 'ios' ? TouchableOpacity : TouchableNativeFeedback,
+  },
+}
+
+export { ElementsTheme }
 export default Theme
