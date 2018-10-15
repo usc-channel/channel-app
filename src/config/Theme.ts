@@ -1,7 +1,7 @@
 import {
   Platform,
+  TouchableHighlight,
   TouchableNativeFeedback,
-  TouchableOpacity,
 } from 'react-native'
 import { Theme } from 'react-native-elements'
 
@@ -61,7 +61,7 @@ const Theme = {
 const ElementsTheme: Theme = {
   ListItem: {
     component:
-      Platform.OS === 'ios' ? TouchableOpacity : TouchableNativeFeedback,
+      Platform.OS === 'ios' ? TouchableHighlight : TouchableNativeFeedback,
   },
 }
 
