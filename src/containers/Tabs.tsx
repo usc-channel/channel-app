@@ -145,7 +145,7 @@ export default createBottomTabNavigator(
     },
   },
   {
-    initialRouteName: 'Reviews',
+    initialRouteName: 'Posts',
     tabBarOptions: {
       showLabel: Platform.OS === 'ios',
       activeTintColor: Theme.primary,
