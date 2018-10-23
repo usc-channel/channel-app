@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
+import { decode } from 'he'
 
 import { PostMeta, Touchable } from '@components'
 import { Post } from '@types'
@@ -21,7 +22,7 @@ const LargePost: React.SFC<Props> = ({ post, onPress }) => (
         style={styles.image}
       />
 
-      <Text style={styles.title}>{post.title}</Text>
+      <Text style={styles.title}>{decode(post.title)}</Text>
 
       {!!post.excerpt && (
         <Text style={styles.excerpt} numberOfLines={1}>
