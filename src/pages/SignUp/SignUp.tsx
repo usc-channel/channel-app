@@ -211,7 +211,7 @@ class SignUp extends React.Component<Props, State> {
             .ref(`avatars/${id}${fileExtension}`)
             .putFile(avatar.path)
 
-          resolve(response.downloadURL)
+          resolve(response.downloadURL!)
         } catch (e) {
           reject(e)
         }
@@ -253,7 +253,7 @@ class SignUp extends React.Component<Props, State> {
                   color="#fff"
                   containerStyle={styles.icon}
                   onPress={this.selectAvatar}
-                  component={TouchableOpacity}
+                  Component={TouchableOpacity}
                 />
               </View>
             </View>

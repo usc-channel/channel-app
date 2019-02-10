@@ -8,7 +8,7 @@ type SignInAction = Action & {
 
 type SignOutAction = Action
 
-type AuthAction = SignInAction & SignOutAction
+export type AuthAction = SignInAction & SignOutAction
 
 const signIn = (user: User): SignInAction => ({
   type: SIGNIN,
@@ -19,4 +19,4 @@ const signOut = (): SignOutAction => ({
   type: SIGNOUT,
 })
 
-export { signIn, signOut, AuthAction }
+export { signIn, signOut }

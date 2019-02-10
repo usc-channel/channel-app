@@ -14,6 +14,7 @@ import Error from './Error'
 import Picker from './Picker'
 import Empty from './Empty'
 import Spinner from './Spinner'
+import Ionicon from './Ionicon'
 
 export {
   NavIcon,
@@ -32,4 +33,5 @@ export {
   SearchError,
   Empty,
   Spinner,
+  Ionicon,
 }

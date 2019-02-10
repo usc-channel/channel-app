@@ -14,7 +14,15 @@ def getPassword(String currentUser, String keyChain) {
 }
  
 buildscript {
+    ext {
+        buildToolsVersion = "28.0.2"
+        minSdkVersion = 16
+        compileSdkVersion = 28
+        targetSdkVersion = 27
+        supportLibVersion = "28.0.0"
+    }
     repositories {
+        google()
         jcenter()
         google()
         maven {
@@ -23,7 +31,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.3'
+        classpath 'com.android.tools.build:gradle:3.2.1'
         classpath 'com.google.gms:google-services:3.2.1'
      
         // NOTE: Do not place your application dependencies here; they belong
@@ -34,8 +42,8 @@ buildscript {
 allprojects {
     repositories {
         mavenLocal()
-        jcenter()
         google()
+        jcenter()
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
             url "$rootDir/../node_modules/react-native/android"
@@ -48,10 +56,18 @@ allprojects {
     }
 }
 
-ext {
-    buildToolsVersion = "27.0.3"
-    minSdkVersion = 16
-    compileSdkVersion = 27
-    targetSdkVersion = 27
-    supportLibVersion = "26.1.0"
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.7'
+    distributionUrl = distributionUrl.replace("bin", "all")
+}
+
+subprojects {
+    project.configurations.all {
+        resolutionStrategy.eachDependency { details ->
+            if (details.requested.group == 'com.android.support'
+                    && !details.requested.name.contains('multidex') ) {
+                details.useVersion "28.0.0"
+            }
+        }
+    }
 }

@@ -78,7 +78,7 @@ class SignIn extends React.Component<Props, State> {
 
       const response = await firebase
         .auth()
-        .signInAndRetrieveDataWithEmailAndPassword(email, password)
+        .signInWithEmailAndPassword(email, password)
 
       this.setState({ loading: false })
 
@@ -195,7 +195,7 @@ class SignIn extends React.Component<Props, State> {
             <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
               <Button
                 title="Forgot Password?"
-                clear
+                type="clear"
                 titleStyle={{
                   color: 'rgba(0,0,0,.87)',
                   fontSize: 16,

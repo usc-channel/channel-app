@@ -126,7 +126,7 @@ class ViewLecturer extends React.Component<Props, State> {
           </View>
 
           <Icon
-            component={TouchableOpacity}
+            Component={TouchableOpacity}
             name="star"
             color={Theme.accent}
             size={24}
