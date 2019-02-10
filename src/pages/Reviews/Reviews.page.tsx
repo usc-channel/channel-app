@@ -400,7 +400,7 @@ class Reviews extends React.Component<Props, State> {
           pointerEvents="box-none"
         >
           <Icon
-            component={TouchableOpacity}
+            Component={TouchableOpacity}
             name="star"
             color={Theme.accent}
             size={24}

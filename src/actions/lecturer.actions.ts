@@ -6,11 +6,11 @@ type SetLecturerAction = Action & {
   payload: LecturerState
 }
 
-type LecturerAction = SetLecturerAction
+export type LecturerAction = SetLecturerAction
 
 const setLecturer = (lecturer: LecturerState): LecturerAction => ({
   type: SET_LECTURER,
   payload: lecturer,
 })
 
-export { setLecturer, LecturerAction }
+export { setLecturer }

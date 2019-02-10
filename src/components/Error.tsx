@@ -28,7 +28,7 @@ const Error: React.SFC<ErrorProps> = ({ message, action, loading }) => (
     {action && (
       <Button
         containerStyle={{ marginTop: 15 }}
-        clear
+        type="clear"
         titleStyle={{
           fontFamily: Theme.fonts.regular,
           color: Theme.primary,

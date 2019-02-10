@@ -35,7 +35,7 @@ const navigationOptions = {
       }),
 } as any
 
-const Theme = {
+const theme = {
   accent: '#4E9CD0',
   darkPrimary: '#194D81',
   tabIconSize: 24,
@@ -60,10 +60,10 @@ const Theme = {
 
 const ElementsTheme: Theme = {
   ListItem: {
-    component:
+    Component:
       Platform.OS === 'ios' ? TouchableHighlight : TouchableNativeFeedback,
   },
 }
 
 export { ElementsTheme }
-export default Theme
+export default theme

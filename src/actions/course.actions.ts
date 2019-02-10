@@ -6,11 +6,11 @@ type SetCourseAction = Action & {
   payload: CourseState
 }
 
-type CourseAction = SetCourseAction
+export type CourseAction = SetCourseAction
 
 const setCourse = (course: CourseState): CourseAction => ({
   type: SET_COURSE,
   payload: course,
 })
 
-export { setCourse, CourseAction }
+export { setCourse }

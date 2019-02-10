@@ -1,8 +1,7 @@
 import React from 'react'
 import { Platform, View } from 'react-native'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
-import Ionicon from 'react-native-vector-icons/Ionicons'
-import { Touchable } from '@components'
+import { Ionicon, Touchable } from '@components'
 
 interface Props {
   iconName: string

@@ -13,7 +13,7 @@ import Archives from './Archives.container'
 import More from './More.container'
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import { Ionicon } from '@components'
 
 type Navigation = NavigationScreenProps<{ index: number }>
 
@@ -32,7 +32,7 @@ export default createBottomTabNavigator(
           tabBarVisible,
           tabBarLabel: 'POSTS',
           tabBarIcon: ({ tintColor, focused }: TabScene) => (
-            <Ionicons
+            <Ionicon
               name={
                 Platform.OS === 'ios'
                   ? `ios-paper${!focused ? '-outline' : ''}`
@@ -58,7 +58,7 @@ export default createBottomTabNavigator(
           tabBarVisible,
           tabBarLabel: 'REVIEWS',
           tabBarIcon: ({ tintColor, focused }: TabScene) => (
-            <Ionicons
+            <Ionicon
               name={
                 Platform.OS === 'ios'
                   ? `ios-chatbubbles${!focused ? '-outline' : ''}`
@@ -77,7 +77,7 @@ export default createBottomTabNavigator(
         tabBarLabel: 'MEDIA',
         tabBarIcon: ({ tintColor, focused }: TabScene) => {
           return Platform.OS === 'ios' ? (
-            <Ionicons
+            <Ionicon
               name={`ios-images${!focused ? '-outline' : ''}`}
               size={Theme.tabIconSize}
               color={tintColor!}
@@ -106,7 +106,7 @@ export default createBottomTabNavigator(
           tabBarLabel: 'ARCHIVES',
           tabBarIcon: ({ tintColor, focused }: TabScene) => {
             return Platform.OS === 'ios' ? (
-              <Ionicons
+              <Ionicon
                 name={`ios-bookmarks${!focused ? '-outline' : ''}`}
                 size={Theme.tabIconSize}
                 color={tintColor!}
@@ -128,7 +128,7 @@ export default createBottomTabNavigator(
         tabBarLabel: 'MORE',
         tabBarIcon: ({ tintColor }: TabScene) => {
           return Platform.OS === 'ios' ? (
-            <Ionicons
+            <Ionicon
               name="ios-menu"
               size={Theme.tabIconSize}
               color={tintColor!}
