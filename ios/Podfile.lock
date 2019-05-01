@@ -71,7 +71,7 @@ PODS:
   - QBImagePickerController (3.4.0)
   - React (0.58.4):
     - React/Core (= 0.58.4)
-  - react-native-fast-image (4.0.14):
+  - react-native-fast-image (5.1.2):
     - FLAnimatedImage
     - React
     - SDWebImage/Core
@@ -115,8 +115,8 @@ PODS:
     - React/Core
     - RSKImageCropper
   - RSKImageCropper (2.2.1)
-  - SDWebImage/Core (4.4.5)
-  - SDWebImage/GIF (4.4.5):
+  - SDWebImage/Core (4.4.6)
+  - SDWebImage/GIF (4.4.6):
     - FLAnimatedImage (~> 1.0)
     - SDWebImage/Core
   - yoga (0.58.4.React)
@@ -184,7 +184,7 @@ SPEC CHECKSUMS:
   rn-fetch-blob: 76a8f798dae965bbcd146a2438f2e1d381c91ae3
   RNImageCropPicker: 32ca4b9fef4e1b7b85ba69494242122948117e06
   RSKImageCropper: 98296ad26b41753f796b6898d015509598f13d97
-  SDWebImage: ecc03494e973b93b80213649d32175f8d2d17d4d
+  SDWebImage: 3f3f0c02f09798048c47a5ed0a13f17b063572d8
   yoga: 0885622311729a02c2bc02dca97167787a51488b
 
 PODFILE CHECKSUM: cbb4107635a0ba9e2307684b1348f441eb9aaf2a
