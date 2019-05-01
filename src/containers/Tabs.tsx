@@ -78,13 +78,13 @@ export default createBottomTabNavigator(
         tabBarIcon: ({ tintColor, focused }: TabScene) => {
           return Platform.OS === 'ios' ? (
             <Ionicon
-              name={`ios-images${!focused ? '-outline' : ''}`}
+              name={`ios-videocam${!focused ? '-outline' : ''}`}
               size={Theme.tabIconSize}
               color={tintColor!}
             />
           ) : (
             <MaterialIcons
-              name="photo-library"
+              name="videocam"
               size={Theme.tabIconSize}
               color={tintColor!}
             />
