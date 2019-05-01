@@ -86,4 +86,5 @@ declare module 'plur' {
 declare module 'react-native-dotenv' {
   export const AUTH: string
   export const API_URL: string
+  export const YOUTUBE_KEY: string
 }
