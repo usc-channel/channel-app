@@ -92,7 +92,7 @@ class SignIn extends React.Component<Props, State> {
       StatusBar.setBarStyle('light-content', true)
       this.props.navigation.dismiss()
     } catch (e) {
-      let error = `Couldn't sign in right now, try again later.`
+      let error = "Couldn't sign in right now, try again later."
 
       switch (e.code) {
         case 'auth/user-not-found':
@@ -179,6 +179,7 @@ class SignIn extends React.Component<Props, State> {
               error={this.state.emailError}
               returnKeyType="next"
               onSubmitEditing={() => this.password!.focus()}
+              textContentType="emailAddress"
             />
 
             <TextField

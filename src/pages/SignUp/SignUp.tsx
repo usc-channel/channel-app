@@ -172,7 +172,7 @@ class SignUp extends React.Component<Props, State> {
         this.props.navigation.dismiss()
       })
     } catch (e) {
-      let error = `Couldn't sign up right now, try again later.`
+      let error = "Couldn't sign up right now, try again later."
 
       switch (e.code) {
         case 'auth/email-already-in-use':
@@ -190,7 +190,7 @@ class SignUp extends React.Component<Props, State> {
   }
 
   createUser = (user: Partial<User>) => {
-    return API().post(`/users`, user)
+    return API().post('/users', user)
   }
 
   uploadImage = (id: string): Promise<string> => {
@@ -278,6 +278,7 @@ class SignUp extends React.Component<Props, State> {
               error={this.state.emailError}
               returnKeyType="next"
               onSubmitEditing={() => this.password!.focus()}
+              textContentType="emailAddress"
             />
 
             <TextField
