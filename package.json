@@ -21,7 +21,7 @@
     "query-string": "^5.1.0",
     "react": "16.8.3",
     "react-apollo": "^2.1.9",
-    "react-native": "0.59.3",
+    "react-native": "0.59.4",
     "react-native-collapsible": "^0.13.0",
     "react-native-dotenv": "^0.2.0",
     "react-native-dropdownalert": "^3.3.1",
