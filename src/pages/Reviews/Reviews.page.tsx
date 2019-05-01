@@ -218,6 +218,8 @@ class Reviews extends React.Component<Props, State> {
           },
           android: {
             elevation: this.state.text.length > 0 ? 0 : 3,
+            paddingTop: 0,
+            paddingBottom: 0,
           },
         })}
         inputStyle={{ fontFamily: Theme.fonts.regular, fontSize: 16 }}
