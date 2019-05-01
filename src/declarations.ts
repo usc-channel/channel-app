@@ -82,3 +82,8 @@ declare module 'plur' {
     count?: number
   ): string
 }
+
+declare module 'react-native-dotenv' {
+  export const AUTH: string
+  export const API_URL: string
+}
