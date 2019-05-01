@@ -86,11 +86,11 @@ class NewLecturer extends React.Component<Props, State> {
     try {
       const {
         data: { results: schools },
-      } = await API().get(`/schools/?limit=0`)
+      } = await API().get('/schools/?limit=0')
       this.setState({ schools })
     } catch {
       this.setState({
-        message: { text: `Couldn't get list of schools`, error: true },
+        message: { text: "Couldn't get list of schools", error: true },
       })
     }
   }
@@ -145,7 +145,7 @@ class NewLecturer extends React.Component<Props, State> {
     try {
       const { name, school } = this.state
 
-      const { data } = await API().post(`/lecturers`, {
+      const { data } = await API().post('/lecturers', {
         name,
         school_id: school!.id,
       })
@@ -170,7 +170,7 @@ class NewLecturer extends React.Component<Props, State> {
         }, Theme.loadingTimeout)
       )
     } catch (e) {
-      const text = `Couldn't create lecturer right now, try again later.`
+      const text = "Couldn't create lecturer right now, try again later."
 
       this.setState({ loading: false, disabled: false }, () =>
         setTimeout(() => {

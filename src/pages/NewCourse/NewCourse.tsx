@@ -130,7 +130,7 @@ class NewCourse extends React.Component<Props, State> {
     try {
       const { code, name } = this.state
 
-      const { data } = await API().post(`/courses`, { code, name })
+      const { data } = await API().post('/courses', { code, name })
 
       this.props.setCourse(data)
 
@@ -152,7 +152,7 @@ class NewCourse extends React.Component<Props, State> {
         }, Theme.loadingTimeout)
       )
     } catch (e) {
-      const text = `Couldn't create course right now, try again later.`
+      const text = "Couldn't create course right now, try again later."
 
       this.setState({ loading: false }, () =>
         setTimeout(() => {

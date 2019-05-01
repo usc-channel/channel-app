@@ -349,22 +349,20 @@ class Reviews extends React.Component<Props, State> {
       >
         {this.renderSearch()}
 
-        {!this.state.errored &&
-          !this.state.loading &&
-          text.length === 0 && (
-            <View
-              style={{
-                marginTop: -100,
-                flex: 1,
-              }}
-            >
-              <Empty
-                image={require('../../assets/chat.png')}
-                title="Lecturer Reviews"
-                message="Search for a course or lecturer to see popular reviews or add one yourself!"
-              />
-            </View>
-          )}
+        {!this.state.errored && !this.state.loading && text.length === 0 && (
+          <View
+            style={{
+              marginTop: -100,
+              flex: 1,
+            }}
+          >
+            <Empty
+              image={require('../../assets/chat.png')}
+              title="Lecturer Reviews"
+              message="Search for a course or lecturer to see popular reviews or add one yourself!"
+            />
+          </View>
+        )}
 
         {this.state.firstSearch &&
           this.state.loading &&

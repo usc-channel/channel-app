@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "lint": "tslint 'src/**/*.ts?(x)' --format stylish",
+    "lint": "eslint --ext js,ts,tsx .",
     "precommit": "lint-staged",
     "check": "tsc --noEmit --pretty"
   },
@@ -50,6 +50,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
+    "@react-native-community/eslint-config": "^0.0.5",
     "@types/he": "^0.5.29",
     "@types/lodash.debounce": "^4.0.3",
     "@types/node": "^9.6.4",
@@ -66,15 +67,13 @@
     "@types/validator": "^9.4.1",
     "babel-jest": "23.2.0",
     "babel-plugin-module-resolver": "^3.1.1",
+    "eslint": "^5.16.0",
     "husky": "^0.14.3",
     "jest": "23.3.0",
     "lint-staged": "^7.2.2",
     "metro-react-native-babel-preset": "^0.51.1",
-    "prettier": "^1.14.2",
     "react-native-typescript-transformer": "^1.2.11",
     "react-test-renderer": "16.4.1",
-    "tslint": "^5.9.1",
-    "tslint-react": "^3.4.0",
     "typescript": "^3.3.3"
   },
   "jest": {
@@ -86,8 +85,9 @@
     ]
   },
   "lint-staged": {
-    "linters": {
-      "*.{ts,tsx}": "tslint 'src/**/*.ts?(x)' --format stylish"
-    }
+    "*.{js,ts,tsx}": [
+      "eslint --fix",
+      "git add"
+    ]
   }
 }
