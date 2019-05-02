@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList } from 'react-native'
+import { FlatList, View } from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
 
 import ReleaseThumbnail from './components/ReleaseThumbnail'
@@ -112,27 +112,31 @@ class Releases extends React.Component<Props, State> {
       refreshing,
     } = this.state
 
-    return loading ? (
-      <Spinner />
-    ) : error ? (
-      <Error
-        message="There's been a problem getting the magazine releases."
-        action={{ message: 'Try again?', callback: this.retry }}
-        loading={retrying}
-      />
-    ) : (
-      <FlatList
-        data={releases}
-        keyExtractor={(a: Release) => a.title}
-        numColumns={2}
-        renderItem={({ item }) => (
-          <ReleaseThumbnail release={item} viewRelease={this.viewRelease} />
+    return (
+      <View style={{ flex: 1, backgroundColor: Theme.background }}>
+        {loading ? (
+          <Spinner />
+        ) : error ? (
+          <Error
+            message="There's been a problem getting the magazine releases."
+            action={{ message: 'Try again?', callback: this.retry }}
+            loading={retrying}
+          />
+        ) : (
+          <FlatList
+            data={releases}
+            keyExtractor={(a: Release) => a.title}
+            numColumns={2}
+            renderItem={({ item }) => (
+              <ReleaseThumbnail release={item} viewRelease={this.viewRelease} />
+            )}
+            onEndReached={this.fetchMore}
+            refreshing={refreshing}
+            onRefresh={this.refresh}
+            ListFooterComponent={fetchingMore ? <Spinner /> : null}
+          />
         )}
-        onEndReached={this.fetchMore}
-        refreshing={refreshing}
-        onRefresh={this.refresh}
-        ListFooterComponent={fetchingMore ? <Spinner /> : null}
-      />
+      </View>
     )
   }
 }

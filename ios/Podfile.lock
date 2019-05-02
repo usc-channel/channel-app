@@ -77,8 +77,8 @@ PODS:
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
   - QBImagePickerController (3.4.0)
-  - React (0.59.0):
-    - React/Core (= 0.59.0)
+  - React (0.59.5):
+    - React/Core (= 0.59.5)
   - react-native-fast-image (5.1.2):
     - FLAnimatedImage
     - React
@@ -88,51 +88,53 @@ PODS:
     - React
   - react-native-splash-screen (3.2.0):
     - React
-  - React/Core (0.59.0):
-    - yoga (= 0.59.0.React)
-  - React/CxxBridge (0.59.0):
+  - React/Core (0.59.5):
+    - yoga (= 0.59.5.React)
+  - React/CxxBridge (0.59.5):
     - Folly (= 2018.10.22.00)
     - React/Core
     - React/cxxreact
     - React/jsiexecutor
-  - React/cxxreact (0.59.0):
+  - React/cxxreact (0.59.5):
     - boost-for-react-native (= 1.63.0)
     - DoubleConversion
     - Folly (= 2018.10.22.00)
     - glog
     - React/jsinspector
-  - React/DevSupport (0.59.0):
+  - React/DevSupport (0.59.5):
     - React/Core
     - React/RCTWebSocket
-  - React/fishhook (0.59.0)
-  - React/jsi (0.59.0):
+  - React/fishhook (0.59.5)
+  - React/jsi (0.59.5):
     - DoubleConversion
     - Folly (= 2018.10.22.00)
     - glog
-  - React/jsiexecutor (0.59.0):
+  - React/jsiexecutor (0.59.5):
     - DoubleConversion
     - Folly (= 2018.10.22.00)
     - glog
     - React/cxxreact
     - React/jsi
-  - React/jsinspector (0.59.0)
-  - React/RCTAnimation (0.59.0):
+  - React/jsinspector (0.59.5)
+  - React/RCTAnimation (0.59.5):
     - React/Core
-  - React/RCTBlob (0.59.0):
+  - React/RCTBlob (0.59.5):
     - React/Core
-  - React/RCTImage (0.59.0):
+  - React/RCTImage (0.59.5):
     - React/Core
     - React/RCTNetwork
-  - React/RCTNetwork (0.59.0):
+  - React/RCTNetwork (0.59.5):
     - React/Core
-  - React/RCTText (0.59.0):
+  - React/RCTText (0.59.5):
     - React/Core
-  - React/RCTWebSocket (0.59.0):
+  - React/RCTWebSocket (0.59.5):
     - React/Core
     - React/fishhook
     - React/RCTBlob
   - rn-fetch-blob (0.10.6):
     - React/Core
+  - RNGestureHandler (1.2.1):
+    - React
   - RNImageCropPicker (0.20.3):
     - QBImagePickerController
     - React/Core
@@ -142,7 +144,7 @@ PODS:
   - SDWebImage/GIF (4.4.6):
     - FLAnimatedImage (~> 1.0)
     - SDWebImage/Core
-  - yoga (0.59.0.React)
+  - yoga (0.59.5.React)
 
 DEPENDENCIES:
   - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
@@ -164,6 +166,7 @@ DEPENDENCIES:
   - React/RCTText (from `../node_modules/react-native`)
   - React/RCTWebSocket (from `../node_modules/react-native`)
   - rn-fetch-blob (from `../node_modules/rn-fetch-blob`)
+  - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -186,6 +189,8 @@ EXTERNAL SOURCES:
     :path: ../node_modules/react-native-splash-screen
   rn-fetch-blob:
     :path: ../node_modules/rn-fetch-blob
+  RNGestureHandler:
+    :path: ../node_modules/react-native-gesture-handler
   RNImageCropPicker:
     :path: ../node_modules/react-native-image-crop-picker
   yoga:
@@ -215,11 +220,12 @@ SPEC CHECKSUMS:
   react-native-pdf: 0268038d049187eccaf4bce4a2ca4a96719fdc36
   react-native-splash-screen: a49be22f0f6648b8416f3bd28258645eeaa5b42b
   rn-fetch-blob: 76a8f798dae965bbcd146a2438f2e1d381c91ae3
+  RNGestureHandler: 7ccf2f3f60458e084f9ada01fbaf610f6fef073c
   RNImageCropPicker: 32ca4b9fef4e1b7b85ba69494242122948117e06
   RSKImageCropper: 98296ad26b41753f796b6898d015509598f13d97
   SDWebImage: 3f3f0c02f09798048c47a5ed0a13f17b063572d8
   yoga: 128daf064cacaede0c3bb27424b6b4c71052e6cd
 
-PODFILE CHECKSUM: cd1ae2bae43b346230884148630de17937ac99d4
+PODFILE CHECKSUM: 8f5b8c84da3dbe2ad2d37c042e81b4917a2b22b1
 
 COCOAPODS: 1.4.0

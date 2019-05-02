@@ -6,7 +6,7 @@ import Axios from 'axios'
 import { Video } from '@types'
 import VideoPreview from './components/VideoPreview'
 import { Spinner } from '@components'
-import { YOUTUBE_KEY } from '@config'
+import { YOUTUBE_KEY, Theme } from '@config'
 
 interface State {
   loading: boolean
@@ -91,7 +91,7 @@ export default class Videos extends React.Component<{}, State> {
 
   render() {
     return (
-      <View style={{ flexGrow: 1 }}>
+      <View style={{ flex: 1, backgroundColor: Theme.background }}>
         {this.state.loading ? (
           <Spinner />
         ) : (
@@ -99,18 +99,11 @@ export default class Videos extends React.Component<{}, State> {
             data={this.state.videos}
             keyExtractor={(a: Video) => a.videoId}
             onEndReachedThreshold={1}
-            contentContainerStyle={{ paddingBottom: 30 }}
             renderItem={({ item }) => (
               <VideoPreview video={item} onPress={this.viewVideo} />
             )}
             onEndReached={this.fetchMoreVideos}
-            ListFooterComponent={() =>
-              this.state.fetchingMore ? (
-                <Spinner />
-              ) : (
-                <View style={{ paddingVertical: 30 }} />
-              )
-            }
+            ListFooterComponent={() => this.state.fetchingMore && <Spinner />}
           />
         )}
       </View>

@@ -12,6 +12,6 @@ export default createStackNavigator(
     },
   },
   {
-    navigationOptions: Theme.navigationOptions,
+    defaultNavigationOptions: Theme.navigationOptions,
   }
 )

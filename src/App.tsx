@@ -1,8 +1,8 @@
 import React from 'react'
-import { AppRegistry, StatusBar, View } from 'react-native'
+import { StatusBar, View } from 'react-native'
 import { ApolloProvider } from 'react-apollo'
 import { Provider } from 'react-redux'
-import { createStackNavigator } from 'react-navigation'
+import { createStackNavigator, createAppContainer } from 'react-navigation'
 import { withNetworkConnectivity } from 'react-native-offline'
 import FlashMessage from 'react-native-flash-message'
 import SplashScreen from 'react-native-splash-screen'
@@ -61,7 +61,9 @@ ModalStack = withNetworkConnectivity({
   withRedux: true,
 })(ModalStack)
 
-class AppRoot extends React.Component {
+const Root = createAppContainer(ModalStack)
+
+export default class AppRoot extends React.Component {
   componentDidMount() {
     SplashScreen.hide()
   }
@@ -76,7 +78,7 @@ class AppRoot extends React.Component {
                 backgroundColor={Theme.darkPrimary}
                 barStyle="light-content"
               />
-              <ModalStack />
+              <Root />
               <FlashMessage position="bottom" />
             </View>
           </ApolloProvider>
@@ -85,5 +87,3 @@ class AppRoot extends React.Component {
     )
   }
 }
-
-AppRegistry.registerComponent('USCChannel', () => AppRoot)

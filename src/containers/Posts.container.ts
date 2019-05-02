@@ -20,6 +20,6 @@ export default createStackNavigator(
   },
   {
     headerMode: 'screen',
-    navigationOptions: Theme.navigationOptions,
+    defaultNavigationOptions: Theme.navigationOptions,
   }
 )
