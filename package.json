@@ -30,7 +30,7 @@
     "react-native-firebase": "^5.3.1",
     "react-native-flash-message": "^0.1.9",
     "react-native-gesture-handler": "^1.2.1",
-    "react-native-image-crop-picker": "^0.20.3",
+    "react-native-image-crop-picker": "^0.24.0",
     "react-native-keyboard-aware-scroll-view": "^0.7.0",
     "react-native-linear-gradient": "^2.5.3",
     "react-native-modal": "^6.4.0",
