@@ -93,8 +93,6 @@ def enableSeparateBuildPerCPUArchitecture = false
  */
 def enableProguardInReleaseBuilds = false
 
-def pass = getPassword("kyleroach", "uscchannel-keystore")
-
 android {
     // because of firestore:
     dexOptions {
@@ -122,16 +120,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
         multiDexEnabled true
-    }
-    signingConfigs {
-        release {
-            storeFile file(MYAPP_RELEASE_STORE_FILE)
-            storePassword pass // Change this
-            keyAlias MYAPP_RELEASE_KEY_ALIAS
-            keyPassword pass // Change this
-        }
     }
     splits {
         abi {
@@ -145,7 +135,6 @@ android {
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            signingConfig signingConfigs.release
         }
     }
     // applicationVariants are e.g. debug, release
