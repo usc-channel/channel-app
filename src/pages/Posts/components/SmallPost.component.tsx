@@ -12,7 +12,7 @@ interface Props {
   onPress(): void
 }
 
-const LargePost: React.SFC<Props> = ({ post, onPress }) => (
+const SmallPost: React.SFC<Props> = ({ post, onPress }) => (
   <Touchable onPress={onPress}>
     <View style={styles.container}>
       <View style={{ flex: 1 }}>
@@ -77,4 +77,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default LargePost
+export default SmallPost
