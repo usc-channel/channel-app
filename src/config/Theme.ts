@@ -63,6 +63,9 @@ const ElementsTheme: Theme = {
     Component:
       Platform.OS === 'ios' ? TouchableHighlight : TouchableNativeFeedback,
   },
+  SearchBar: {
+    placeholderTextColor: '#bdbdbd',
+  },
 }
 
 export { ElementsTheme }
