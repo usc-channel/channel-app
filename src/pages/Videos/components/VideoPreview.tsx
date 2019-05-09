@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontFamily: Theme.fonts.semiBold,
     fontSize: 18,
+    maxWidth: '100%',
   },
   meta: {
     marginTop: 8,
