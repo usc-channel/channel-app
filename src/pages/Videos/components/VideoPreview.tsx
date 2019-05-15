@@ -7,6 +7,7 @@ import {
   View,
 } from 'react-native'
 import moment from 'moment'
+import { decode } from 'he'
 
 import { Video } from '@types'
 import { Theme } from '@config'
@@ -25,7 +26,7 @@ const VideoPreview: React.SFC<Props> = ({ video, onPress }) => (
     >
       <Touchable onPress={() => onPress(video)}>
         <View>
-          <Text style={styles.title}>{video.title}</Text>
+          <Text style={styles.title}>{decode(video.title)}</Text>
 
           <View style={styles.meta}>
             <Text style={styles.date}>
