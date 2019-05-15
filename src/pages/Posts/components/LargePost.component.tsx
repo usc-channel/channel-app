@@ -6,6 +6,7 @@ import { decode } from 'he'
 import { PostMeta, Touchable } from '@components'
 import { Post } from '@types'
 import { Theme } from '@config'
+import { stripHTMLTags } from '@util'
 
 interface Props {
   post: Post
@@ -26,7 +27,7 @@ const LargePost: React.SFC<Props> = ({ post, onPress }) => (
 
       {!!post.excerpt && (
         <Text style={styles.excerpt} numberOfLines={1}>
-          {post.excerpt}
+          {stripHTMLTags(post.excerpt)}
         </Text>
       )}
 

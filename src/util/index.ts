@@ -1,5 +1,6 @@
 import { Dimensions, Platform, StatusBar } from 'react-native'
 import { MessageOptions, showMessage } from 'react-native-flash-message'
+import { decode } from 'he'
 
 const printArray = (values: string[]) => values.toString().replace(/,/g, ', ')
 
@@ -40,4 +41,10 @@ const getStatusBarHeight = () => {
   return StatusBar.currentHeight
 }
 
-export { printArray, showBanner, getStatusBarHeight }
+const stripHTMLTags = (string: string) => {
+  return decode(string)
+    .replace(/<[^>]*>/g, '')
+    .trim()
+}
+
+export { printArray, showBanner, getStatusBarHeight, stripHTMLTags }

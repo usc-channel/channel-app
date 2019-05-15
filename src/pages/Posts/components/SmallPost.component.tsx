@@ -6,6 +6,7 @@ import FastImage from 'react-native-fast-image'
 import { PostMeta, Touchable } from '@components'
 import { Post } from '@types'
 import { featuredCategoryId, Theme } from '@config'
+import { stripHTMLTags } from '@util'
 
 interface Props {
   post: Post
@@ -20,7 +21,7 @@ const SmallPost: React.SFC<Props> = ({ post, onPress }) => (
 
         {!!post.excerpt && (
           <Text style={styles.excerpt} numberOfLines={1}>
-            {post.excerpt}
+            {stripHTMLTags(post.excerpt)}
           </Text>
         )}
 
