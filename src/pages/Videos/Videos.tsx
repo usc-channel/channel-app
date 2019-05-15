@@ -67,7 +67,7 @@ export default class Videos extends React.Component<{}, State> {
             videoId: a.id.videoId,
             publishedAt: a.snippet.publishedAt,
             title: a.snippet.title,
-            thumbnail: a.snippet.thumbnails.medium.url,
+            thumbnail: a.snippet.thumbnails.high.url,
           })),
       ],
     })
